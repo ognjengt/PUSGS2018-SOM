@@ -1,12 +1,15 @@
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using RentApp.Models.Entities;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
+using System.Linq;
+
 namespace RentApp.Migrations
 {
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
-    using RentApp.Models.Entities;
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
+
 
     internal sealed class Configuration : DbMigrationsConfiguration<RentApp.Persistance.RADBContext>
     {
@@ -71,6 +74,20 @@ namespace RentApp.Migrations
                 new AppUser() { FullName = "AppUser AppUserovic" }
 
             );
+
+            AppUser appUser = new AppUser() { Id = 1, FullName = "Pera Petrovic", Email = "perapetrovic@gmail.com", Birthday = DateTime.Now, Image = "slika.jpg", Activated = true, Rents= new List<Rent>() };
+
+
+            Vehicle vozilo = new Vehicle() {Id="1", Model="Audi", Manufactor="Proizvodjac1", Year=2015, Description="Dizel", Type=new VehicleType(), PricePerHour=10, Unavailable=true, Images=new List<string>() };
+            context.AppUsers.AddOrUpdate(
+
+                 e => e.Email,
+
+                new AppUser() { Email = "" }
+
+            );
+
+
 
             context.SaveChanges();
 
