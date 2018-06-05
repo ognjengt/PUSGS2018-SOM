@@ -109,7 +109,7 @@ namespace RentApp.Migrations
             BranchOffice bo = new BranchOffice() { Address = "Adresa1", Latitude = 45.123123, Longitude = 19.123123, Logo = "logo.jpg", Name = "Office1" };
 
             Rent r1 = new Rent() { BranchOffice = bo, Start = DateTime.Now, End = DateTime.Now, Vehicle = v1 };
-
+                
             AppUser appuser = new AppUser() { Activated = false, Birthday = DateTime.Now, FullName = "User Userovic", Email = "user@userovic.com", Image = "slika.jpg", Rents = new List<Rent>() { r1 } };
 
             Service s1 = new Service() { BranchOffices = new List<BranchOffice>() { bo }, Description = "adasdasd", Email = "service1@service.com", Logo = "logo1.png", Name = "Service1", Vehicles = new List<Vehicle>() { v1 } };
