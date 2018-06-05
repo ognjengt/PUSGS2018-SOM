@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using System.Data.Entity.Validation;
 using System.Linq;
+using System.Text;
 
 namespace RentApp.Migrations
 {
@@ -75,10 +77,16 @@ namespace RentApp.Migrations
 
             );
 
-            AppUser appUser = new AppUser() {FullName = "Pera Petrovic", Email = "perapetrovic@gmail.com", Birthday = DateTime.Now, Image = "slika.jpg", Activated = true, Rents= new List<Rent>() };
+            BranchOffice bo = new BranchOffice() { Address = "Random adresa", Latitude = 19.0202, Longitude = 20.2112, Logo = "logo.png", Name = "Office1" };
 
+            Vehicle vozilo = new Vehicle() { Model = "Audi", Manufactor = "Proizvodjac1", Year = 2015, Description = "Dizel", Type = new VehicleType() {Name = "Limuzina", Vehicles = new List<Vehicle>() }, PricePerHour = 10, Unavailable = true, Images = new List<string>() };
 
-            Vehicle vozilo = new Vehicle() {Model="Audi", Manufactor="Proizvodjac1", Year=2015, Description="Dizel", Type=new VehicleType(), PricePerHour=10, Unavailable=true, Images=new List<string>() };
+            Service s1 = new Service() { BranchOffices = new List<BranchOffice>() { bo }, Email = "test@mail.com", Description = "asdasdasd", Name = "test name", Logo = "logo.png", Vehicles = new List<Vehicle>() { vozilo } };
+
+            Rent r = new Rent() { BranchOffice = bo, Start = DateTime.Now, End = DateTime.Now, Vehicle = vozilo };
+
+            AppUser appUser = new AppUser() {FullName = "Pera Petrovic", Email = "perapetrovic@gmail.com", Birthday = DateTime.Now, Image = "slika.jpg", Activated = false, Rents = new List<Rent>() { r } };
+            
             context.AppUsers.AddOrUpdate(
 
                  e => e.Email,
@@ -86,10 +94,8 @@ namespace RentApp.Migrations
                 new AppUser() { Email = "" }
 
             );
-
-
-
-            context.SaveChanges();
+            
+            SaveChanges(context);
 
             var userStore = new UserStore<RAIdentityUser>(context);
             var userManager = new UserManager<RAIdentityUser>(userStore);
@@ -112,6 +118,32 @@ namespace RentApp.Migrations
                 userManager.AddToRole(user.Id, "AppUser");
 
             }
+
+        }
+        private static void SaveChanges(DbContext context)
+        {
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var sb = new StringBuilder();
+                foreach (var failure in ex.EntityValidationErrors)
+                {
+                    sb.AppendFormat("{0} failed validation\n", failure.Entry.Entity.GetType());
+                    foreach (var error in failure.ValidationErrors)
+                    {
+                        sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
+                        sb.AppendLine();
+                    }
+                }
+                throw new DbEntityValidationException(
+                    "Entity Validation Failed - errors follow:\n" +
+                    sb.ToString(), ex
+                );
+            }
         }
     }
+
 }
