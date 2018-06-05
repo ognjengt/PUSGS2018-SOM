@@ -7,13 +7,13 @@ namespace RentApp.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Dodatinullabletipovi : IMigrationMetadata
+    public sealed partial class CompletedModel : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Dodatinullabletipovi));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CompletedModel));
         
         string IMigrationMetadata.Id
         {
-            get { return "201806041014494_Dodati nullable tipovi"; }
+            get { return "201806050911209_CompletedModel"; }
         }
         
         string IMigrationMetadata.Source

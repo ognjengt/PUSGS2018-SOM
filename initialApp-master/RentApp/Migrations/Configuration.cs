@@ -61,40 +61,109 @@ namespace RentApp.Migrations
                 manager.Create(role);
             }
 
-            context.AppUsers.AddOrUpdate(
+            //context.AppUsers.AddOrUpdate(
 
-                  u => u.FullName,
+            //      u => u.FullName,
 
-                  new AppUser() { FullName = "Admin Adminovic" }
+            //      new AppUser() { FullName = "Admin Adminovic" }
 
-            );
+            //);
 
-            context.AppUsers.AddOrUpdate(
+            //context.AppUsers.AddOrUpdate(
 
-                p => p.FullName,
+            //    p => p.FullName,
 
-                new AppUser() { FullName = "AppUser AppUserovic" }
+            //    new AppUser() { FullName = "AppUser AppUserovic" }
 
-            );
+            //);
 
-            BranchOffice bo = new BranchOffice() { Address = "Random adresa", Latitude = 19.0202, Longitude = 20.2112, Logo = "logo.png", Name = "Office1" };
 
-            Vehicle vozilo = new Vehicle() { Model = "Audi", Manufactor = "Proizvodjac1", Year = 2015, Description = "Dizel", Type = new VehicleType() {Name = "Limuzina", Vehicles = new List<Vehicle>() }, PricePerHour = 10, Unavailable = true, Images = new List<string>() };
 
-            Service s1 = new Service() { BranchOffices = new List<BranchOffice>() { bo }, Email = "test@mail.com", Description = "asdasdasd", Name = "test name", Logo = "logo.png", Vehicles = new List<Vehicle>() { vozilo } };
+            //BranchOffice bo = new BranchOffice() { Address = "Random adresa", Latitude = 45.267136, Longitude = 19.833549, Logo = "logo.png", Name = "Office1" };
 
-            Rent r = new Rent() { BranchOffice = bo, Start = DateTime.Now, End = DateTime.Now, Vehicle = vozilo };
+            //Vehicle vozilo = new Vehicle();
 
-            AppUser appUser = new AppUser() {FullName = "Pera Petrovic", Email = "perapetrovic@gmail.com", Birthday = DateTime.Now, Image = "slika.jpg", Activated = false, Rents = new List<Rent>() { r } };
-            
+            //VehicleType vt = new VehicleType() { Name = "Limuzina" };
+
+            //vozilo.Model = "Audi";
+            //vozilo.Manufactor = "Proizvodjac1";
+            //vozilo.Year = 2015;
+            //vozilo.Description = "asdasdas";
+            //vozilo.Type = vt;
+            //vozilo.PricePerHour = 10;
+            //vozilo.Unavailable = false;
+            //vozilo.Images = new List<string>() { "slika1.png" };
+
+            //vt.Vehicles = new List<Vehicle>() { vozilo };
+
+            //Service s1 = new Service() { BranchOffices = new List<BranchOffice>() { bo }, Email = "test@mail.com", Description = "asdasdasd", Name = "test name", Logo = "logo.png", Vehicles = new List<Vehicle>() { vozilo } };
+
+            //Rent r1 = new Rent() { BranchOffice = bo, Start = DateTime.Now, End = DateTime.Now, Vehicle = vozilo };
+
+            //AppUser appUser = new AppUser() { FullName = "Pera Petrovic", Email = "perapetrovic@gmail.com", Birthday = DateTime.Now, Image = "slika.jpg", Activated = false, Rents = new List<Rent>() { r1 } };
+
+            VehicleType vt = new VehicleType() { Name = "Limuzina" };
+            Vehicle v1 = new Vehicle() { Model = "Punto", Description = "asdasdasd", Images = new List<string>() { "slika.jpg" }, Manufactor = "Fiat", PricePerHour = 10, Type = vt, Unavailable = false, Year = 2015 };
+            vt.Vehicles = new List<Vehicle>() { v1 };
+
+            BranchOffice bo = new BranchOffice() { Address = "Adresa1", Latitude = 45.123123, Longitude = 19.123123, Logo = "logo.jpg", Name = "Office1" };
+
+            Rent r1 = new Rent() { BranchOffice = bo, Start = DateTime.Now, End = DateTime.Now, Vehicle = v1 };
+
+            AppUser appuser = new AppUser() { Activated = false, Birthday = DateTime.Now, FullName = "User Userovic", Email = "user@userovic.com", Image = "slika.jpg", Rents = new List<Rent>() { r1 } };
+
+            Service s1 = new Service() { BranchOffices = new List<BranchOffice>() { bo }, Description = "adasdasd", Email = "service1@service.com", Logo = "logo1.png", Name = "Service1", Vehicles = new List<Vehicle>() { v1 } };
+
+
             context.AppUsers.AddOrUpdate(
 
                  e => e.Email,
 
-                new AppUser() { Email = "" }
+                appuser
 
             );
-            
+
+            context.BranchOffices.AddOrUpdate(
+
+                 b => b.Name,
+
+                bo
+
+            );
+
+            context.VehicleTypes.AddOrUpdate(
+
+                 v => v.Name,
+
+                vt
+
+            );
+
+            context.Vehicles.AddOrUpdate(
+
+                 v => v.Model,
+
+                v1
+
+            );
+
+            context.Services.AddOrUpdate(
+
+                 s => s.Name,
+
+                s1
+
+            );
+
+            context.Rents.AddOrUpdate(
+
+                 r => r.Id,
+
+                r1
+
+            );
+
+
             SaveChanges(context);
 
             var userStore = new UserStore<RAIdentityUser>(context);

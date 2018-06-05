@@ -272,25 +272,9 @@
     <Compile Include="Migrations\201806031439020_Initial.Designer.cs">
       <DependentUpon>201806031439020_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201806041011532_Implementirani inicijalni modeli.cs" />
-    <Compile Include="Migrations\201806041011532_Implementirani inicijalni modeli.Designer.cs">
-      <DependentUpon>201806041011532_Implementirani inicijalni modeli.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806041014494_Dodati nullable tipovi.cs" />
-    <Compile Include="Migrations\201806041014494_Dodati nullable tipovi.Designer.cs">
-      <DependentUpon>201806041014494_Dodati nullable tipovi.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806041025321_Veza User Rent.cs" />
-    <Compile Include="Migrations\201806041025321_Veza User Rent.Designer.cs">
-      <DependentUpon>201806041025321_Veza User Rent.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806041043560_Izmenio Rent u Rents.cs" />
-    <Compile Include="Migrations\201806041043560_Izmenio Rent u Rents.Designer.cs">
-      <DependentUpon>201806041043560_Izmenio Rent u Rents.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806050619305_Promenio id na int.cs" />
-    <Compile Include="Migrations\201806050619305_Promenio id na int.Designer.cs">
-      <DependentUpon>201806050619305_Promenio id na int.cs</DependentUpon>
+    <Compile Include="Migrations\201806050911209_CompletedModel.cs" />
+    <Compile Include="Migrations\201806050911209_CompletedModel.Designer.cs">
+      <DependentUpon>201806050911209_CompletedModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -387,25 +371,33 @@
     <EmbeddedResource Include="Migrations\201806031439020_Initial.resx">
       <DependentUpon>201806031439020_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806041011532_Implementirani inicijalni modeli.resx">
-      <DependentUpon>201806041011532_Implementirani inicijalni modeli.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806041014494_Dodati nullable tipovi.resx">
-      <DependentUpon>201806041014494_Dodati nullable tipovi.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806041025321_Veza User Rent.resx">
-      <DependentUpon>201806041025321_Veza User Rent.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806041043560_Izmenio Rent u Rents.resx">
-      <DependentUpon>201806041043560_Izmenio Rent u Rents.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806050619305_Promenio id na int.resx">
-      <DependentUpon>201806050619305_Promenio id na int.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201806050911209_CompletedModel.resx">
+      <DependentUpon>201806050911209_CompletedModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
