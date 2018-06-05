@@ -10,7 +10,7 @@ namespace RentApp.Models.Entities
         public int Id { get; set; }
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
-        public BranchOffice BranchOffice { get; set; }
-        public Vehicle Vehicle { get; set; }
+        public virtual BranchOffice BranchOffice { get; set; }
+        public virtual Vehicle Vehicle { get; set; }
     }
 }

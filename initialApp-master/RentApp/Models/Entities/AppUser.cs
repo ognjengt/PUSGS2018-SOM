@@ -13,6 +13,6 @@ namespace RentApp.Models.Entities
         public DateTime? Birthday { get; set; }
         public string Image { get; set; }
         public bool Activated { get; set; }
-        public List<Rent> Rents { get; set; }
+        public virtual List<Rent> Rents { get; set; }
     }
 }
