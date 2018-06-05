@@ -7,7 +7,7 @@ namespace RentApp.Models.Entities
 {
     public class Rent
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
         public BranchOffice BranchOffice { get; set; }

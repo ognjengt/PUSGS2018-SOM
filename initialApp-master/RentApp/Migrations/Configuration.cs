@@ -75,10 +75,10 @@ namespace RentApp.Migrations
 
             );
 
-            AppUser appUser = new AppUser() { Id = 1, FullName = "Pera Petrovic", Email = "perapetrovic@gmail.com", Birthday = DateTime.Now, Image = "slika.jpg", Activated = true, Rents= new List<Rent>() };
+            AppUser appUser = new AppUser() {FullName = "Pera Petrovic", Email = "perapetrovic@gmail.com", Birthday = DateTime.Now, Image = "slika.jpg", Activated = true, Rents= new List<Rent>() };
 
 
-            Vehicle vozilo = new Vehicle() {Id="1", Model="Audi", Manufactor="Proizvodjac1", Year=2015, Description="Dizel", Type=new VehicleType(), PricePerHour=10, Unavailable=true, Images=new List<string>() };
+            Vehicle vozilo = new Vehicle() {Model="Audi", Manufactor="Proizvodjac1", Year=2015, Description="Dizel", Type=new VehicleType(), PricePerHour=10, Unavailable=true, Images=new List<string>() };
             context.AppUsers.AddOrUpdate(
 
                  e => e.Email,
