@@ -51,6 +51,13 @@ namespace RentApp
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
 
+            container.RegisterType<IAppUserRepository, AppUserRepository>();
+            container.RegisterType<IBranchOfficeRepository, BranchOfficeRepository>();
+            container.RegisterType<IVehicleRepository, VehicleRepository>();
+            container.RegisterType<IRentRepository, RentRepository>();
+            container.RegisterType<IVehicleTypeRepository, VehicleTypeRepository>();
+            container.RegisterType<IServiceRepository, ServiceRepository>();
+            container.RegisterType<IUnitOfWork, DemoUnitOfWork>();
 
             container.RegisterType<DbContext, RADBContext>(new PerRequestLifetimeManager());
             container.RegisterType<ApplicationUserManager>();
