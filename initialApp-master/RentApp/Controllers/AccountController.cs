@@ -20,7 +20,7 @@ using RentApp.Results;
 
 namespace RentApp.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {

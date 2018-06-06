@@ -61,21 +61,21 @@ namespace RentApp.Migrations
                 manager.Create(role);
             }
 
-            //context.AppUsers.AddOrUpdate(
+            context.AppUsers.AddOrUpdate(
 
-            //      u => u.FullName,
+                  u => u.FullName,
 
-            //      new AppUser() { FullName = "Admin Adminovic" }
+                  new AppUser() { FullName = "Admin Adminovic" }
 
-            //);
+            );
 
-            //context.AppUsers.AddOrUpdate(
+            context.AppUsers.AddOrUpdate(
 
-            //    p => p.FullName,
+                p => p.FullName,
 
-            //    new AppUser() { FullName = "AppUser AppUserovic" }
+                new AppUser() { FullName = "AppUser AppUserovic" }
 
-            //);
+            );
 
 
 
@@ -102,66 +102,66 @@ namespace RentApp.Migrations
 
             //AppUser appUser = new AppUser() { FullName = "Pera Petrovic", Email = "perapetrovic@gmail.com", Birthday = DateTime.Now, Image = "slika.jpg", Activated = false, Rents = new List<Rent>() { r1 } };
 
-            VehicleType vt = new VehicleType() { Name = "Limuzina" };
-            Vehicle v1 = new Vehicle() { Model = "Punto", Description = "asdasdasd", Images = new List<string>() { "slika.jpg" }, Manufactor = "Fiat", PricePerHour = 10, Type = vt, Unavailable = false, Year = 2015 };
-            vt.Vehicles = new List<Vehicle>() { v1 };
+            //VehicleType vt = new VehicleType() { Name = "Limuzina" };
+            //Vehicle v1 = new Vehicle() { Model = "Punto", Description = "asdasdasd", Images = new List<string>() { "slika.jpg" }, Manufactor = "Fiat", PricePerHour = 10, Type = vt, Unavailable = false, Year = 2015 };
+            //vt.Vehicles = new List<Vehicle>() { v1 };
 
-            BranchOffice bo = new BranchOffice() { Address = "Adresa1", Latitude = 45.123123, Longitude = 19.123123, Logo = "logo.jpg", Name = "Office1" };
+            //BranchOffice bo = new BranchOffice() { Address = "Adresa1", Latitude = 45.123123, Longitude = 19.123123, Logo = "logo.jpg", Name = "Office1" };
 
-            Rent r1 = new Rent() { BranchOffice = bo, Start = DateTime.Now, End = DateTime.Now, Vehicle = v1 };
-                
-            AppUser appuser = new AppUser() { Activated = false, Birthday = DateTime.Now, FullName = "User Userovic", Email = "user@userovic.com", Image = "slika.jpg", Rents = new List<Rent>() { r1 } };
+            //Rent r1 = new Rent() { BranchOffice = bo, Start = DateTime.Now, End = DateTime.Now, Vehicle = v1 };
 
-            Service s1 = new Service() { BranchOffices = new List<BranchOffice>() { bo }, Description = "adasdasd", Email = "service1@service.com", Logo = "logo1.png", Name = "Service1", Vehicles = new List<Vehicle>() { v1 } };
+            //AppUser appuser = new AppUser() { Activated = false, Birthday = DateTime.Now, FullName = "User Userovic", Email = "user@userovic.com", Image = "slika.jpg", Rents = new List<Rent>() { r1 } };
+
+            //Service s1 = new Service() { BranchOffices = new List<BranchOffice>() { bo }, Description = "adasdasd", Email = "service1@service.com", Logo = "logo1.png", Name = "Service1", Vehicles = new List<Vehicle>() { v1 } };
 
 
-            context.AppUsers.AddOrUpdate(
+            //context.AppUsers.AddOrUpdate(
 
-                 e => e.Email,
+            //     e => e.Email,
 
-                appuser
+            //    appuser
 
-            );
+            //);
 
-            context.BranchOffices.AddOrUpdate(
+            //context.BranchOffices.AddOrUpdate(
 
-                 b => b.Name,
+            //     b => b.Name,
 
-                bo
+            //    bo
 
-            );
+            //);
 
-            context.VehicleTypes.AddOrUpdate(
+            //context.VehicleTypes.AddOrUpdate(
 
-                 v => v.Name,
+            //     v => v.Name,
 
-                vt
+            //    vt
 
-            );
+            //);
 
-            context.Vehicles.AddOrUpdate(
+            //context.Vehicles.AddOrUpdate(
 
-                 v => v.Model,
+            //     v => v.Model,
 
-                v1
+            //    v1
 
-            );
+            //);
 
-            context.Services.AddOrUpdate(
+            //context.Services.AddOrUpdate(
 
-                 s => s.Name,
+            //     s => s.Name,
 
-                s1
+            //    s1
 
-            );
+            //);
 
-            context.Rents.AddOrUpdate(
+            //context.Rents.AddOrUpdate(
 
-                 r => r.Id,
+            //     r => r.Id,
 
-                r1
+            //    r1
 
-            );
+            //);
 
 
             SaveChanges(context);
@@ -187,7 +187,6 @@ namespace RentApp.Migrations
                 userManager.AddToRole(user.Id, "AppUser");
 
             }
-
         }
         private static void SaveChanges(DbContext context)
         {
