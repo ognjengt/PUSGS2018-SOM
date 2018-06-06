@@ -10,6 +10,10 @@ namespace RentApp.Persistance.UnitOfWork
     public interface IUnitOfWork : IDisposable
     {
         IServiceRepository Services { get; set; }
+        IBranchOfficeRepository BranchOffices { get; set; }
+        IRentRepository Rents { get; set; }
+        IVehicleRepository Vehicles { get; set; }
+        IVehicleTypeRepository VehicleTypes { get; set; }
         int Complete();
     }
 }

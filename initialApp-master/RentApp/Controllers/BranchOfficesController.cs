@@ -10,24 +10,28 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using RentApp.Models.Entities;
 using RentApp.Persistance;
+using RentApp.Persistance.UnitOfWork;
 
 namespace RentApp.Controllers
 {
     public class BranchOfficesController : ApiController
     {
-        private RADBContext db = new RADBContext();
+        private readonly IUnitOfWork unitOfWork;
 
-        // GET: api/BranchOffices
-        public IQueryable<BranchOffice> GetBranchOffices()
+        public BranchOfficesController(IUnitOfWork unitOfWork)
         {
-            return db.BranchOffices;
+            this.unitOfWork = unitOfWork;
         }
 
-        // GET: api/BranchOffices/5
+        public IEnumerable<BranchOffice> GetBranchOffices()
+        {
+            return unitOfWork.BranchOffices.GetAll();
+        }
+
         [ResponseType(typeof(BranchOffice))]
         public IHttpActionResult GetBranchOffice(int id)
         {
-            BranchOffice branchOffice = db.BranchOffices.Find(id);
+            BranchOffice branchOffice = unitOfWork.BranchOffices.Get(id);
             if (branchOffice == null)
             {
                 return NotFound();
@@ -36,7 +40,6 @@ namespace RentApp.Controllers
             return Ok(branchOffice);
         }
 
-        // PUT: api/BranchOffices/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutBranchOffice(int id, BranchOffice branchOffice)
         {
@@ -50,11 +53,10 @@ namespace RentApp.Controllers
                 return BadRequest();
             }
 
-            db.Entry(branchOffice).State = EntityState.Modified;
-
             try
             {
-                db.SaveChanges();
+                unitOfWork.BranchOffices.Update(branchOffice);
+                unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -71,7 +73,6 @@ namespace RentApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/BranchOffices
         [ResponseType(typeof(BranchOffice))]
         public IHttpActionResult PostBranchOffice(BranchOffice branchOffice)
         {
@@ -80,40 +81,30 @@ namespace RentApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.BranchOffices.Add(branchOffice);
-            db.SaveChanges();
+            unitOfWork.BranchOffices.Add(branchOffice);
+            unitOfWork.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = branchOffice.Id }, branchOffice);
         }
 
-        // DELETE: api/BranchOffices/5
         [ResponseType(typeof(BranchOffice))]
         public IHttpActionResult DeleteBranchOffice(int id)
         {
-            BranchOffice branchOffice = db.BranchOffices.Find(id);
+            BranchOffice branchOffice = unitOfWork.BranchOffices.Get(id);
             if (branchOffice == null)
             {
                 return NotFound();
             }
 
-            db.BranchOffices.Remove(branchOffice);
-            db.SaveChanges();
+            unitOfWork.BranchOffices.Remove(branchOffice);
+            unitOfWork.Complete();
 
             return Ok(branchOffice);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         private bool BranchOfficeExists(int id)
         {
-            return db.BranchOffices.Count(e => e.Id == id) > 0;
+            return unitOfWork.BranchOffices.Get(id) != null;
         }
     }
 }

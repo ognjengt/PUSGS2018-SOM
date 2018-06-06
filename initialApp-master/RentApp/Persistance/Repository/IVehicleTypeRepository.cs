@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RentApp.Persistance.Repository
 {
-    interface IVehicleTypeRepository : IRepository<VehicleType, int>
+    public interface IVehicleTypeRepository : IRepository<VehicleType, int>
     {
         IEnumerable<VehicleType> GetAll(int pageIndex, int pageSize);
     }
