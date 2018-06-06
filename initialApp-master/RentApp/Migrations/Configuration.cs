@@ -8,7 +8,7 @@ using System.Data.Entity.Migrations;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
-
+ 
 namespace RentApp.Migrations
 {
 
@@ -73,10 +73,17 @@ namespace RentApp.Migrations
 
                 p => p.FullName,
 
-                new AppUser() { FullName = "AppUser AppUserovic" }
+                new AppUser() { FullName = "AppUser AppUserovic" , Email= "sofija@gmail.com", Id=12345 }
 
             );
 
+            context.AppUsers.AddOrUpdate(
+
+                s => s.FullName,
+
+                new AppUser() { FullName = "Sofija Ilic", Email = "sofija4@gmail.com", Id = 1234567890 }
+
+            );
 
 
             //BranchOffice bo = new BranchOffice() { Address = "Random adresa", Latitude = 45.267136, Longitude = 19.833549, Logo = "logo.png", Name = "Office1" };
