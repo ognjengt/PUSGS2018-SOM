@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 // Bootstrap Modules
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -46,6 +47,7 @@ const Routes = [
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),

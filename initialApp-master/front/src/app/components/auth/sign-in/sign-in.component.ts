@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../../services/auth/authentication-service.service';
+import { AuthenticationModule } from '../../../models/registration.model';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-sign-in',
@@ -14,6 +16,9 @@ export class SignInComponent implements OnInit {
   ngOnInit() {
   }
 
+  onSubmit(loginData: AuthenticationModule, form: NgForm) {
+    console.log(loginData);
 
-  // Todo implement
+    // Todo call Service and send post request to /oauth/token to get the token, and save it to localStorage
+  }
 }

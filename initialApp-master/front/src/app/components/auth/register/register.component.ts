@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../../services/auth/authentication-service.service';
+import { AuthenticationModule } from '../../../models/registration.model';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -9,11 +11,17 @@ import { AuthenticationService } from '../../../services/auth/authentication-ser
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private authService: AuthenticationService) { }
+  constructor(private authService: AuthenticationService) { 
+  }
 
   ngOnInit() {
   }
 
 
-  // Todo implement
+  onSubmit(registrationData: AuthenticationModule, form: NgForm) {
+    console.log(registrationData);
+
+    // Todo call Service and send register request
+  }
+  
 }

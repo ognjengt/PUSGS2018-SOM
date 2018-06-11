@@ -7,9 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuBarComponent implements OnInit {
   appName: string;
+  signedIn: boolean;
 
   constructor() {
     this.appName = "Rent a Vehicle";
+    this.signedIn = true; // dobaviti od parent komponente (app.component.ts)
    }
 
   ngOnInit() {
