@@ -18,7 +18,11 @@ export class SignInComponent implements OnInit {
 
   onSubmit(loginData: AuthenticationModule, form: NgForm) {
     console.log(loginData);
-
+    var modified = {
+      Username: loginData.Email,
+      Password: loginData.Password
+    }
     // Todo call Service and send post request to /oauth/token to get the token, and save it to localStorage
+    this.authService.login(modified);
   }
 }
