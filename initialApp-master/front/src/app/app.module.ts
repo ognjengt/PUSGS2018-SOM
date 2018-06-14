@@ -14,6 +14,13 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientXsrfModule } from '@angular/common/http';
 
+// Interceptors
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './interceptors/interceptor';
+
+// Guard
+import {CanActivateViaAuthGuard} from './guard/auth.guard';
+
 // Our Components
 import { AppComponent } from './app.component';
 import { MenuBarComponent } from './components/menu-bar/menu-bar.component';
@@ -86,7 +93,20 @@ const Routes = [
     HttpClientModule,
     HttpClientXsrfModule
   ],
-  providers: [],
+  providers: [
+    CanActivateViaAuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
+    {
+      provide: 'CanAlwaysActivateGuard',
+      useValue: () => {
+        return true;
+      } 
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
