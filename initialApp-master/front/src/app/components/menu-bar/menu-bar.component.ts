@@ -11,10 +11,16 @@ export class MenuBarComponent implements OnInit {
 
   constructor() {
     this.appName = "Rent a Vehicle";
-    this.signedIn = true; // dobaviti od parent komponente (app.component.ts)
    }
 
   ngOnInit() {
   }
 
+  loggedIn(): string {
+    return localStorage.jwt;
+  }
+
+  logout() {
+    localStorage.clear();
+  }
 }

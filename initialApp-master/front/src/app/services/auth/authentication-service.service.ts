@@ -33,15 +33,15 @@ export class AuthenticationService {
 
   login(loginData: any) {
 
-    let headers = new HttpHeaders();
+      let headers = new HttpHeaders();
       headers = headers.append('Content-type', 'application/x-www-form-urlencoded');
 
-      console.log(loginData.Username);
+      console.log(loginData.Email);
       console.log(loginData.Password);
 
       if(!localStorage.jwt)
       {
-         let x = this.httpClient.post('http://localhost:51680/oauth/token',`username=${loginData.Username}&password=${loginData.Password}&grant_type=password`, {"headers": headers}) as Observable<any>
+         let x = this.httpClient.post('http://localhost:51680/oauth/token',`username=${loginData.Email}&password=${loginData.Password}&grant_type=password`, {"headers": headers}) as Observable<any>
   
         x.subscribe(
           res => {
@@ -62,6 +62,7 @@ export class AuthenticationService {
   
             localStorage.setItem('jwt', jwt)
             localStorage.setItem('role', role);
+            window.location.href = "/home"; // ovo verovatno ce morati da se radi kroz komponentu, sto znaci da ova funkcija mora da vrati neku vrednost, tipa da vrati uspesno ulogovan ili neuspesno
           },
           err => {
             console.log("Error occured");

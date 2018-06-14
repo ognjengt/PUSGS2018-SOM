@@ -321,6 +321,7 @@ namespace RentApp.Controllers
             appUser.Email = model.Email;
             appUser.Activated = false;
             appUser.FullName = model.FullName;
+            appUser.Birthday = DateTime.Parse(model.Date);
             appUser.Rents = new List<Rent>();
             
             var user = new RAIdentityUser() { UserName = model.Email, Email = model.Email, AppUser = appUser, PasswordHash = RAIdentityUser.HashPassword(model.Password) };

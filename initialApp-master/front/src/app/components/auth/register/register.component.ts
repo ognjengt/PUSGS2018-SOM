@@ -18,10 +18,14 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
 
-
+  
   onSubmit(registrationData: AuthenticationModule, form: NgForm) {
     console.log(registrationData);
-
+    
+    if(this.confirmPassword(registrationData.Password, registrationData.ConfirmPassword) === false) {
+      alert("Passwords do not match!");
+      return;
+    }
     // Todo call Service and send register request
     this.authService.register(registrationData)
     .subscribe( data => {
@@ -30,6 +34,11 @@ export class RegisterComponent implements OnInit {
     error => {
       alert("Error!");
     })
+  }
+
+  confirmPassword(password1: string, password2: string) {
+    if(password1 !== password2) return false;
+    else return true;
   }
   
 }

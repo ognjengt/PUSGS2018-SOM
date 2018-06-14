@@ -12,9 +12,12 @@
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form> -->
-    <ul class="navbar-nav" [hidden]="!signedIn">
+    <ul class="navbar-nav" *ngIf="!loggedIn()">
         <li><a class="nav-link" [routerLink]="['/signin']">Sign In</a></li>
         <li><a class="nav-link" [routerLink]="['/register']">Register</a></li>
     </ul>
+    <ul class="navbar-nav" *ngIf="loggedIn()">
+      <li><a class="nav-link" [routerLink]="['/logout']" (click)="logout()">Logout</a></li>
+  </ul>
   </div>
 </nav>
