@@ -333,6 +333,8 @@ namespace RentApp.Controllers
                 return GetErrorResult(result);
             }
 
+            UserManager.AddToRole(user.Id, "AppUser"); // Dajemo rolu
+
             return Ok();
         }
 
