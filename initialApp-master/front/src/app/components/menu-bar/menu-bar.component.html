@@ -7,6 +7,9 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li><a class="nav-link" [routerLink]="['/home']">Home</a></li>
+      <li><a class="nav-link" [routerLink]="['/services']">Services</a></li>
+      <li><a class="nav-link" [routerLink]="['/branchoffices']">Branch offices</a></li>
+      <li><a class="nav-link" [routerLink]="['/rents']">Rents</a></li>
      </ul>
     <!-- <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -17,7 +20,7 @@
         <li><a class="nav-link" [routerLink]="['/register']">Register</a></li>
     </ul>
     <ul class="navbar-nav" *ngIf="loggedIn()">
-      <li><a class="nav-link" [routerLink]="['/profile']">{{getEmail()}}</a></li>
+      <li><a class="nav-link" [routerLink]="['/profile']">Profile</a></li>
       <li><a class="nav-link" [routerLink]="['/logout']" (click)="logout()">Logout</a></li>
   </ul>
   </div>

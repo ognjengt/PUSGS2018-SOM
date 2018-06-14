@@ -23,8 +23,4 @@ export class MenuBarComponent implements OnInit {
   logout() {
     localStorage.clear();
   }
-
-  getEmail() {
-    return "ovde uzeti email iz localstoragea";
-  }
 }

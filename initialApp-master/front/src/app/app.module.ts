@@ -20,8 +20,17 @@ import { MenuBarComponent } from './components/menu-bar/menu-bar.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { SignInComponent } from './components/auth/sign-in/sign-in.component';
 import { HomeComponent } from './components/home/home.component';
+import { ServicesComponent } from './components/services/services.component';
+import { BranchOfficesComponent } from './components/branch-offices/branch-offices.component';
+import { RentsComponent } from './components/rents/rents.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { Profile } from 'selenium-webdriver/firefox';
 
 const Routes = [
+  {
+    path: "",
+    component: HomeComponent
+  },
   {
     path: "register",
     component: RegisterComponent
@@ -33,6 +42,22 @@ const Routes = [
   {
     path: "home",
     component: HomeComponent
+  },
+  {
+    path: "services",
+    component: ServicesComponent
+  },
+  {
+    path: "branchoffices",
+    component: BranchOfficesComponent
+  },
+  {
+    path: "rents",
+    component: RentsComponent
+  },
+  {
+    path: "profile",
+    component: ProfileComponent
   }
 ]
 
@@ -43,7 +68,11 @@ const Routes = [
     MenuBarComponent,
     RegisterComponent,
     SignInComponent,
-    HomeComponent
+    HomeComponent,
+    ServicesComponent,
+    BranchOfficesComponent,
+    RentsComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
