@@ -17,6 +17,7 @@
         <li><a class="nav-link" [routerLink]="['/register']">Register</a></li>
     </ul>
     <ul class="navbar-nav" *ngIf="loggedIn()">
+      <li><a class="nav-link" [routerLink]="['/profile']">{{getEmail()}}</a></li>
       <li><a class="nav-link" [routerLink]="['/logout']" (click)="logout()">Logout</a></li>
   </ul>
   </div>
