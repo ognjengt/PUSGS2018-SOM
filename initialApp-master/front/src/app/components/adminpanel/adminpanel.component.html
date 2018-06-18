@@ -14,11 +14,15 @@
 
     <div class="col-md-12">
         <h3>Remove ban from managers</h3> 
-        renderuj sve managere koji su banovani
+        <ul class="list-group" *ngFor="let bannedManager of bannedManagers">
+          <li class="list-group-item">{{bannedManager.FullName}}</li>
+        </ul>
   
       </div>
     <div class="col-md-12">
       <h3>Authorize awaiting clients</h3> 
-      renderuj sve klijente koji cekaju
+      <ul class="list-group" *ngFor="let awaitingClient of awaitingClients">
+        <li class="list-group-item">{{awaitingClient.FullName}}</li>
+      </ul>
     </div>
 </div>

@@ -9,11 +9,20 @@ import { AdminServiceService } from '../../services/adminServices/admin-service.
 export class AdminpanelComponent implements OnInit {
 
   unbannedManagers:any = [];
+  bannedManagers:any = [];
+  awaitingClients:any = [];
 
   constructor(adminService: AdminServiceService) { 
     adminService.getUnbannedManagers().subscribe(data => {
       this.unbannedManagers = data;
-      console.log(data)
+    })
+
+    adminService.getBannedManagers().subscribe(data => {
+      this.bannedManagers = data;
+    })
+
+    adminService.getAwaitingClients().subscribe(data => {
+      this.awaitingClients = data;
     })
   }
 

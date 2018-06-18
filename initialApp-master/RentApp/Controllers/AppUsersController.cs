@@ -29,5 +29,17 @@ namespace RentApp.Controllers
         {
             return unitOfWork.AppUserRepository.GetUnbannedManagers();
         }
+
+        [Route("GetBannedManagers")]
+        public IEnumerable<AppUser> GetBannedManagers()
+        {
+            return unitOfWork.AppUserRepository.GetBannedManagers();
+        }
+
+        [Route("GetAwaitingClients")]
+        public IEnumerable<AppUser> GetAwaitingClients()
+        {
+            return unitOfWork.AppUserRepository.GetAwaitingClients();
+        }
     }
 }
