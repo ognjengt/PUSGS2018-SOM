@@ -97,10 +97,10 @@ namespace RentApp.Controllers
             return CreatedAtRoute("DefaultApi", new { id = service.Id }, service);
         }
 
-        [ResponseType(typeof(Service))]
-        public IHttpActionResult DeleteService(int id)
+        [Route("DeleteService")]
+        public IHttpActionResult DeleteService(string id)
         {
-            Service service = unitOfWork.Services.Get(id);
+            Service service = unitOfWork.Services.Get(Int32.Parse(id));
             if (service == null)
             {
                 return NotFound();

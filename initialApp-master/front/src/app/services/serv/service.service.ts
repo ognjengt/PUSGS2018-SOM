@@ -20,6 +20,10 @@ export class ServiceService {
   }
 
   addService(addServiceData: ServiceModule){
-    return this.httpClient.post("http://localhost:51680/api/Services/AddService", addServiceData);
+    return this.httpClient.post("http://localhost:51680/api/Services/AddService", addServiceData)
+  }
+
+  deleteService(id){
+    return this.httpClient.delete("http://localhost:51680/api/Services/DeleteService?id=" + id)
   }
 }

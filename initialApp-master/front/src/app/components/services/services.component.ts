@@ -11,7 +11,7 @@ import { ServiceService } from '../../services/serv/service.service';
 export class ServicesComponent implements OnInit {
 
   services : any = []
-  
+
   constructor(private servService: ServiceService) {
     this.servService.getServices().
     subscribe(data => {
@@ -19,9 +19,17 @@ export class ServicesComponent implements OnInit {
     })
   }
 
-  ngOnInit() {
+  deleteService(id, i){
+    console.log(i)
+    this.servService.deleteService(id).
+    subscribe(data => {      
+      alert("Delete successful!")
+      this.services.splice(i, 1)
+    })
   }
 
+  ngOnInit() {
+  }
 
   // Todo pogledati ko moze da dodaje servise
 }
