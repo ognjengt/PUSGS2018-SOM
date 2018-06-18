@@ -340,16 +340,6 @@ namespace RentApp.Controllers
             return Ok();
         }
 
-
-        // Vraca sve unbannovane managere
-        // GET api/Account/GetRegularManagers
-        [AllowAnonymous]
-        [Route("GetUnbannedManagers")]
-        public async Task<IEnumerable<AppUser>> GetUnbannedManagers()
-        {
-            return unitOfWork.AppUserRepository.GetUnbannedManagers();
-        }
-
         // POST api/Account/RegisterExternal
         [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]

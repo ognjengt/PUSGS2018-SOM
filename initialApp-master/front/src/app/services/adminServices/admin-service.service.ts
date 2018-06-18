@@ -33,4 +33,12 @@ export class AdminServiceService {
     return this.httpClient.get("http://localhost:51680/api/AdditionalUserOps/GetUnbannedManagers");
   }
 
+  getBannedManagers(): Observable<any> {
+    return this.httpClient.get("http://localhost:51680/api/AdditionalUserOps/GetBannedManagers");
+  }
+
+  getAwaitingClients(): Observable<any> {
+    return this.httpClient.get("http://localhost:51680/api/AdditionalUserOps/GetAwaitingClients");
+  }
+
 }
