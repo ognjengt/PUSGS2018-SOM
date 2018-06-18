@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="col-md-12">
+      <h3>Authorize awaiting services </h3>
+      renderuj sve servise koji nisu odobreni
+
+    </div>
+    <div class="col-md-12">
+      <h3>Ban managers</h3> 
+      <ul class="list-group" *ngFor="let unbannedManager of unbannedManagers">
+        <li class="list-group-item">{{unbannedManager.FullName}}</li>
+      </ul>
+
+    </div>
+
+    <div class="col-md-12">
+        <h3>Remove ban from managers</h3> 
+        renderuj sve managere koji su banovani
+  
+      </div>
+    <div class="col-md-12">
+      <h3>Authorize awaiting clients</h3> 
+      renderuj sve klijente koji cekaju
+    </div>
+</div>

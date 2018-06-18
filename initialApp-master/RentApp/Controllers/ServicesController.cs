@@ -73,6 +73,7 @@ namespace RentApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+
         [ResponseType(typeof(Service))]
         public IHttpActionResult PostService(Service service)
         {

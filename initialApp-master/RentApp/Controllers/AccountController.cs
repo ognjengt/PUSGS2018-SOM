@@ -17,6 +17,7 @@ using RentApp.Models;
 using RentApp.Models.Entities;
 using RentApp.Providers;
 using RentApp.Results;
+using RentApp.Persistance.UnitOfWork;
 
 namespace RentApp.Controllers
 {
@@ -25,6 +26,7 @@ namespace RentApp.Controllers
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
+        private readonly IUnitOfWork unitOfWork;
 
         public AccountController()
         {
@@ -333,9 +335,19 @@ namespace RentApp.Controllers
                 return GetErrorResult(result);
             }
 
-            UserManager.AddToRole(user.Id, "AppUser"); // Dajemo rolu
+            UserManager.AddToRole(user.Id, "Admin"); // Dajemo rolu
 
             return Ok();
+        }
+
+
+        // Vraca sve unbannovane managere
+        // GET api/Account/GetRegularManagers
+        [AllowAnonymous]
+        [Route("GetUnbannedManagers")]
+        public async Task<IEnumerable<AppUser>> GetUnbannedManagers()
+        {
+            return unitOfWork.AppUserRepository.GetUnbannedManagers();
         }
 
         // POST api/Account/RegisterExternal

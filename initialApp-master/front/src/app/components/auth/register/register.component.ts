@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
       alert("Passwords do not match!");
       return;
     }
-    // Todo call Service and send register request
+
     this.authService.register(registrationData)
     .subscribe( data => {
       alert("Register successful!");
