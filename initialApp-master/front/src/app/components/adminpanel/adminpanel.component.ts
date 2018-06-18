@@ -4,7 +4,8 @@ import { AdminServiceService } from '../../services/adminServices/admin-service.
 @Component({
   selector: 'app-adminpanel',
   templateUrl: './adminpanel.component.html',
-  styleUrls: ['./adminpanel.component.css']
+  styleUrls: ['./adminpanel.component.css'],
+  providers: [AdminServiceService]
 })
 export class AdminpanelComponent implements OnInit {
 

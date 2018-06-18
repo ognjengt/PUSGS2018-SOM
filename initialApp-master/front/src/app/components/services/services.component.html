@@ -2,11 +2,11 @@
     <div class="row card-group">
         <div class="col-4"  *ngFor="let service of services; let i = index">
             <div class="card">
-                <img class="card-img-top" src=service.Logo alt="Card image cap">
+                <img class="card-img-top" src="service.Logo" alt="Card image cap">
                 <div class="card-body">
                   <h5 class="card-title">{{service.Name}}</h5>
                   <p class="card-text">{{service.Description}}</p>
-                  <button type="button" href="#" class="btn btn-primary">View Service</button>
+                  <button type="button" [routerLink]="['/services', service.Id]" class="btn btn-primary">View Service</button>
                   <button type="button" class="btn btn-danger" (click)="deleteService(service.Id, i)">Delete Service</button>
                   <button type="button" class="btn btn-warning" [routerLink]="['/editService', service.Id]">Edit Service</button>
                 </div>

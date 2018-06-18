@@ -34,6 +34,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { AddServiceComponent } from './components/services/add-service/add-service.component';
 import { AdminpanelComponent } from './components/adminpanel/adminpanel.component';
 import { EditServiceComponent } from './components/services/edit-service/edit-service.component';
+import { ServiceDetailComponent } from './components/services/service-detail/service-detail.component';
 
 const Routes = [
   {
@@ -55,6 +56,10 @@ const Routes = [
   {
     path: "services",
     component: ServicesComponent
+  },
+  {
+    path: "services/:Id",
+    component: ServiceDetailComponent
   },
   {
     path: "branchoffices",
@@ -96,7 +101,8 @@ const Routes = [
     ProfileComponent,
     AddServiceComponent,
     AdminpanelComponent,
-    EditServiceComponent
+    EditServiceComponent,
+    ServiceDetailComponent
   ],
   imports: [
     BrowserModule,
