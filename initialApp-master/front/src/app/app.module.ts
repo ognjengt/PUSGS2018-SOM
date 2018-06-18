@@ -69,6 +69,10 @@ const Routes = [
   {
     path: "adminpanel",
     component: AdminpanelComponent
+  },
+  {
+    path: "addService",
+    component: ServicesComponent
   }
 ]
 

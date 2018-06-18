@@ -16,6 +16,7 @@ namespace RentApp.Persistance.Repository
         public IEnumerable<Service> GetAll(int pageIndex, int pageSize)
         {
             return Context.Services.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+            //return new List<Service>() { new Service() { Authorized = true, Name = "Audi", Email = "Audi@gmail.com", Id = 1, BranchOffices = new List<BranchOffice>(), Description = "We are Audi, buy our cars" } };
         }
 
         protected RADBContext Context { get { return RADBContext.Create(); } }
