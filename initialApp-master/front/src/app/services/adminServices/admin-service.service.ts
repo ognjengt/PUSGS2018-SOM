@@ -26,7 +26,11 @@ export class AdminServiceService {
 
 
   getAwaitingServices(): Observable<any> {
-    return this.httpClient.get("http://localhost:51680/api/Services/ENDPOINT");
+    return this.httpClient.get("http://localhost:51680/api/Services/GetAwaitingServices");
+  }
+
+  authorizeService(serviceId): Observable<any> {
+    return this.httpClient.post("http://localhost:51680/api/Services/AuthorizeService", serviceId);
   }
 
   getUnbannedManagers(): Observable<any> {
@@ -41,8 +45,8 @@ export class AdminServiceService {
     return this.httpClient.get("http://localhost:51680/api/AdditionalUserOps/GetAwaitingClients");
   }
 
-  authorizeUser(id): Observable<any> {
-    return this.httpClient.post("http://localhost:51680/api/AdditionalUserOps/AuthorizeUser",id);
+  authorizeUser(userId): Observable<any> {
+    return this.httpClient.post("http://localhost:51680/api/AdditionalUserOps/AuthorizeUser",userId);
   }
 
 }

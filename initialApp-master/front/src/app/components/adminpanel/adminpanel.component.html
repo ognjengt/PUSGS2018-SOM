@@ -1,7 +1,9 @@
 <div class="container">
     <div class="col-md-12">
       <h3>Authorize awaiting services </h3>
-      renderuj sve servise koji nisu odobreni
+      <ul class="list-group" *ngFor="let awaitingService of awaitingServices; let i = index">
+        <li class="list-group-item">{{awaitingService.Name}} <span class="pull-right" style="float:right"><button class="btn btn-success btn-small" (click)="AuthorizeService(awaitingService.Id,i)">Authorize Service</button></span></li>
+      </ul>
 
     </div>
     <div class="col-md-12">
@@ -22,7 +24,7 @@
     <div class="col-md-12">
       <h3>Authorize awaiting clients</h3> 
       <ul class="list-group" *ngFor="let awaitingClient of awaitingClients; let i = index">
-        <li class="list-group-item">{{awaitingClient.FullName}} <span class="pull-right" style="float:right"><button class="btn btn-success btn-small" (click)="AuthorizeUser(awaitingClient.Id,i)">Authorize</button></span></li>
+        <li class="list-group-item">{{awaitingClient.FullName}} <span class="pull-right" style="float:right"><button class="btn btn-success btn-small" (click)="AuthorizeUser(awaitingClient.Id,i)">Authorize Client</button></span></li>
       </ul>
     </div>
 </div>

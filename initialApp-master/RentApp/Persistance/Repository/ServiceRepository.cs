@@ -19,6 +19,12 @@ namespace RentApp.Persistance.Repository
             //return new List<Service>() { new Service() { Authorized = true, Name = "Audi", Email = "Audi@gmail.com", Id = 1, BranchOffices = new List<BranchOffice>(), Description = "We are Audi, buy our cars" } };
         }
 
+        // Vraca sve servise koji cekaju odobrenje
+        public IEnumerable<Service> GetAwaitingServices()
+        {
+            return Context.Services.Where(s => s.Authorized == false).ToList();
+        }
+
         protected RADBContext Context { get { return RADBContext.Create(); } }
     }
 }

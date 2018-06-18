@@ -114,6 +114,38 @@ namespace RentApp.Controllers
             return Ok(service);
         }
 
+        // Autorizuje servis da postane vidljiv
+        [Route("GetAwaitingServices")]
+        public IEnumerable<Service> GetAwaitingServices()
+        {
+            return unitOfWork.Services.GetAwaitingServices();
+        }
+
+        // Autorizuje servis da postane vidljiv
+        [Route("AuthorizeService")]
+        public string AuthorizeService([FromBody]string Id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState).ToString();
+            }
+            //Get user data, and update activated to true
+            Service current = unitOfWork.Services.Get(Int32.Parse(Id));
+            current.Authorized = true;
+
+            try
+            {
+                unitOfWork.Services.Update(current);
+                unitOfWork.Complete();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return BadRequest().ToString();
+            }
+
+            return "Ok";
+        }
+
         private bool ServiceExists(int id)
         {
             return unitOfWork.Services.Get(id) != null;

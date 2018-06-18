@@ -23,30 +23,21 @@ namespace RentApp.Persistance.Repository
         }
 
         // Vraca sve menadzere koji nisu banovani
-        [Route("GetUnbannedManagers")]
         public IEnumerable<AppUser> GetUnbannedManagers()
         {
             return new List<AppUser>() { new AppUser() { FullName = "Onaj koji nije banovan" }, new AppUser() { FullName = "Onaj koji nije banovan 2" } };
         }
 
         // Vraca sve menadzere koji su banovani
-        [Route("GetBannedManagers")]
         public IEnumerable<AppUser> GetBannedManagers()
         {
             return new List<AppUser>() { new AppUser() { FullName = "Banovan menadzer 1" } };
         }
 
         // Vraca sve usere koji cekaju odobrenje naloga
-        [Route("GetAwaitingClients")]
         public IEnumerable<AppUser> GetAwaitingClients()
         {
             return Context.AppUsers.Where(a => a.Activated == false).ToList();
-        }
-
-        [Route("GetUser")]
-        public AppUser GetUser(int Id)
-        {
-            return Context.AppUsers.SingleOrDefault(u => u.Id == Id);
         }
 
         protected RADBContext Context { get { return RADBContext.Create(); } }
