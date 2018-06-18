@@ -8,11 +8,13 @@ import { AdminServiceService } from '../../services/adminServices/admin-service.
 })
 export class AdminpanelComponent implements OnInit {
 
+  adminService: AdminServiceService;
   unbannedManagers:any = [];
   bannedManagers:any = [];
   awaitingClients:any = [];
 
   constructor(adminService: AdminServiceService) { 
+    this.adminService = adminService;
     adminService.getUnbannedManagers().subscribe(data => {
       this.unbannedManagers = data;
     })
@@ -27,6 +29,17 @@ export class AdminpanelComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  AuthorizeUser(id, i) {
+    this.adminService.authorizeUser(id).subscribe(resp => {
+      if(resp == "Ok")  {
+        alert("Authorized!"); 
+        this.awaitingClients.splice(i,1);
+      }
+
+      else alert("Something went wrong");
+    })
   }
 
 }

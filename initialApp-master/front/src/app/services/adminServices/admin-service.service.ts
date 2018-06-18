@@ -41,4 +41,8 @@ export class AdminServiceService {
     return this.httpClient.get("http://localhost:51680/api/AdditionalUserOps/GetAwaitingClients");
   }
 
+  authorizeUser(id): Observable<any> {
+    return this.httpClient.post("http://localhost:51680/api/AdditionalUserOps/AuthorizeUser",id);
+  }
+
 }

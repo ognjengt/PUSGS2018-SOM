@@ -41,5 +41,29 @@ namespace RentApp.Controllers
         {
             return unitOfWork.AppUserRepository.GetAwaitingClients();
         }
+
+        [Route("AuthorizeUser")]
+        public string AuthorizeUser([FromBody]string Id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState).ToString();
+            }
+            //Get user data, and update activated to true
+            AppUser current = unitOfWork.AppUserRepository.Get(Int32.Parse(Id));
+            current.Activated = true;
+
+            try
+            {
+                unitOfWork.AppUserRepository.Update(current);
+                unitOfWork.Complete();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return BadRequest().ToString();
+            }
+
+            return "Ok";
+        }
     }
 }

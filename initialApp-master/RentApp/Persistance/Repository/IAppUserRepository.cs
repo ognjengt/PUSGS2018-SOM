@@ -13,5 +13,6 @@ namespace RentApp.Persistance.Repository
         IEnumerable<AppUser> GetUnbannedManagers();
         IEnumerable<AppUser> GetBannedManagers();
         IEnumerable<AppUser> GetAwaitingClients();
+        AppUser GetUser(int Id);
     }
 }
