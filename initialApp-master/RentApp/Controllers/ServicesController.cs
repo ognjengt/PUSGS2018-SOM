@@ -30,10 +30,11 @@ namespace RentApp.Controllers
             return unitOfWork.Services.GetAll();
         }
 
+        [Route("GetService")]
         [ResponseType(typeof(Service))]
-        public IHttpActionResult GetService(int id)
+        public IHttpActionResult GetService(string id)
         {
-            Service service = unitOfWork.Services.Get(id);
+            Service service = unitOfWork.Services.Get(Int32.Parse(id));
             if (service == null)
             {
                 return NotFound();
@@ -50,6 +51,7 @@ namespace RentApp.Controllers
         }
 
         [ResponseType(typeof(void))]
+        [Route("PutService")]        
         public IHttpActionResult PutService(int id, Service service)
         {
             if (!ModelState.IsValid)

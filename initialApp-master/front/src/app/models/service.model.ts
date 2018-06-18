@@ -1,4 +1,5 @@
 export class ServiceModule {
+    Id: string;
     Email: string;
     Name: string;
     //Logo: Image;

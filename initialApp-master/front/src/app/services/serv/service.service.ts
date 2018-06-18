@@ -19,11 +19,19 @@ export class ServiceService {
     return this.httpClient.get('http://localhost:51680/api/Services/GetServices')   
   }
 
+  getService(id){
+    return this.httpClient.get('http://localhost:51680/api/Services/GetService?id=' + id)
+  }
+
   addService(addServiceData: ServiceModule){
     return this.httpClient.post("http://localhost:51680/api/Services/AddService", addServiceData)
   }
 
   deleteService(id){
     return this.httpClient.delete("http://localhost:51680/api/Services/DeleteService?id=" + id)
+  }
+
+  editService(id, serviceModule: ServiceModule){
+    return this.httpClient.put("http://localhost:51680/api/Services/PutService?id=" + id, serviceModule)
   }
 }

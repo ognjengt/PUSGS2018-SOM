@@ -8,6 +8,7 @@
                   <p class="card-text">{{service.Description}}</p>
                   <button type="button" href="#" class="btn btn-primary">View Service</button>
                   <button type="button" class="btn btn-danger" (click)="deleteService(service.Id, i)">Delete Service</button>
+                  <button type="button" class="btn btn-warning" [routerLink]="['/editService', service.Id]">Edit Service</button>
                 </div>
             </div>
         </div>

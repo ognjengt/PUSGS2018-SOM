@@ -33,6 +33,7 @@ import { RentsComponent } from './components/rents/rents.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AddServiceComponent } from './components/services/add-service/add-service.component';
 import { AdminpanelComponent } from './components/adminpanel/adminpanel.component';
+import { EditServiceComponent } from './components/services/edit-service/edit-service.component';
 
 const Routes = [
   {
@@ -74,6 +75,10 @@ const Routes = [
   {
     path: "addService",
     component: AddServiceComponent
+  },
+  {
+    path: "editService/:Id",
+    component: EditServiceComponent
   }
 ]
 
@@ -90,7 +95,8 @@ const Routes = [
     RentsComponent,
     ProfileComponent,
     AddServiceComponent,
-    AdminpanelComponent
+    AdminpanelComponent,
+    EditServiceComponent
   ],
   imports: [
     BrowserModule,

@@ -20,7 +20,6 @@ export class ServicesComponent implements OnInit {
   }
 
   deleteService(id, i){
-    console.log(i)
     this.servService.deleteService(id).
     subscribe(data => {      
       alert("Delete successful!")
