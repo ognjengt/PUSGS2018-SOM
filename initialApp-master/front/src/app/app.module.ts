@@ -31,7 +31,6 @@ import { ServicesComponent } from './components/services/services.component';
 import { BranchOfficesComponent } from './components/branch-offices/branch-offices.component';
 import { RentsComponent } from './components/rents/rents.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { Profile } from 'selenium-webdriver/firefox';
 
 const Routes = [
   {
@@ -65,6 +64,10 @@ const Routes = [
   {
     path: "profile",
     component: ProfileComponent
+  },
+  {
+    path: "addService",
+    component: ServicesComponent
   }
 ]
 

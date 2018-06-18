@@ -280,6 +280,10 @@
     <Compile Include="Migrations\201806050911209_CompletedModel.Designer.cs">
       <DependentUpon>201806050911209_CompletedModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806181756539_AuthorizationAdded.cs" />
+    <Compile Include="Migrations\201806181756539_AuthorizationAdded.Designer.cs">
+      <DependentUpon>201806181756539_AuthorizationAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -394,6 +398,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806050911209_CompletedModel.resx">
       <DependentUpon>201806050911209_CompletedModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806181756539_AuthorizationAdded.resx">
+      <DependentUpon>201806181756539_AuthorizationAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
