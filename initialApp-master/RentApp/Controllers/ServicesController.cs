@@ -42,6 +42,13 @@ namespace RentApp.Controllers
             return Ok(service);
         }
 
+        [Route("AddServices")]
+        public IHttpActionResult AddService(Service service)
+        {
+            this.unitOfWork.Services.Add(service);
+            return Ok();
+        }
+
         [ResponseType(typeof(void))]
         public IHttpActionResult PutService(int id, Service service)
         {
