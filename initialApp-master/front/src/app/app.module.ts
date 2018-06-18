@@ -32,6 +32,7 @@ import { BranchOfficesComponent } from './components/branch-offices/branch-offic
 import { RentsComponent } from './components/rents/rents.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AddServiceComponent } from './components/services/add-service/add-service.component';
+import { AdminpanelComponent } from './components/adminpanel/adminpanel.component';
 
 const Routes = [
   {
@@ -67,6 +68,10 @@ const Routes = [
     component: ProfileComponent
   },
   {
+    path: "adminpanel",
+    component: AdminpanelComponent
+  },
+  {
     path: "addService",
     component: AddServiceComponent
   }
@@ -84,7 +89,8 @@ const Routes = [
     BranchOfficesComponent,
     RentsComponent,
     ProfileComponent,
-    AddServiceComponent
+    AddServiceComponent,
+    AdminpanelComponent
   ],
   imports: [
     BrowserModule,

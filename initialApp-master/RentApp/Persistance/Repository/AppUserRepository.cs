@@ -18,6 +18,12 @@ namespace RentApp.Persistance.Repository
             return Context.AppUsers.Skip((pageIndex - 1) * pageSize).Take(pageSize);
         }
 
+        // Vraca sve menadzere koji nisu banovani
+        public IEnumerable<AppUser> GetUnbannedManagers()
+        {
+            return new List<AppUser>() { new AppUser() { FullName = "Menadzer Menadzerovic" } };
+        }
+
         protected RADBContext Context { get { return RADBContext.Create(); } }
     }
 }

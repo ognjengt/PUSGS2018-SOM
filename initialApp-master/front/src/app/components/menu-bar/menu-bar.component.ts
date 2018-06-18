@@ -20,6 +20,10 @@ export class MenuBarComponent implements OnInit {
     return localStorage.jwt;
   }
 
+  getRole(): string {
+    return localStorage.role;
+  }
+
   logout() {
     localStorage.clear();
   }

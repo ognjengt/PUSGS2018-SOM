@@ -71,16 +71,7 @@ export class AuthenticationService {
       }
       else
       {
-        let x = this.httpClient.get('http://localhost:51680/api/Services') as Observable<any>
-  
-        x.subscribe(
-          res => {
-            console.log(res);
-          },
-          err => {
-            console.log("Error occured");
-          }
-        );
+         window.location.href = "/home";
       }
 }
 }
