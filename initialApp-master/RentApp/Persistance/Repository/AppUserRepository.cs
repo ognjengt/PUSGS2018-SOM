@@ -32,6 +32,8 @@ namespace RentApp.Persistance.Repository
             return new List<AppUser>() { new AppUser() { FullName = "Onaj koji nije banovan" }, new AppUser() { FullName = "Onaj koji nije banovan 2" } };
         }
 
+        
+
         // Vraca sve menadzere koji su banovani
         public IEnumerable<AppUser> GetBannedManagers()
         {

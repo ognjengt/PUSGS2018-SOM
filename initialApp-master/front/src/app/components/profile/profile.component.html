@@ -1,3 +1,16 @@
-<p>
-  profile works!
-</p>
+<div class="container">
+  // Ovde slika
+  <h3>Full Name: {{user.FullName}}</h3>
+  <h4>Email: {{user.Email}}</h4>
+  <h4>Birthday: {{user.Birthday}}</h4>
+
+
+  <div *ngFor="let rent of user.Rents">
+      <div class="card">
+          <!-- <img class="card-img-top" src="vehicles.Logo" alt="Card image cap"> -->
+          <div class="card-body">
+            {{rent.Vehicle.Model}}
+          </div>
+      </div>
+  </div>
+</div>
