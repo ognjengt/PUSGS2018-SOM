@@ -40,6 +40,7 @@ import { EditBranchComponent } from './components/branch-offices/edit-branch/edi
 import { BranchOfficeDetailComponent } from './components/branch-offices/branch-office-detail/branch-office-detail.component';
 import { AddRentComponent } from './components/rents/add-rent/add-rent.component';
 import { EditRentComponent } from './components/rents/edit-rent/edit-rent.component';
+import { MapBoxComponent } from './components/map/map-box/map-box.component';
 
 const Routes = [
   {
@@ -128,7 +129,8 @@ const Routes = [
     EditBranchComponent,
     BranchOfficeDetailComponent,
     AddRentComponent,
-    EditRentComponent
+    EditRentComponent,
+    MapBoxComponent
   ],
   imports: [
     BrowserModule,
