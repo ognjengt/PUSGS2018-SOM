@@ -8,7 +8,7 @@ import { FileUploadService } from '../../services/file-upload/file-upload.servic
 })
 export class FileUploaderComponent implements OnInit {
 
-  selectedImage : File = null;
+  selectedImages : File[] = [];
 
   constructor(private fileUploadService: FileUploadService) { }
 
@@ -16,13 +16,12 @@ export class FileUploaderComponent implements OnInit {
   }
 
   onFileSelected(event){
-    this.selectedImage = event.target.files[0];
+    this.selectedImages = event.target.files;
   }
 
   onUpload(){
-    this.fileUploadService.uploadFile(this.selectedImage)
+    this.fileUploadService.uploadFile(this.selectedImages)
     .subscribe(data => {
-      console.log(data)
     })
   }
 }

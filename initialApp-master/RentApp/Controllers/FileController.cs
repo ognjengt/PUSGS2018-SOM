@@ -54,16 +54,15 @@ namespace RentApp.Controllers
                             postedFile.SaveAs(filePath);
 
                             var message = string.Format("/Content/Images/" + postedFile.FileName);
-                            return Request.CreateResponse(HttpStatusCode.OK, message);
                         }
                     }
 
                     var message1 = string.Format("Image Updated Successfully.");
-                    return Request.CreateErrorResponse(HttpStatusCode.Created, message1);
+                    //return Request.CreateErrorResponse(HttpStatusCode.Created, message1);
                 }
 
                 var res = string.Format("Please Upload a image.");
-                return Request.CreateResponse(HttpStatusCode.NotFound, res);
+                //return Request.CreateResponse(HttpStatusCode.NotFound, res);
             }
             catch (Exception)
             {
@@ -71,6 +70,8 @@ namespace RentApp.Controllers
                 dict.Add("error", res);
                 return Request.CreateResponse(HttpStatusCode.NotFound, dict);
             }
+
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
 }
