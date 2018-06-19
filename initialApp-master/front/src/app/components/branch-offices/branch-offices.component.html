@@ -7,7 +7,7 @@
               <div class="card-body">
                 <h5 class="card-title">{{branchOffice.Name}}</h5>
                 <p class="card-text">{{branchOffice.Address}}</p>
-                <button type="button" [routerLink]="['/branchOffices', branchOffice.Id]" class="btn btn-primary">View Details</button>
+                <button type="button" [routerLink]="['/branchOffice', branchOffice.Id]" class="btn btn-primary">View Details</button>
                 <button type="button" class="btn btn-danger" (click)="deletebranchOffice(branchOffice.Id, i)">Delete</button>
                 <button type="button" class="btn btn-warning" [routerLink]="['/editBranchOffice', branchOffice.Id]">Edit</button>
               </div>
