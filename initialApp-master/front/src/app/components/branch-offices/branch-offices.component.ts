@@ -28,5 +28,4 @@ export class BranchOfficesComponent implements OnInit {
       this.branchOffices.splice(i, 1);
     })
   }
-
 }

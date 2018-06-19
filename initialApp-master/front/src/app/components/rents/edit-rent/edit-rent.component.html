@@ -1,0 +1,33 @@
+<div class="container">
+    <h1>Edit Vehicle</h1>
+    <form #editVehicleForm="ngForm" (ngSubmit)="onSubmit(editVehicleForm.value, editVehicleForm)">
+        <div class="form-group">
+            <label for="name">Model</label>
+            <input type="text" class="form-control" name="Model" placeholder="Model" [(ngModel)]="vehicle.Model">
+          </div>
+          <div class="form-group">
+            <label for="email">Manufactor</label>
+            <input type="text" class="form-control" name="Manufactor" placeholder="Manufactor" [(ngModel)]="vehicle.Manufactor">
+          </div>
+          <div class="form-group">
+            <label for="year">Year</label>
+            <input type="number" class="form-control" name="Year" placeholder="Year" [(ngModel)]="vehicle.Year">
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" name="Description" placeholder="Description" [(ngModel)]="vehicle.Description">
+          </div>
+          <div class="form-group">
+            <label for="pricePerHour">Price Per Hour</label>
+            <input type="number" class="form-control" name="PricePerHour" placeholder="Price Per Hour" [(ngModel)]="vehicle.PricePerHour">
+          </div>
+          <div class="form-group">
+              <label for="Service">Type</label>
+              <select class="form-control" name="Type" [(ngModel)]="vehicle.Type.Name">
+                <option *ngFor="let type of types" value="{{type.Name}}">{{type.Name}}</option>
+              </select>
+          </div>
+
+        <button type="submit" class="btn btn-primary">Edit</button>
+      </form>
+</div>

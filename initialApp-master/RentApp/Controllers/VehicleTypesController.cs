@@ -14,6 +14,7 @@ using RentApp.Persistance.UnitOfWork;
 
 namespace RentApp.Controllers
 {
+    [RoutePrefix("api/Types")]
     public class VehicleTypesController : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
@@ -23,6 +24,7 @@ namespace RentApp.Controllers
             this.unitOfWork = unitOfWork;
         }
 
+        [Route("GetTypes")]
         public IEnumerable<VehicleType> GetVehicleTypes()
         {
             return unitOfWork.VehicleTypes.GetAll();
