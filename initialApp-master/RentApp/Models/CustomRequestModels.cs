@@ -16,4 +16,14 @@ namespace RentApp.Models
         public string Longitude { get; set; }
         public int ServiceId { get; set; }
     }
+
+    public class ReviewRequestModel
+    {
+        public int Id { get; set; }
+        public string User { get; set; }
+        public DateTime? DatePosted { get; set; }
+        public string Comment { get; set; }
+        public int Stars { get; set; }
+        public int ServiceId { get; set; }
+    }
 }

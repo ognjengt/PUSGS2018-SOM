@@ -10,6 +10,8 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
 using System.Text;
+using static Thinktecture.IdentityModel.Constants.JwtConstants;
+using System.IdentityModel.Tokens;
 
 namespace RentApp.Persistance.Repository
 {
@@ -40,6 +42,14 @@ namespace RentApp.Persistance.Repository
         public IEnumerable<AppUser> GetAwaitingClients()
         {
             return Context.AppUsers.Where(a => a.Activated == false).ToList();
+        }
+
+        public JwtSecurityToken DecodeJwt(string protectedToken)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var decodedToken = handler.ReadToken(protectedToken) as JwtSecurityToken;
+
+            return decodedToken;
         }
 
         public bool NotifyViaEmail(string targetEmail, string subject, string body)

@@ -34,4 +34,8 @@ export class ServiceService {
   editService(id, serviceModule: ServiceModule){
     return this.httpClient.put("http://localhost:51680/api/Services/PutService?id=" + id, serviceModule)
   }
+
+  postReview(review) {
+    return this.httpClient.post("http://localhost:51680/api/Services/PostReview", review)
+  }
 }

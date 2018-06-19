@@ -1,4 +1,31 @@
 <div class="container">
   <h1>{{service.Name}}</h1>
   <p>{{service.Description}}</p>
+
+  <h4>Reviews</h4>
+  <div class="list-group" *ngFor="let review of reviews">
+      <a class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-between">
+          <h6 class="mb-1">{{review.Stars}} stars</h6>
+          <small>{{review.DatePosted | date}}</small>
+        </div>
+        <p class="mb-1">{{review.Comment}}</p>
+        <small>{{review.User}}</small>
+      </a>
+    </div>
+
+    <h5>Add review</h5>
+    <form #addReviewForm="ngForm" (ngSubmit)="onSubmitReview(addReviewForm.value, addReviewForm)">
+        <div class="form-group">
+          <label for="Stars">Your grade</label>
+          <input type="number" min="1" max="5" class="form-control" name="Stars" placeholder="From 1-5" ngModel>
+        </div>
+
+        <div class="form-group">
+          <label for="Comment">Comment</label>
+          <textarea type="text" class="form-control" name="Comment" placeholder="Post your comment here..." ngModel></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Review</button>
+      </form>
 </div>

@@ -6,6 +6,7 @@ using System.Configuration;
 using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Security.Cryptography;
+using System.ServiceModel.Security.Tokens;
 using System.Web;
 using Thinktecture.IdentityModel.Tokens;
 

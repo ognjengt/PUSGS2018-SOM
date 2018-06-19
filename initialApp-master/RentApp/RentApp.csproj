@@ -285,11 +285,16 @@
     <Compile Include="Migrations\201806181756539_AuthorizationAdded.Designer.cs">
       <DependentUpon>201806181756539_AuthorizationAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806191743275_Reviews.cs" />
+    <Compile Include="Migrations\201806191743275_Reviews.Designer.cs">
+      <DependentUpon>201806191743275_Reviews.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CustomRequestModels.cs" />
     <Compile Include="Models\Entities\BranchOffice.cs" />
+    <Compile Include="Models\Entities\Review.cs" />
     <Compile Include="Models\Entities\RAIdentityUser.cs" />
     <Compile Include="Models\Entities\AppUser.cs" />
     <Compile Include="Models\Entities\Rent.cs" />
@@ -304,11 +309,13 @@
     <Compile Include="Persistance\Repository\IBranchOfficeRepository.cs" />
     <Compile Include="Persistance\Repository\IRentRepository.cs" />
     <Compile Include="Persistance\Repository\IRepository.cs" />
+    <Compile Include="Persistance\Repository\IReviewRepository.cs" />
     <Compile Include="Persistance\Repository\IServiceRepository.cs" />
     <Compile Include="Persistance\Repository\IVehicleRepository.cs" />
     <Compile Include="Persistance\Repository\IVehicleTypeRepository.cs" />
     <Compile Include="Persistance\Repository\RentRepository.cs" />
     <Compile Include="Persistance\Repository\Repository.cs" />
+    <Compile Include="Persistance\Repository\ReviewRepository.cs" />
     <Compile Include="Persistance\Repository\ServiceRepository.cs" />
     <Compile Include="Persistance\Repository\VehicleRepository.cs" />
     <Compile Include="Persistance\Repository\VehicleTypeRepository.cs" />
@@ -403,6 +410,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806181756539_AuthorizationAdded.resx">
       <DependentUpon>201806181756539_AuthorizationAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806191743275_Reviews.resx">
+      <DependentUpon>201806191743275_Reviews.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

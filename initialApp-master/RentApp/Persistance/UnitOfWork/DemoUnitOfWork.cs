@@ -30,6 +30,9 @@ namespace RentApp.Persistance.UnitOfWork
         [Dependency]
         public IAppUserRepository AppUserRepository { get; set; }
 
+        [Dependency]
+        public IReviewRepository Reviews { get; set; }
+
 
         public DemoUnitOfWork(DbContext context)
         {

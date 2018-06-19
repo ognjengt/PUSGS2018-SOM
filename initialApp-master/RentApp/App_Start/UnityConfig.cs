@@ -56,6 +56,7 @@ namespace RentApp
             container.RegisterType<IAppUserRepository, AppUserRepository>();
             container.RegisterType<IBranchOfficeRepository, BranchOfficeRepository>();
             container.RegisterType<IVehicleRepository, VehicleRepository>();
+            container.RegisterType<IReviewRepository, ReviewRepository>();
             container.RegisterType<IRentRepository, RentRepository>();
             container.RegisterType<IVehicleTypeRepository, VehicleTypeRepository>();
             container.RegisterType<IServiceRepository, ServiceRepository>();

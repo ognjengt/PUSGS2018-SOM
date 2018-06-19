@@ -11,6 +11,9 @@ using System.Web.Http.Description;
 using RentApp.Models.Entities;
 using RentApp.Persistance;
 using RentApp.Persistance.UnitOfWork;
+using RentApp.Models;
+using Microsoft.Owin.Security.DataHandler;
+using System.IdentityModel.Tokens;
 
 namespace RentApp.Controllers
 {
@@ -145,6 +148,47 @@ namespace RentApp.Controllers
 
             return "Ok";
         }
+
+        [Authorize]
+        [Route("PostReview")]
+        public IHttpActionResult PostReview([FromBody]ReviewRequestModel reviewRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Izvuci iz heada jwt i uzmi koji je user
+            string jwt = Request.Headers.Authorization.Parameter.ToString();
+            var decodedToken = unitOfWork.AppUserRepository.DecodeJwt(jwt);
+
+            string userEmail = decodedToken.Claims.First(claim => claim.Type == "unique_name").Value;
+
+            Review review = new Review();
+            review.Comment = reviewRequest.Comment;
+            review.DatePosted = DateTime.Now;
+            review.Stars = reviewRequest.Stars;
+            review.User = userEmail;
+
+            Service service = unitOfWork.Services.Get(reviewRequest.ServiceId);
+
+            try
+            {
+                unitOfWork.Reviews.Add(review);
+                service.Reviews.Add(review);
+                unitOfWork.Complete();
+            }
+            catch (Exception)
+            {
+
+                return NotFound();
+            }
+            
+
+            return Ok();
+        }
+
+
 
         private bool ServiceExists(int id)
         {

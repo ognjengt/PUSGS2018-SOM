@@ -16,5 +16,6 @@ namespace RentApp.Models.Entities
 
         public virtual List<Vehicle> Vehicles { get; set; }
         public virtual List<BranchOffice> BranchOffices { get; set; }
+        public virtual List<Review> Reviews { get; set; }
     }
 }

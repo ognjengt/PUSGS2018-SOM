@@ -8,7 +8,7 @@ import { BranchofficeService } from '../../../services/branchoffices/branchoffic
 @Component({
   selector: 'app-branch-office-detail',
   templateUrl: './branch-office-detail.component.html',
-  styleUrls: ['./branch-office-detail.component.css']
+  styleUrls: ['./branch-office-detail.component.css'],
   providers: [BranchofficeService]
 })
 export class BranchOfficeDetailComponent implements OnInit {
