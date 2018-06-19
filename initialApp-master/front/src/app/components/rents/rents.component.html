@@ -1,3 +1,25 @@
-<p>
-  rents works!
-</p>
+<div class="container">
+  <h2>Vehicles</h2>
+      <div>
+          <button type="button" class="btn btn-primary"  [routerLink]="['/addVehicle']">Add Vehicle</button>    
+      </div>
+
+  <div class="row card-group">
+      <div class="col-4"  *ngFor="let vehicle of vehicles; let i = index">
+          <div class="card">
+              <!-- <img class="card-img-top" src="vehicles.Logo" alt="Card image cap"> -->
+              <div class="card-body">
+                <h5 class="card-title">{{vehicle.Model}}</h5>
+                <p class="card-text">{{vehicle.Manufactor}}</p>
+                <p class="card-text">{{vehicle.Year}}</p>
+                <p class="card-text">{{vehicle.Description}}</p>
+                <p class="card-text">{{vehicle.PricePerHour}}</p>
+                <p class="card-text">{{vehicle.Type.Name}}</p>
+                <button type="button" [routerLink]="['/vehicles', vehicle.Id]" class="btn btn-primary">View Vehicle</button>
+                <button type="button" class="btn btn-danger" (click)="deleteVehicle(vehicle.Id, i)">Delete Vehicle</button>
+                <button type="button" class="btn btn-warning" [routerLink]="['/editVehicle', vehicle.Id]">Edit Vehicle</button>
+              </div>
+          </div>
+      </div>
+  </div>    
+</div>

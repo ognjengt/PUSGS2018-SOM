@@ -26,4 +26,17 @@ namespace RentApp.Models
         public int Stars { get; set; }
         public int ServiceId { get; set; }
     }
+
+    public class VehicleRequestModel
+    {
+        public int Id { get; set; }
+        public string Model { get; set; }
+        //public string Logo { get; set; }
+        public string Manufactor { get; set; }
+        public int Year { get; set; }
+        public string Description { get; set; }
+        public string Type { get; set; }
+        public decimal PricePerHour { get; set; }
+        public int ServiceId { get; set; }
+    }
 }

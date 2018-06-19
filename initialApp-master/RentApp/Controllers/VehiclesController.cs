@@ -11,9 +11,11 @@ using System.Web.Http.Description;
 using RentApp.Models.Entities;
 using RentApp.Persistance;
 using RentApp.Persistance.UnitOfWork;
+using RentApp.Models;
 
 namespace RentApp.Controllers
 {
+    [RoutePrefix("api/Vehicles")]
     public class VehiclesController : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
@@ -23,11 +25,13 @@ namespace RentApp.Controllers
             this.unitOfWork = unitOfWork;
         }
 
+        [Route("GetVehicles")]
         public IEnumerable<Vehicle> GetVehicles()
         {
             return unitOfWork.Vehicles.GetAll();
         }
 
+        [Route("GetVehicle")]
         [ResponseType(typeof(Vehicle))]
         public IHttpActionResult GetVehicle(int id)
         {
@@ -40,8 +44,16 @@ namespace RentApp.Controllers
             return Ok(vehicle);
         }
 
+        [Route("AddVehicles")]
+        public IHttpActionResult AddVehicle(Vehicle vehicle)
+        {
+            this.unitOfWork.Vehicles.Add(vehicle);
+            return Ok();
+        }
+
+        [Route("PutVehicle")]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutVehicle(int id, Vehicle vehicle)
+        public IHttpActionResult PutVehicle(int id, VehicleRequestModel vehicle)
         {
             if (!ModelState.IsValid)
             {
@@ -55,7 +67,19 @@ namespace RentApp.Controllers
 
             try
             {
-                unitOfWork.Vehicles.Update(vehicle);
+                var vs = unitOfWork.Vehicles.GetAll();
+                Vehicle v = vs.ToList<Vehicle>().Where(ve => ve.Id == id).ToList().First();
+                v.Id = id;
+                v.Model = vehicle.Model;
+                v.Description = vehicle.Description;
+                v.Manufactor = vehicle.Manufactor;
+                v.Year = vehicle.Year;
+                v.PricePerHour = vehicle.PricePerHour;
+                var types = unitOfWork.VehicleTypes.GetAll();
+                v.Type = (VehicleType)types.ToList<VehicleType>().Where(t => t.Name == vehicle.Type).ToList().First();
+                //v.Images = vehicle.Images;
+
+                unitOfWork.Vehicles.Update(v);
                 unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
@@ -73,20 +97,32 @@ namespace RentApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        [Route("PostVehicle")]
         [ResponseType(typeof(Vehicle))]
-        public IHttpActionResult PostVehicle(Vehicle vehicle)
+        public IHttpActionResult PostVehicle(VehicleRequestModel vehicle)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            unitOfWork.Vehicles.Add(vehicle);
+            Vehicle v = new Vehicle();
+            v.Model = vehicle.Model;
+            v.Description = vehicle.Description;
+            v.Manufactor = vehicle.Manufactor;
+            v.Year = vehicle.Year;
+            v.PricePerHour = vehicle.PricePerHour;
+            var types = unitOfWork.VehicleTypes.GetAll();
+            v.Type = (VehicleType)types.ToList<VehicleType>().Where(t => t.Name == vehicle.Type).ToList().First();
+            //v.Images = vehicle.Images;
+
+            unitOfWork.Vehicles.Add(v);
             unitOfWork.Complete();
 
-            return CreatedAtRoute("DefaultApi", new { id = vehicle.Id }, vehicle);
+            return Ok();
         }
 
+        [Route("DeleteVehicle")]
         [ResponseType(typeof(Vehicle))]
         public IHttpActionResult DeleteVehicle(int id)
         {
