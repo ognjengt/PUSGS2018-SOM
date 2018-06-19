@@ -9,11 +9,14 @@ using System.Web.Http;
 
 namespace RentApp.Controllers
 {
+    [RoutePrefix("api/File")]
     public class FileController : ApiController
     {
         [AllowAnonymous]
-        public async Task<HttpResponseMessage> PostImage(string path)
+        [Route("PostImage")]
+        public async Task<HttpResponseMessage> PostImage()
         {
+            string path = "Users";
             Dictionary<string, object> dict = new Dictionary<string, object>();
             try
             {
@@ -47,7 +50,7 @@ namespace RentApp.Controllers
                         }
                         else
                         {
-                            var filePath = HttpContext.Current.Server.MapPath("/Content/Images/"+path+"/" + postedFile.FileName);
+                            var filePath = HttpContext.Current.Server.MapPath("/Content/Images/" + path + "/" + postedFile.FileName);
                             postedFile.SaveAs(filePath);
 
                             var message = string.Format("/Content/Images/" + postedFile.FileName);
