@@ -21,12 +21,14 @@ export class EditServiceComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.id = params['Id'];
+
+        this.service = this.servService.getService(this.id).
+          subscribe(data => {
+            this.service = data
+            console.log(this.service)
+         })
     });
-    this.service = this.servService.getService(this.id).
-    subscribe(data => {
-      this.service = data
-      console.log(this.service)
-    })
+    
   }
 
   onSubmit(editServiceData: ServiceModule, form: NgForm) {

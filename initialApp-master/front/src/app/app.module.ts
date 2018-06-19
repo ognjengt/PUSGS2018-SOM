@@ -35,6 +35,8 @@ import { AddServiceComponent } from './components/services/add-service/add-servi
 import { AdminpanelComponent } from './components/adminpanel/adminpanel.component';
 import { EditServiceComponent } from './components/services/edit-service/edit-service.component';
 import { ServiceDetailComponent } from './components/services/service-detail/service-detail.component';
+import { AddBranchComponent } from './components/branch-offices/add-branch/add-branch.component';
+import { EditBranchComponent } from './components/branch-offices/edit-branch/edit-branch.component';
 
 const Routes = [
   {
@@ -84,6 +86,10 @@ const Routes = [
   {
     path: "editService/:Id",
     component: EditServiceComponent
+  },
+  {
+    path: "editBranchOffice/:Id",
+    component: EditBranchComponent
   }
 ]
 
@@ -102,7 +108,9 @@ const Routes = [
     AddServiceComponent,
     AdminpanelComponent,
     EditServiceComponent,
-    ServiceDetailComponent
+    ServiceDetailComponent,
+    AddBranchComponent,
+    EditBranchComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,9 @@
 <div class="container">
+    <h2>Services</h2>
+        <div>
+            <button type="button" class="btn btn-primary"  [routerLink]="['/addService']">Add Service</button>    
+        </div>
+
     <div class="row card-group">
         <div class="col-4"  *ngFor="let service of services; let i = index">
             <div class="card">
@@ -13,7 +18,5 @@
             </div>
         </div>
     </div>
-    <div>
-        <button type="button" class="btn btn-primary"  [routerLink]="['/addService']">Add Service</button>    
-    </div>
+    
 </div>

@@ -11,9 +11,11 @@ using System.Web.Http.Description;
 using RentApp.Models.Entities;
 using RentApp.Persistance;
 using RentApp.Persistance.UnitOfWork;
+using RentApp.Models;
 
 namespace RentApp.Controllers
 {
+    [RoutePrefix("api/BranchOffices")]
     public class BranchOfficesController : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
@@ -23,6 +25,7 @@ namespace RentApp.Controllers
             this.unitOfWork = unitOfWork;
         }
 
+        [Route("GetBranchOffices")]
         public IEnumerable<BranchOffice> GetBranchOffices()
         {
             return unitOfWork.BranchOffices.GetAll();
@@ -40,18 +43,26 @@ namespace RentApp.Controllers
             return Ok(branchOffice);
         }
 
+        [Route("PutBranchOffice")]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutBranchOffice(int id, BranchOffice branchOffice)
+        public IHttpActionResult PutBranchOffice(int id, BranchOfficeRequestModel branchOfficeRequest)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != branchOffice.Id)
+            if (id != branchOfficeRequest.Id)
             {
                 return BadRequest();
             }
+
+            BranchOffice branchOffice = new BranchOffice();
+            branchOffice.Id = branchOfficeRequest.Id;
+            branchOffice.Name = branchOfficeRequest.Name;
+            branchOffice.Latitude = Double.Parse(branchOfficeRequest.Latitude);
+            branchOffice.Longitude = Double.Parse(branchOfficeRequest.Longitude);
+            branchOffice.Address = branchOfficeRequest.Address;
 
             try
             {
@@ -70,23 +81,43 @@ namespace RentApp.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok();
         }
 
+        [Route("PostBranchOffice")]
         [ResponseType(typeof(BranchOffice))]
-        public IHttpActionResult PostBranchOffice(BranchOffice branchOffice)
+        public IHttpActionResult PostBranchOffice([FromBody]BranchOfficeRequestModel branchOfficeRequest)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            unitOfWork.BranchOffices.Add(branchOffice);
-            unitOfWork.Complete();
+            BranchOffice branchOffice = new BranchOffice();
+            branchOffice.Name = branchOfficeRequest.Name;
+            branchOffice.Latitude = Double.Parse(branchOfficeRequest.Latitude);
+            branchOffice.Longitude = Double.Parse(branchOfficeRequest.Longitude);
+            //branchOffice.Logo = branchOfficeRequest.Logo;
+            branchOffice.Address = branchOfficeRequest.Address;
 
-            return CreatedAtRoute("DefaultApi", new { id = branchOffice.Id }, branchOffice);
+            Service service = unitOfWork.Services.Get(branchOfficeRequest.ServiceId);
+
+            try
+            {
+                unitOfWork.BranchOffices.Add(branchOffice);
+                service.BranchOffices.Add(branchOffice);
+                unitOfWork.Complete();
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
+           
         }
 
+        [Route("DeleteBranchOffice")]
         [ResponseType(typeof(BranchOffice))]
         public IHttpActionResult DeleteBranchOffice(int id)
         {
