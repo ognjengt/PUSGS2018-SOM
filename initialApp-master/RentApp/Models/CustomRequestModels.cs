@@ -38,5 +38,6 @@ namespace RentApp.Models
         public string Type { get; set; }
         public decimal PricePerHour { get; set; }
         public int ServiceId { get; set; }
+        public bool Unavailable { get; set; }
     }
 }

@@ -34,4 +34,8 @@ export class RentService {
   editVehicle(id, vehicleModule: VehicleModule){
     return this.httpClient.put("http://localhost:51680/api/Vehicles/PutVehicle?id=" + id, vehicleModule)
   }
+
+  setVehicleAvailability(id, vehicleModule: VehicleModule){
+    return this.httpClient.put("http://localhost:51680/api/Vehicles/PutVehicleAvailability?id=" + id, vehicleModule)
+  }
 }

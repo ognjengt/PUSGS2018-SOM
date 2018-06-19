@@ -97,6 +97,40 @@ namespace RentApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        [Route("PutVehicleAvailability")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutVehicleAvailability(int id, Vehicle vehicle)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != vehicle.Id)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                unitOfWork.Vehicles.Update(vehicle);
+                unitOfWork.Complete();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!VehicleExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
         [Route("PostVehicle")]
         [ResponseType(typeof(Vehicle))]
         public IHttpActionResult PostVehicle(VehicleRequestModel vehicle)

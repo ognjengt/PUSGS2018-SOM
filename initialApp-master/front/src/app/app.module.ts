@@ -42,6 +42,7 @@ import { AddRentComponent } from './components/rents/add-rent/add-rent.component
 import { EditRentComponent } from './components/rents/edit-rent/edit-rent.component';
 import { MapBoxComponent } from './components/map/map-box/map-box.component';
 import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
+import { RentsDetailsComponent } from './components/rents/rents-details/rents-details.component';
 
 const Routes = [
   {
@@ -107,6 +108,10 @@ const Routes = [
   {
     path: "editVehicle/:Id",
     component: EditRentComponent
+  },
+  {
+    path: "vehicleDetails/:Id",
+    component: RentsDetailsComponent
   }
 ]
 
@@ -132,7 +137,8 @@ const Routes = [
     AddRentComponent,
     EditRentComponent,
     MapBoxComponent,
-    FileUploaderComponent
+    FileUploaderComponent,
+    RentsDetailsComponent
   ],
   imports: [
     BrowserModule,
