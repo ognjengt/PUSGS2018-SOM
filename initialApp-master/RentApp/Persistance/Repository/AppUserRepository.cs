@@ -8,6 +8,8 @@ using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Net;
 using System.Net.Http;
+using System.Net.Mail;
+using System.Text;
 
 namespace RentApp.Persistance.Repository
 {
@@ -38,6 +40,39 @@ namespace RentApp.Persistance.Repository
         public IEnumerable<AppUser> GetAwaitingClients()
         {
             return Context.AppUsers.Where(a => a.Activated == false).ToList();
+        }
+
+        public bool NotifyViaEmail(string targetEmail, string subject, string body)
+        {
+            string mailTo = targetEmail;
+            string mailFrom = "capsulelink@gmail.com";
+            string pass = "AosOqPB3h74y";
+
+            try
+            {
+                SmtpClient client = new SmtpClient();
+                client.Port = 587;
+                client.Host = "smtp.gmail.com";
+                client.EnableSsl = true;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.Timeout = 10000;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new System.Net.NetworkCredential(mailFrom, pass);
+
+                MailMessage mm = new MailMessage(mailFrom, mailTo);
+                mm.BodyEncoding = UTF8Encoding.UTF8;
+                mm.Subject = subject;
+                mm.Body = body;
+                mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+
+                client.Send(mm);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error, mail did not send");
+                return false;
+            }
         }
 
         protected RADBContext Context { get { return RADBContext.Create(); } }

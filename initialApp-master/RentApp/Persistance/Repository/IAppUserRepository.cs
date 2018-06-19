@@ -13,5 +13,6 @@ namespace RentApp.Persistance.Repository
         IEnumerable<AppUser> GetUnbannedManagers();
         IEnumerable<AppUser> GetBannedManagers();
         IEnumerable<AppUser> GetAwaitingClients();
+        bool NotifyViaEmail(string targetEmail, string subject, string body);
     }
 }

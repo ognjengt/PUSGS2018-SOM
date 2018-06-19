@@ -57,6 +57,10 @@ namespace RentApp.Controllers
             {
                 unitOfWork.AppUserRepository.Update(current);
                 unitOfWork.Complete();
+
+                string subject = "Account approval";
+                string desc = $"Dear {current.FullName}, Your account has been approved. Block 8 team.";
+                unitOfWork.AppUserRepository.NotifyViaEmail(current.Email, subject, desc);
             }
             catch (DbUpdateConcurrencyException)
             {
