@@ -14,6 +14,7 @@ import { BranchofficeService } from '../../../services/branchoffices/branchoffic
 export class BranchOfficeDetailComponent implements OnInit {
 
   branchOffice:any
+  branchOfficeLoaded: boolean;
   id:any
 
   constructor(private branchOfficeService: BranchofficeService, private route: ActivatedRoute, private router: Router) {
@@ -24,6 +25,7 @@ export class BranchOfficeDetailComponent implements OnInit {
       this.id = params['Id'];
 
       this.branchOfficeService.getBranchOffice(parseInt(this.id)).subscribe(data => {
+        this.branchOfficeLoaded = true
         this.branchOffice = data;
       })
     });

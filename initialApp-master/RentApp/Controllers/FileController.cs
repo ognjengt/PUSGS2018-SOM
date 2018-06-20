@@ -71,7 +71,7 @@ namespace RentApp.Controllers
                             var filePath = HttpContext.Current.Server.MapPath("/Content/Images/Users/" + user.Id + "/profilePic." + postedFile.FileName.Split('.').LastOrDefault());
                             postedFile.SaveAs(filePath);
 
-                            user.Image = filePath;
+                            user.Image = "/Content/Images/Users/" + user.Id + "/profilePic." + postedFile.FileName.Split('.').LastOrDefault();
                             var message = string.Format("/Content/Images/" + postedFile.FileName);
                         }
                     }

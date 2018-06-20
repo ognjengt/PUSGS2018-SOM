@@ -14,6 +14,7 @@ import { BranchValidations } from '../../../models/validations/validationModels'
 export class EditBranchComponent implements OnInit {
 
   branchOffice: BranchOfficeModel;
+  branchOfficeLoaded: boolean;
   id: any;
   validations: BranchValidations = new BranchValidations();
 
@@ -23,6 +24,7 @@ export class EditBranchComponent implements OnInit {
       this.id = params['Id'];
 
       this.branchOfficeService.getBranchOffice(parseInt(this.id)).subscribe(data => {
+        this.branchOfficeLoaded = true
         this.branchOffice = data;
   
       })

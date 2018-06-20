@@ -16,16 +16,24 @@ export class ProfileComponent implements OnInit {
   selectedImage: any;
 
   constructor(private usersService: UsersService, private fileUploadService: FileUploadService) {
-    usersService.getUserClaims().subscribe(claims => {
-      usersService.getUserData(claims['Email']).subscribe(data => {
-        this.profileLoaded = true;
-        this.user = data;
-      })
-    })
+    this.requestUserInfo()
    }
 
   ngOnInit() {
   }  
+
+  getRole(): string {
+    return localStorage.role;
+  }
+  
+  requestUserInfo(){
+    this.usersService.getUserClaims().subscribe(claims => {
+      this.usersService.getUserData(claims['Email']).subscribe(data => {
+        this.profileLoaded = true
+        this.user = data;
+      })
+    })
+  }
   
   onFileSelected(event){
     this.selectedImage = event.target.files;
@@ -37,9 +45,9 @@ export class ProfileComponent implements OnInit {
       return; 
     }
     this.fileUploadService.uploadFile(this.selectedImage)
-    .subscribe(data => {
-      this.user.Image = this.selectedImage[0].name;
-      alert("Image uploaded.");
+    .subscribe(data => {      
+      alert("Image uploaded.");      
+      this.requestUserInfo()
     })
   }
 }

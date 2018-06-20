@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="vehicleLoaded">
     <h1>Edit Vehicle</h1>
     <form #editVehicleForm="ngForm" (ngSubmit)="onSubmit(editVehicleForm.value, editVehicleForm)">
         <div class="form-group">

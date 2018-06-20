@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="branchOfficeLoaded">
     <h1>Edit Branch Office</h1>
     <form #editBranchOfficeForm="ngForm" (ngSubmit)="onSubmit(editBranchOfficeForm.value, editBranchOfficeForm)">
 

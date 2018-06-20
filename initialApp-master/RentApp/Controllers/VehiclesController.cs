@@ -150,8 +150,20 @@ namespace RentApp.Controllers
             v.Type = (VehicleType)types.ToList<VehicleType>().Where(t => t.Name == vehicle.Type).ToList().First();
             //v.Images = vehicle.Images;
 
-            unitOfWork.Vehicles.Add(v);
-            unitOfWork.Complete();
+            Service service = unitOfWork.Services.Get(vehicle.ServiceId);
+
+            try
+            {
+                unitOfWork.Vehicles.Add(v);
+                service.Vehicles.Add(v);
+                unitOfWork.Complete();
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
 
             return Ok();
         }
