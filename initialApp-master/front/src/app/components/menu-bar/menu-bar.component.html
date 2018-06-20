@@ -22,7 +22,7 @@
     </ul>
     <ul class="navbar-nav" *ngIf="loggedIn()">
       <li><a class="nav-link" [routerLink]="['/profile']">Profile</a></li>
-      <li><a class="nav-link" [routerLink]="['/logout']" (click)="logout()">Logout</a></li>
+      <li><a class="nav-link" href="/home" (click)="logout()">Logout</a></li>
   </ul>
   </div>
 </nav>
