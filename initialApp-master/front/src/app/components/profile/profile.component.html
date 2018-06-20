@@ -1,8 +1,15 @@
-<div class="container">
+<div class="container" *ngIf="profileLoaded">
   // Ovde slika
   <h3>Full Name: {{user.FullName}}</h3>
   <h4>Email: {{user.Email}}</h4>
-  <h4>Birthday: {{user.Birthday}}</h4>
+  <h4>Birthday: {{user.Birthday}}</h4> <br/>
+  <div *ngIf="!user.Image">
+    <h4>Upload your drivers licence:</h4>
+    <div class="container">
+      <input type="file" (change)="onFileSelected($event)">  
+      <button type="button" class="btn btn-primary" (click)="onUpload()">Upload</button>
+    </div>
+  </div>
 
 
   <div *ngFor="let rent of user.Rents">

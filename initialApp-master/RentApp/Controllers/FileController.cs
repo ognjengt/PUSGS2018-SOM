@@ -1,5 +1,8 @@
-﻿using System;
+﻿using RentApp.Persistance.UnitOfWork;
+using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -12,11 +15,23 @@ namespace RentApp.Controllers
     [RoutePrefix("api/File")]
     public class FileController : ApiController
     {
+        private readonly IUnitOfWork unitOfWork;
+
+        public FileController(IUnitOfWork unitOfWork)
+        {
+            this.unitOfWork = unitOfWork;
+        }
+
         [AllowAnonymous]
         [Route("PostImage")]
         public async Task<HttpResponseMessage> PostImage()
         {
-            string path = "Users";
+            string jwt = Request.Headers.Authorization.Parameter.ToString();
+            var decodedToken = unitOfWork.AppUserRepository.DecodeJwt(jwt);
+
+            string userEmail = decodedToken.Claims.First(claim => claim.Type == "unique_name").Value;
+            var user = unitOfWork.AppUserRepository.GetAll().ToList().Where(u => u.Email == userEmail).ToList().FirstOrDefault();
+
             Dictionary<string, object> dict = new Dictionary<string, object>();
             try
             {
@@ -50,9 +65,13 @@ namespace RentApp.Controllers
                         }
                         else
                         {
-                            var filePath = HttpContext.Current.Server.MapPath("/Content/Images/" + path + "/" + postedFile.FileName);
+                            if (!Directory.Exists(HttpContext.Current.Server.MapPath("/Content/Images/Users/" + user.Id)))
+                                Directory.CreateDirectory(HttpContext.Current.Server.MapPath("/Content/Images/Users/" + user.Id));
+                            
+                            var filePath = HttpContext.Current.Server.MapPath("/Content/Images/Users/" + user.Id + "/profilePic." + postedFile.FileName.Split('.').LastOrDefault());
                             postedFile.SaveAs(filePath);
 
+                            user.Image = filePath;
                             var message = string.Format("/Content/Images/" + postedFile.FileName);
                         }
                     }
@@ -71,6 +90,8 @@ namespace RentApp.Controllers
                 return Request.CreateResponse(HttpStatusCode.NotFound, dict);
             }
 
+            unitOfWork.AppUserRepository.Update(user);
+            unitOfWork.Complete();
             return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
