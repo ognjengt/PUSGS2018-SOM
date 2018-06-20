@@ -7,7 +7,8 @@
     <div class="row card-group">
         <div class="col-4"  *ngFor="let service of services; let i = index">
             <div class="card">
-                <img class="card-img-top" src="service.Logo" alt="Card image cap">
+                <img class="card-img-top" src="http:\\localhost:51680\{{service.Logo}}" *ngIf="service.Logo">
+                <img class="card-img-top" src="https://putovanjaisitonija.files.wordpress.com/2017/05/rent-a-car-sitonija1.png?w=593&h=261&crop=1" *ngIf="!service.Logo">                
                 <div class="card-body">
                   <h5 class="card-title">{{service.Name}}</h5>
                   <p class="card-text">{{service.Description}}</p>

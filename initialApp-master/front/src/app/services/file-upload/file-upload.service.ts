@@ -22,5 +22,13 @@ export class FileUploadService {
       fd.append(selectedFile.name, selectedFile)
     }    
     return this.httpClient.post("http://localhost:51680/api/File/PostImage", fd);
+  }  
+  
+  uploadServiceLogo(serviceEmail: string, selectedFiles: File[]){
+    const fd = new FormData();
+    for (let selectedFile of selectedFiles){
+      fd.append(selectedFile.name, selectedFile)
+    }    
+    return this.httpClient.post("http://localhost:51680/api/File/PostServiceImage?serviceEmail=" + serviceEmail, fd);
   }
 }

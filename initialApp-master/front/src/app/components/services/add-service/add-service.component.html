@@ -13,6 +13,11 @@
           <label for="description">Description</label>
           <input type="text" class="form-control" name="Description" placeholder="Description" ngModel>
         </div>
+        <div class="container">
+          <input type="file" name="Logo" (change)="onFileSelected($event)" multiple>  
+        </div>
+        <br/>
+        <br/>
         <!-- <div class="form-group">
           <label for="logo">Logo</label>
           <input type="image" class="form-control" name="Logo" placeholder="Logo" ngModel>
