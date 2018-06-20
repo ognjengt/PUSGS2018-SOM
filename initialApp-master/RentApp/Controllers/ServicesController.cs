@@ -105,7 +105,15 @@ namespace RentApp.Controllers
         [Route("DeleteService")]
         public IHttpActionResult DeleteService(string id)
         {
-            Service service = unitOfWork.Services.Get(Int32.Parse(id));
+            Service service = unitOfWork.Services.Get(Int32.Parse(id));                   
+            unitOfWork.Reviews.RemoveRange(service.Reviews);
+            service.Reviews.Clear();
+            unitOfWork.BranchOffices.RemoveRange(service.BranchOffices);
+            service.BranchOffices.Clear();
+            unitOfWork.Vehicles.RemoveRange(service.Vehicles);
+            service.Vehicles.Clear();
+            unitOfWork.Complete();
+
             if (service == null)
             {
                 return NotFound();
