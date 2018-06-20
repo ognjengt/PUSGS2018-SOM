@@ -31,7 +31,7 @@ namespace RentApp.Controllers
         }
 
         [Route("GetUser")]
-        public AppUser GetUser([FromBody]string email)
+        public AppUser GetUser(string email)
         {
             AppUser user = unitOfWork.AppUserRepository.Find(u => u.Email == email).FirstOrDefault();
             return user;

@@ -319,6 +319,7 @@ namespace RentApp.Controllers
             {
                 return BadRequest(ModelState);
             }
+
             AppUser appUser = new AppUser();
             appUser.Email = model.Email;
             appUser.Activated = false;

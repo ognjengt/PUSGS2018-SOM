@@ -11,6 +11,7 @@ import { VehicleModule } from '../../models/vehicle.model';
 @Injectable({
   providedIn: 'root'
 })
+
 export class RentService {
 
   constructor(private http: Http, private httpClient: HttpClient) { }
