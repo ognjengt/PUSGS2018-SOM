@@ -32,6 +32,7 @@ export class AdminpanelComponent implements OnInit {
 
     adminService.getAwaitingClients().subscribe(data => {
       this.awaitingClients = data;
+      console.log(this.awaitingClients);
     })
   }
 
