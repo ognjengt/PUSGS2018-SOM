@@ -7,32 +7,58 @@
             <option *ngFor="let service of services" value="{{service.Id}}">{{service.Name}}</option>
           </select>
       </div>
+
+      <div *ngIf="!validations.serviceSelected" style="color:red">Select Service this vehicle belongs to.</div>
+
+
       <div class="form-group">
         <label for="name">Model</label>
         <input type="text" class="form-control" name="Model" placeholder="Model" ngModel>
       </div>
+
+      <div *ngIf="!validations.modelOk" style="color:red">This field can't be empty.</div>
+
+
       <div class="form-group">
         <label for="email">Manufactor</label>
         <input type="text" class="form-control" name="Manufactor" placeholder="Manufactor" ngModel>
       </div>
+
+      <div *ngIf="!validations.manufactorOk" style="color:red">This field can't be empty.</div>
+
+
       <div class="form-group">
         <label for="year">Year</label>
         <input type="number" class="form-control" name="Year" placeholder="Year" ngModel>
       </div>
+
+
+
       <div class="form-group">
         <label for="description">Description</label>
         <input type="text" class="form-control" name="Description" placeholder="Description" ngModel>
       </div>
+
+
+
       <div class="form-group">
         <label for="pricePerHour">Price Per Hour</label>
         <input type="number" class="form-control" name="PricePerHour" placeholder="Price Per Hour" ngModel>
       </div>
+
+      <div *ngIf="!validations.pricePerHourOk" style="color:red">This field can't be empty.</div>
+
+
       <div class="form-group">
           <label for="Service">Select Type</label>
           <select class="form-control" name="Type" ngModel>
             <option *ngFor="let type of types" value="{{type.Name}}">{{type.Name}}</option>
           </select>
       </div>
+
+      <div *ngIf="!validations.typeSelected" style="color:red">This field can't be empty.</div>
+
+
       <!-- <div class="form-group">
         <label for="logo">Logo</label>
         <input type="image" class="form-control" name="Logo" placeholder="Logo" ngModel>

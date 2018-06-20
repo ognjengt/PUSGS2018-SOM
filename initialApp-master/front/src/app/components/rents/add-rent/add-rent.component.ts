@@ -4,6 +4,7 @@ import { VehicleModule } from '../../../models/vehicle.model';
 import { ServiceModule } from '../../../models/service.model';
 import { ServiceService } from '../../../services/serv/service.service';
 import { VehicleTypeService } from '../../../services/vehicle-type/vehicle-type.service';
+import { VehicleValidations } from '../../../models/validations/validationModels';
 
 
 @Component({
@@ -14,7 +15,8 @@ import { VehicleTypeService } from '../../../services/vehicle-type/vehicle-type.
 export class AddRentComponent implements OnInit {
 
   services: any = [];
-  types: any = []
+  types: any = [];
+  validations: VehicleValidations = new VehicleValidations();
 
   constructor(private serviceService: ServiceService, private rentService: RentService, private vehicleTypeService: VehicleTypeService) { 
     serviceService.getServices().subscribe(data => {
@@ -29,6 +31,8 @@ export class AddRentComponent implements OnInit {
   }
 
   onSubmit(vehicleFormData, vehicleForm) {
+
+    if(this.validations.validate(vehicleFormData)) return;
     console.log(vehicleFormData)
     this.rentService.addVehicle(vehicleFormData).subscribe(response => {
       alert("Vehicle added!");

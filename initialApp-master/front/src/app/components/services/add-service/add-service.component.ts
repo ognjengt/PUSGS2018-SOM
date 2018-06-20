@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { HttpHeaders } from '@angular/common/http';
 import { ServiceModule } from '../../../models/service.model';
 import { FileUploadService } from '../../../services/file-upload/file-upload.service';
+import { ServiceValidations } from '../../../models/validations/validationModels';
 
 @Component({
   selector: 'app-add-service',
@@ -17,6 +18,8 @@ export class AddServiceComponent implements OnInit {
   logo: any;
 
   constructor(private servService: ServiceService, private fileUploadService: FileUploadService) { }
+  validations: ServiceValidations = new ServiceValidations();
+
 
   ngOnInit() {
   }
@@ -26,6 +29,9 @@ export class AddServiceComponent implements OnInit {
   }
 
   onSubmit(addServiceData: ServiceModule, form: NgForm) { 
+
+    if(this.validations.validate(addServiceData)) return;
+
     this.servService.addService(addServiceData)
     .subscribe( data => {
       if (this.logo != undefined){

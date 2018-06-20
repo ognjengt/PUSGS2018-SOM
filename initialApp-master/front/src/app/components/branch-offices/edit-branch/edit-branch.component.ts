@@ -3,6 +3,7 @@ import { BranchofficeService } from '../../../services/branchoffices/branchoffic
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { BranchOfficeModel } from '../../../models/branchoffice.model';
 import { NgForm } from '@angular/forms';
+import { BranchValidations } from '../../../models/validations/validationModels';
 
 @Component({
   selector: 'app-edit-branch',
@@ -15,6 +16,7 @@ export class EditBranchComponent implements OnInit {
   branchOffice: BranchOfficeModel;
   branchOfficeLoaded: boolean;
   id: any;
+  validations: BranchValidations = new BranchValidations();
 
   constructor(private branchOfficeService: BranchofficeService, private route: ActivatedRoute, private router: Router) { 
     
@@ -35,6 +37,9 @@ export class EditBranchComponent implements OnInit {
   }
 
   onSubmit(editBranchData, form: NgForm) {
+
+    if(this.validations.validateEdit(editBranchData)) return;
+
     editBranchData.Id = this.branchOffice.Id;
     this.branchOfficeService.editService(this.id, editBranchData).subscribe(resp => {
       console.log(resp);

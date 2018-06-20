@@ -3,6 +3,7 @@ import { AuthenticationService } from '../../../services/auth/authentication-ser
 import { AuthenticationModule } from '../../../models/registration.model';
 import { NgForm } from '@angular/forms';
 import { HttpHeaders } from '@angular/common/http';
+import { RegistrationValidations } from '../../../models/validations/validationModels';
 
 @Component({
   selector: 'app-register',
@@ -12,6 +13,8 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class RegisterComponent implements OnInit {
 
+  validations: RegistrationValidations = new RegistrationValidations();
+
   constructor(private authService: AuthenticationService) { 
   }
 
@@ -20,6 +23,8 @@ export class RegisterComponent implements OnInit {
 
   
   onSubmit(registrationData: AuthenticationModule, form: NgForm) {
+
+    if(this.validations.validate(registrationData)) return;
     console.log(registrationData);
     
     if(this.confirmPassword(registrationData.Password, registrationData.ConfirmPassword) === false) {

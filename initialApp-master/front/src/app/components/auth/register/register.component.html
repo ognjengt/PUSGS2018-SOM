@@ -3,24 +3,36 @@
     <form #registrationForm="ngForm" (ngSubmit)="onSubmit(registrationForm.value, registrationForm)">
         <div class="form-group">
           <label for="email">Email address</label>
-          <input type="email" class="form-control" name="Email" placeholder="Email" ngModel>
+          <input required type="email" class="form-control" name="Email" placeholder="Email" ngModel>
+
+          <div *ngIf="!validations.emailOk" style="color:red">Email can't be empty.</div>
+
         </div>
         <div class="form-group">
           <label for="fullName">Full name</label>
-          <input type="text" class="form-control" name="FullName" placeholder="Full name" ngModel>
+          <input required type="text" class="form-control" name="FullName" placeholder="Full name" ngModel>
         </div>
+
+        <div *ngIf="!validations.fullNameOk" style="color:red">Full Name can't be empty</div>
+
         <div class="form-group">
           <label for="date">Date</label>
-          <input type="date" class="form-control" name="Date" placeholder="dd/mm/yyyy" ngModel>
+          <input required type="date" class="form-control" name="Date" placeholder="dd/mm/yyyy" ngModel>
         </div>
+
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" class="form-control" name="Password" placeholder="Password" ngModel>
+          <input required type="password" class="form-control" name="Password" placeholder="Password" ngModel>
         </div>
+
+        <div *ngIf="!validations.passwordOk" style="color:red">Fill out password</div>
+
         <div class="form-group">
             <label for="confirmPassword">Confirm Password</label>
-            <input type="password" class="form-control" name="ConfirmPassword" placeholder="Password" ngModel>
+            <input required type="password" class="form-control" name="ConfirmPassword" placeholder="Password" ngModel>
           </div>
+
+          <div *ngIf="!validations.passwordOk" style="color:red">Fill out password confirmation</div>
         <button type="submit" class="btn btn-primary">Register</button>
       </form>
 </div>
