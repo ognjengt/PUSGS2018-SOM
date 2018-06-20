@@ -13,6 +13,7 @@ import { NgForm } from '@angular/forms';
 export class EditBranchComponent implements OnInit {
 
   branchOffice: BranchOfficeModel;
+  branchOfficeLoaded: boolean;
   id: any;
 
   constructor(private branchOfficeService: BranchofficeService, private route: ActivatedRoute, private router: Router) { 
@@ -21,6 +22,7 @@ export class EditBranchComponent implements OnInit {
       this.id = params['Id'];
 
       this.branchOfficeService.getBranchOffice(parseInt(this.id)).subscribe(data => {
+        this.branchOfficeLoaded = true
         this.branchOffice = data;
   
       })

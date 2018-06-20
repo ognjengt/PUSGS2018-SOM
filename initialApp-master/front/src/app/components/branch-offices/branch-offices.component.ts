@@ -11,9 +11,11 @@ import { BranchOfficeModel } from '../../models/branchoffice.model';
 export class BranchOfficesComponent implements OnInit {
 
   branchOffices: BranchOfficeModel[] = [];
+  branchOfficeLoaded: boolean;
   
   constructor(private branchOfficeService: BranchofficeService) { 
     this.branchOfficeService.getAllBranchOffices().subscribe(data => {
+      this.branchOfficeLoaded = true
       this.branchOffices = data;
     })
   }

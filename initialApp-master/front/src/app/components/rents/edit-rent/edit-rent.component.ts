@@ -15,6 +15,7 @@ export class EditRentComponent implements OnInit {
   vehicle:any
   id:any
   types: any = []
+  vehicleLoaded: boolean;
 
   constructor(private rentService: RentService, private route: ActivatedRoute, private router: Router, private vehicleTypeService: VehicleTypeService) { }
 
@@ -24,6 +25,7 @@ export class EditRentComponent implements OnInit {
 
         this.vehicle = this.rentService.getVehicle(this.id).
           subscribe(data => {
+            this.vehicleLoaded = true
             this.vehicle = data
          })
     });    
