@@ -4,6 +4,7 @@ import { VehicleModule } from '../../../models/vehicle.model';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { VehicleTypeService } from '../../../services/vehicle-type/vehicle-type.service';
+import { VehicleValidations } from '../../../models/validations/validationModels';
 
 @Component({
   selector: 'app-edit-rent',
@@ -14,7 +15,8 @@ export class EditRentComponent implements OnInit {
 
   vehicle:any
   id:any
-  types: any = []
+  types: any = [];
+  validations: VehicleValidations = new VehicleValidations();
 
   constructor(private rentService: RentService, private route: ActivatedRoute, private router: Router, private vehicleTypeService: VehicleTypeService) { }
 
@@ -33,6 +35,7 @@ export class EditRentComponent implements OnInit {
   }
 
   onSubmit(editVehicleData: VehicleModule, form: NgForm) {
+    if(this.validations.validate(editVehicleData)) return;
     editVehicleData.Id = this.id  
     this.rentService.editVehicle(this.id, editVehicleData)
     .subscribe( data => {

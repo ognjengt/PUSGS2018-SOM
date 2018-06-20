@@ -41,33 +41,7 @@ export class AuthenticationService {
 
       if(!localStorage.jwt)
       {
-         let x = this.httpClient.post('http://localhost:51680/oauth/token',`username=${loginData.Email}&password=${loginData.Password}&grant_type=password`, {"headers": headers}) as Observable<any>
-  
-        x.subscribe(
-          res => {
-            console.log(res.access_token);
-            
-            let jwt = res.access_token;
-  
-            let jwtData = jwt.split('.')[1]
-            let decodedJwtJsonData = window.atob(jwtData)
-            let decodedJwtData = JSON.parse(decodedJwtJsonData)
-  
-            let role = decodedJwtData.role
-  
-            console.log('jwtData: ' + jwtData)
-            console.log('decodedJwtJsonData: ' + decodedJwtJsonData)
-            console.log(decodedJwtData)
-            console.log('Role ' + role)
-  
-            localStorage.setItem('jwt', jwt)
-            localStorage.setItem('role', role);
-            window.location.href = "/home"; // ovo verovatno ce morati da se radi kroz komponentu, sto znaci da ova funkcija mora da vrati neku vrednost, tipa da vrati uspesno ulogovan ili neuspesno
-          },
-          err => {
-            console.log("Error occured");
-          }
-        );
+         return this.httpClient.post('http://localhost:51680/oauth/token',`username=${loginData.Email}&password=${loginData.Password}&grant_type=password`, {"headers": headers}) as Observable<any>
       }
       else
       {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BranchofficeService } from '../../../services/branchoffices/branchoffice.service';
 import { ServiceModule } from '../../../models/service.model';
+import { BranchValidations } from '../../../models/validations/validationModels';
 
 @Component({
   selector: 'app-add-branch',
@@ -11,6 +12,7 @@ import { ServiceModule } from '../../../models/service.model';
 export class AddBranchComponent implements OnInit {
   
   services: ServiceModule[] = [];
+  validations: BranchValidations = new BranchValidations();
 
   constructor(private branchOfficeService: BranchofficeService) { 
     branchOfficeService.getAllServices().subscribe(data => {
@@ -22,6 +24,9 @@ export class AddBranchComponent implements OnInit {
   }
 
   onSubmit(branchFormData, branchForm) {
+
+    if(this.validations.validate(branchFormData)) return;
+
     this.branchOfficeService.postBranchOffice(branchFormData).subscribe(response => {
       console.log(response);
     })
