@@ -13,6 +13,7 @@ namespace RentApp.Models.Entities
         public string Email { get; set; }
         public string Description { get; set; }
         public bool Authorized { get; set; }
+        public int ManagerId { get; set; }
 
         public virtual List<Vehicle> Vehicles { get; set; }
         public virtual List<BranchOffice> BranchOffices { get; set; }

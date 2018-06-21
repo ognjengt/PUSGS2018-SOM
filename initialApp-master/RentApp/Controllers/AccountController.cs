@@ -19,6 +19,7 @@ using RentApp.Providers;
 using RentApp.Results;
 using RentApp.Persistance.UnitOfWork;
 using System.Data.Entity.Infrastructure;
+using System.Net;
 
 namespace RentApp.Controllers
 {

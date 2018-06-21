@@ -16,5 +16,6 @@ namespace RentApp.Persistance.Repository
         IEnumerable<AppUser> GetAwaitingClients();
         bool NotifyViaEmail(string targetEmail, string subject, string body);
         JwtSecurityToken DecodeJwt(string protectedToken);
+        bool UserExistsByEmail(string email);
     }
 }
