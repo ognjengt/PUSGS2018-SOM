@@ -46,6 +46,7 @@ import { FileUploaderComponent } from './components/file-uploader/file-uploader.
 import { RentsDetailsComponent } from './components/rents/rents-details/rents-details.component';
 import { RentACarComponent } from './components/rentACar/rent-a-car/rent-a-car.component';
 import { GOOGLE_API_KEY } from 'keys';
+import { SearchComponent } from './components/search/search.component';
 
 const Routes = [
   {
@@ -119,6 +120,10 @@ const Routes = [
   {
     path: "rentACar/:Id",
     component: RentACarComponent
+  },
+  {
+    path: "search",
+    component: SearchComponent
   }
 ]
 
@@ -146,7 +151,8 @@ const Routes = [
     MapBoxComponent,
     FileUploaderComponent,
     RentsDetailsComponent,
-    RentACarComponent
+    RentACarComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

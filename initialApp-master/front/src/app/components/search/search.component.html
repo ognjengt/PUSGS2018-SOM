@@ -1,0 +1,50 @@
+<div class="container">
+  <h2>Search vehicles</h2>
+  <form #searchForm="ngForm" (ngSubmit)="onSubmit(searchForm.value, searchForm)">
+      <div class="row">
+          <div class="col-md-4">
+            <h4>Attributes</h4>
+
+            <div class="form-group">
+              <label for="Model">Model</label>
+              <input type="text" class="form-control" name="Model" placeholder="Model" ngModel>
+            </div>
+
+            <div class="form-group">
+              <label for="Manufactor">Manufactor</label>
+              <input type="text" class="form-control" name="Manufactor" placeholder="Manufactor" ngModel>
+            </div>
+
+            <div class="form-group">
+              <label for="Year">Year</label>
+              <input type="text" class="form-control" name="Year" placeholder="Year" ngModel>
+            </div>
+      
+          </div>
+          <div class="col-md-4">
+            <h4>Type</h4>
+            
+            <select class="form-control" name="Type" ngModel>
+                <!-- <option *ngFor="let service of services" value="{{service.Id}}">{{service.Name}}</option> -->
+              </select>
+            
+          </div>
+          <div class="col-md-4">
+            <h4>Price per hour</h4>
+            
+            <div class="form-group">
+                <label for="PricePerHour">PricePerHour</label>
+                <input type="number" class="form-control" name="PricePerHour" placeholder="PricePerHour" ngModel>
+              </div>
+      
+          </div>
+        </div>
+        <div class="col-md-12">
+          <button type="submit" class="btn btn-primary btn-large">Search</button>
+        </div>
+  </form>
+
+  <div class="col-md-12">
+    PRIKAZ
+  </div>
+</div>

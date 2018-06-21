@@ -20,7 +20,7 @@
 <app-add-branch></app-add-branch>
 
 <div class="container">
-    <h3>Branch offices map</h3>
+    <h3>Branch offices world map</h3>
     <agm-map [latitude]="lat" [longitude]="lng" [zoom]="5">
         <div *ngFor="let marker of markers">
             <agm-marker (markerClick)="MarkerClickEvent(marker)" [latitude]="marker.lat" [longitude]="marker.lng"></agm-marker>
