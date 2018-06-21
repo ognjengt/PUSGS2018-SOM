@@ -31,6 +31,12 @@ namespace RentApp.Persistance.Repository
         {
             return new List<AppUser>() { new AppUser() { FullName = "Onaj koji nije banovan" }, new AppUser() { FullName = "Onaj koji nije banovan 2" } };
         }
+
+        public bool UserExistsByEmail(string email)
+        {
+            var user = Context.AppUsers.Where(u => u.Email == email).ToList().FirstOrDefault();
+            return user != null ? true : false;
+        }
         
 
         // Vraca sve menadzere koji su banovani

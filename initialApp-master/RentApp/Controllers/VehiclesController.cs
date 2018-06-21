@@ -28,8 +28,7 @@ namespace RentApp.Controllers
         [Route("GetVehicles")]
         public IEnumerable<Vehicle> GetVehicles()
         {
-            var vs = unitOfWork.Vehicles.GetAll();
-            return unitOfWork.Vehicles.GetAll();
+            return unitOfWork.Vehicles.GetAll().Where(v => v.Unavailable == false);
         }
 
         [Route("GetVehicle")]

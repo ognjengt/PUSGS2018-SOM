@@ -41,6 +41,10 @@ export class RentService {
   }
 
   getVehicleTypes() {
-    return this.httpClient.get("http://localhost:51680/api/Types/GetTypes")
+    return this.httpClient.get("http://localhost:51680/api/Types/GetTypes");
+  }
+
+  postNewRent(newRent) {
+    return this.httpClient.post("http://localhost:51680/api/Rents/PostRent", newRent)
   }
 }

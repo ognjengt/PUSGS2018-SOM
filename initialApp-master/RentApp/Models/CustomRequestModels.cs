@@ -56,4 +56,12 @@ namespace RentApp.Models
         public int PricePerHour { get; set; }
         public int Page { get; set; }
     }
+
+    public class RentRequestModel
+    {
+        public int BranchOfficeId { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
+        public int VehicleId { get; set; }
+    }
 }
