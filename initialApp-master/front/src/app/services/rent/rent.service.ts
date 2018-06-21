@@ -51,4 +51,8 @@ export class RentService {
   getRentedVehicles() {
     return this.httpClient.get("http://localhost:51680/api/Rents/GetRents")
   }
+
+  closeRent(id) {
+    return this.httpClient.delete("http://localhost:51680/api/Rents/DeleteRent?id=" + id)
+  }
 }

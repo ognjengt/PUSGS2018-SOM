@@ -33,9 +33,20 @@
       <h3>Rented vehicles</h3> 
       <ul class="list-group" *ngFor="let rent of rentedVehicles; let i = index">
         <div class="card">
+            <h5>Rent details</h5>
             Rent Id: {{rent.Id}} <br>
             Start date: {{rent.Start | date}} <br>
             End date: {{rent.End | date}}
+            <br>
+            <h5>Rent details</h5>
+            Picked up in: {{rent.BranchOffice.Name}} <br>
+            Vehicle: {{rent.Vehicle.Manufactor}} {{rent.Vehicle.Model}}
+
+            <div *ngIf="rentDue(rent)" style="color:red">This rent is due! Please close it ASAP</div>
+            
+            <br>
+
+            <span class="pull-right" style="float:right"><button class="btn btn-danger btn-small" (click)="CloseRent(rent.Id,i)">Close rent</button></span>
         </div>
 
         <hr>
