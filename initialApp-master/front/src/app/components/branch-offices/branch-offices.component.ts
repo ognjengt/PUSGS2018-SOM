@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BranchofficeService } from '../../services/branchoffices/branchoffice.service';
 import { BranchOfficeModel } from '../../models/branchoffice.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-branch-offices',
@@ -17,7 +18,7 @@ export class BranchOfficesComponent implements OnInit {
   lng: number = 19.8226;
   markers: any = [];
   
-  constructor(private branchOfficeService: BranchofficeService) { 
+  constructor(private branchOfficeService: BranchofficeService, private router: Router) { 
     this.branchOfficeService.getAllBranchOffices().subscribe(data => {
       this.branchOfficeLoaded = true
       this.branchOffices = data;
@@ -44,6 +45,6 @@ export class BranchOfficesComponent implements OnInit {
   }
 
   MarkerClickEvent(marker) {
-    window.location.href = "/branchOffice/"+marker.id;
+    this.router.navigateByUrl('/branchOffice/'+marker.id);
   }
 }
