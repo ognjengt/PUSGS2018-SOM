@@ -58,6 +58,11 @@
 
       <div *ngIf="!validations.typeSelected" style="color:red">This field can't be empty.</div>
 
+      <div class="container">
+        <input type="file" name="Logo" (change)="onFileSelected($event)" multiple>  
+      </div>
+      <br/>
+      <br/>
 
       <!-- <div class="form-group">
         <label for="logo">Logo</label>

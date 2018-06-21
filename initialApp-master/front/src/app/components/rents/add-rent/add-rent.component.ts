@@ -5,6 +5,7 @@ import { ServiceModule } from '../../../models/service.model';
 import { ServiceService } from '../../../services/serv/service.service';
 import { VehicleTypeService } from '../../../services/vehicle-type/vehicle-type.service';
 import { VehicleValidations } from '../../../models/validations/validationModels';
+import { FileUploadService } from '../../../services/file-upload/file-upload.service';
 
 
 @Component({
@@ -17,8 +18,9 @@ export class AddRentComponent implements OnInit {
   services: any = [];
   types: any = [];
   validations: VehicleValidations = new VehicleValidations();
+  logo: any;
 
-  constructor(private serviceService: ServiceService, private rentService: RentService, private vehicleTypeService: VehicleTypeService) { 
+  constructor(private serviceService: ServiceService, private rentService: RentService, private vehicleTypeService: VehicleTypeService, private fileUploadService: FileUploadService) { 
     serviceService.getServices().subscribe(data => {
       this.services = data;
     })
@@ -27,15 +29,27 @@ export class AddRentComponent implements OnInit {
     })
   }
 
+  onFileSelected(event){
+    this.logo = event.target.files;
+  }
+
   ngOnInit() {
   }
 
   onSubmit(vehicleFormData, vehicleForm) {
 
     if(this.validations.validate(vehicleFormData)) return;
-    console.log(vehicleFormData)
+    
     this.rentService.addVehicle(vehicleFormData).subscribe(response => {
-      alert("Vehicle added!");
+      if (this.logo != undefined){
+        this.fileUploadService.uploadVehicleImages(response.toString(), this.logo)
+        .subscribe(data => {   
+          alert("Add was successful!");   
+        })
+      }
+      else{        
+        alert("Add was successful!");  
+      }  
     })
   }
 }

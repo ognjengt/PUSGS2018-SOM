@@ -28,7 +28,7 @@ export class AddServiceComponent implements OnInit {
     this.logo = event.target.files;
   }
 
-  onSubmit(addServiceData: ServiceModule, form: NgForm) { 
+  onSubmit(addServiceData: ServiceModule, form: NgForm) {
 
     if(this.validations.validate(addServiceData)) return;
 

@@ -13,10 +13,18 @@ import { VehicleModule } from '../../models/vehicle.model';
 export class RentsComponent implements OnInit {
 
   vehicles : any = []
+  images: any = {}
 
   constructor(private rentService: RentService) { 
     this.rentService.getVehicles().subscribe(data => {
       this.vehicles = data;
+
+      for(let vehicle of this.vehicles){
+        if(vehicle.Images != null && vehicle.Images != undefined){
+          var imgsSplit = vehicle.Images.split(';')
+          this.images[vehicle.Id] = imgsSplit
+        }        
+      }
     })
   }
 

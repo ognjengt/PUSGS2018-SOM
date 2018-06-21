@@ -28,6 +28,7 @@ namespace RentApp.Controllers
         [Route("GetVehicles")]
         public IEnumerable<Vehicle> GetVehicles()
         {
+            var vs = unitOfWork.Vehicles.GetAll();
             return unitOfWork.Vehicles.GetAll();
         }
 
@@ -158,14 +159,12 @@ namespace RentApp.Controllers
                 service.Vehicles.Add(v);
                 unitOfWork.Complete();
 
-                return Ok();
+                return Ok(v.Id);
             }
             catch (Exception ex)
             {
                 return NotFound();
             }
-
-            return Ok();
         }
 
         [Route("DeleteVehicle")]

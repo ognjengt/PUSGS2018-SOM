@@ -15,6 +15,7 @@ export class RentsDetailsComponent implements OnInit {
 
   vehicle:any
   id:any
+  images: any = []
 
   constructor(private rentService: RentService, private route: ActivatedRoute, private router: Router) { }
 
@@ -25,14 +26,17 @@ export class RentsDetailsComponent implements OnInit {
     this.vehicle = this.rentService.getVehicle(this.id).
     subscribe(data => {
       this.vehicle = data;
+      if(this.vehicle.Images != null && this.vehicle.Images != undefined){       
+        this.images = this.vehicle.Images.split(';')
+      }   
     })
   }
 
-  onReserveVehicle(){
-    this.vehicle.Unavailable = true
-    this.rentService.setVehicleAvailability(this.id, this.vehicle).
-    subscribe(data => {
-      console.log(data)
-    })
-  }
+  // onReserveVehicle(){
+  //   this.vehicle.Unavailable = true
+  //   this.rentService.setVehicleAvailability(this.id, this.vehicle).
+  //   subscribe(data => {
+  //     console.log(data)
+  //   })
+  // }
 }

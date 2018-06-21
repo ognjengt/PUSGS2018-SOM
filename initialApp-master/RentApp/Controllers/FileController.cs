@@ -164,13 +164,9 @@ namespace RentApp.Controllers
 
         [AllowAnonymous]
         [Route("PostBranchImage")]
-        public async Task<HttpResponseMessage> PostBranchImage()
+        public async Task<HttpResponseMessage> PostBranchImage(string bId)
         {
-            string jwt = Request.Headers.Authorization.Parameter.ToString();
-            var decodedToken = unitOfWork.AppUserRepository.DecodeJwt(jwt);
-
-            string userEmail = decodedToken.Claims.First(claim => claim.Type == "unique_name").Value;
-            var user = unitOfWork.AppUserRepository.GetAll().ToList().Where(u => u.Email == userEmail).ToList().FirstOrDefault();
+            var branch = unitOfWork.BranchOffices.GetAll().ToList().Where(b => b.Id == Int32.Parse(bId)).ToList().FirstOrDefault();
 
             Dictionary<string, object> dict = new Dictionary<string, object>();
             try
@@ -205,13 +201,13 @@ namespace RentApp.Controllers
                         }
                         else
                         {
-                            if (!Directory.Exists(HttpContext.Current.Server.MapPath("/Content/Images/Users/" + user.Id)))
-                                Directory.CreateDirectory(HttpContext.Current.Server.MapPath("/Content/Images/Users/" + user.Id));
+                            if (!Directory.Exists(HttpContext.Current.Server.MapPath("/Content/Images/BranchOffices/" + branch.Id)))
+                                Directory.CreateDirectory(HttpContext.Current.Server.MapPath("/Content/Images/BranchOffices/" + branch.Id));
 
-                            var filePath = HttpContext.Current.Server.MapPath("/Content/Images/Users/" + user.Id + "/profilePic." + postedFile.FileName.Split('.').LastOrDefault());
+                            var filePath = HttpContext.Current.Server.MapPath("/Content/Images/BranchOffices/" + branch.Id + "/branchPic." + postedFile.FileName.Split('.').LastOrDefault());
                             postedFile.SaveAs(filePath);
 
-                            user.Image = "/Content/Images/Users/" + user.Id + "/profilePic." + postedFile.FileName.Split('.').LastOrDefault();
+                            branch.Logo = "/Content/Images/BranchOffices/" + branch.Id + "/branchPic." + postedFile.FileName.Split('.').LastOrDefault();
                             var message = string.Format("/Content/Images/" + postedFile.FileName);
                         }
                     }
@@ -230,28 +226,27 @@ namespace RentApp.Controllers
                 return Request.CreateResponse(HttpStatusCode.NotFound, dict);
             }
 
-            unitOfWork.AppUserRepository.Update(user);
+            unitOfWork.BranchOffices.Update(branch);
             unitOfWork.Complete();
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         [AllowAnonymous]
-        [Route("PostVehicleImage")]
-        public async Task<HttpResponseMessage> PostVehicleImage()
+        [Route("PostVehicleImages")]
+        public async Task<HttpResponseMessage> PostVehicleImages(string vehicleId)
         {
-            string jwt = Request.Headers.Authorization.Parameter.ToString();
-            var decodedToken = unitOfWork.AppUserRepository.DecodeJwt(jwt);
-
-            string userEmail = decodedToken.Claims.First(claim => claim.Type == "unique_name").Value;
-            var user = unitOfWork.AppUserRepository.GetAll().ToList().Where(u => u.Email == userEmail).ToList().FirstOrDefault();
+            int i = 0;
+            var vehicle = unitOfWork.Vehicles.GetAll().ToList().Where(v => v.Id == Int32.Parse(vehicleId)).ToList().FirstOrDefault();
 
             Dictionary<string, object> dict = new Dictionary<string, object>();
+            String imgs = "";
             try
             {
                 var httpRequest = HttpContext.Current.Request;
 
                 foreach (string file in httpRequest.Files)
                 {
+                    i++;
                     HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
 
                     var postedFile = httpRequest.Files[file];
@@ -278,13 +273,13 @@ namespace RentApp.Controllers
                         }
                         else
                         {
-                            if (!Directory.Exists(HttpContext.Current.Server.MapPath("/Content/Images/Users/" + user.Id)))
-                                Directory.CreateDirectory(HttpContext.Current.Server.MapPath("/Content/Images/Users/" + user.Id));
+                            if (!Directory.Exists(HttpContext.Current.Server.MapPath("/Content/Images/Vehicles/" + vehicle.Id)))
+                                Directory.CreateDirectory(HttpContext.Current.Server.MapPath("/Content/Images/Vehicles/" + vehicle.Id));
 
-                            var filePath = HttpContext.Current.Server.MapPath("/Content/Images/Users/" + user.Id + "/profilePic." + postedFile.FileName.Split('.').LastOrDefault());
+                            var filePath = HttpContext.Current.Server.MapPath("/Content/Images/Vehicles/" + vehicle.Id + "/vehiclePic" + i + "." + postedFile.FileName.Split('.').LastOrDefault());
                             postedFile.SaveAs(filePath);
-
-                            user.Image = "/Content/Images/Users/" + user.Id + "/profilePic." + postedFile.FileName.Split('.').LastOrDefault();
+                            
+                            imgs += (String.Format("/Content/Images/Vehicles/" + vehicle.Id + "/vehiclePic" + i + "." + postedFile.FileName.Split('.').LastOrDefault())) + ";";
                             var message = string.Format("/Content/Images/" + postedFile.FileName);
                         }
                     }
@@ -296,14 +291,15 @@ namespace RentApp.Controllers
                 var res = string.Format("Please Upload a image.");
                 //return Request.CreateResponse(HttpStatusCode.NotFound, res);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 var res = string.Format("some Message");
                 dict.Add("error", res);
                 return Request.CreateResponse(HttpStatusCode.NotFound, dict);
             }
 
-            unitOfWork.AppUserRepository.Update(user);
+            vehicle.Images = imgs;
+            unitOfWork.Vehicles.Update(vehicle);
             unitOfWork.Complete();
             return Request.CreateResponse(HttpStatusCode.OK);
         }

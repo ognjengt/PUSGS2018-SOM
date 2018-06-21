@@ -30,5 +30,21 @@ export class FileUploadService {
       fd.append(selectedFile.name, selectedFile)
     }    
     return this.httpClient.post("http://localhost:51680/api/File/PostServiceImage?serviceEmail=" + serviceEmail, fd);
+  }  
+  
+  uploadVehicleImages(vehicleId: string, selectedFiles: File[]){
+    const fd = new FormData();
+    for (let selectedFile of selectedFiles){
+      fd.append(selectedFile.name, selectedFile)
+    }    
+    return this.httpClient.post("http://localhost:51680/api/File/PostVehicleImages?vehicleId=" + vehicleId, fd);
+  }  
+
+  uploadBranchLogo(branchId: string, selectedFiles: File[]){
+    const fd = new FormData();
+    for (let selectedFile of selectedFiles){
+      fd.append(selectedFile.name, selectedFile)
+    }    
+    return this.httpClient.post("http://localhost:51680/api/File/PostBranchImage?bId=" + branchId, fd);
   }
 }
