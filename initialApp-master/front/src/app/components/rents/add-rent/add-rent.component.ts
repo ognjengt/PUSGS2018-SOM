@@ -45,6 +45,9 @@ export class AddRentComponent implements OnInit {
         this.fileUploadService.uploadVehicleImages(response.toString(), this.logo)
         .subscribe(data => {   
           alert("Add was successful!");   
+        }, 
+        error => {
+          alert("Images not added, some of the images are too large!");  
         })
       }
       else{        
