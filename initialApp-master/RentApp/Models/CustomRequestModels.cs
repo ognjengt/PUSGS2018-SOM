@@ -40,4 +40,10 @@ namespace RentApp.Models
         public int ServiceId { get; set; }
         public bool Unavailable { get; set; }
     }
+
+    public class PromotedUserRequestModel
+    {
+        public int UserId { get; set; }
+        public string NewRole { get; set; }
+    }
 }

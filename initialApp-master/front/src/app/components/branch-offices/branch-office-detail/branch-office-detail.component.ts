@@ -15,7 +15,8 @@ export class BranchOfficeDetailComponent implements OnInit {
 
   branchOffice:any
   branchOfficeLoaded: boolean;
-  id:any
+  id:any;
+  coords: any;
 
   constructor(private branchOfficeService: BranchofficeService, private route: ActivatedRoute, private router: Router) {
   }
@@ -25,8 +26,12 @@ export class BranchOfficeDetailComponent implements OnInit {
       this.id = params['Id'];
 
       this.branchOfficeService.getBranchOffice(parseInt(this.id)).subscribe(data => {
-        this.branchOfficeLoaded = true
+        this.branchOfficeLoaded = true;
         this.branchOffice = data;
+        this.coords = {
+          lat: this.branchOffice.Latitude,
+          lng: this.branchOffice.Longitude
+        }
       })
     });
     

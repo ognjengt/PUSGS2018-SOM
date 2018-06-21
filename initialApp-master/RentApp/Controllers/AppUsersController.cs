@@ -12,6 +12,8 @@ using RentApp.Models.Entities;
 using RentApp.Persistance;
 using RentApp.Persistance.UnitOfWork;
 using System.Web;
+using RentApp.Models;
+using System.Threading.Tasks;
 
 namespace RentApp.Controllers
 {

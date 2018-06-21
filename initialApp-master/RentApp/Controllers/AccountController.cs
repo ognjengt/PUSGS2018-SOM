@@ -18,6 +18,7 @@ using RentApp.Models.Entities;
 using RentApp.Providers;
 using RentApp.Results;
 using RentApp.Persistance.UnitOfWork;
+using System.Data.Entity.Infrastructure;
 
 namespace RentApp.Controllers
 {
@@ -372,6 +373,30 @@ namespace RentApp.Controllers
                 return GetErrorResult(result); 
             }
             return Ok();
+        }
+
+        // Add role to user
+        [Route("PromoteUser")]
+        public string PromoteUser([FromBody]PromotedUserRequestModel promotedUser)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState).ToString();
+            }
+            //Get user data, and update activated to true
+            
+
+            try
+            {
+                //unitOfWork.AppUserRepository.Update(current);
+                //unitOfWork.Complete();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return BadRequest().ToString();
+            }
+
+            return "Ok";
         }
 
         protected override void Dispose(bool disposing)

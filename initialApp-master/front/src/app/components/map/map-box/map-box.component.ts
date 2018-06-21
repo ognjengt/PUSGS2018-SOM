@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { GeoJson, FeatureCollection } from '../../../models/map';
 import { MapServiceService } from '../../../services/map/map-service.service';
@@ -12,6 +12,7 @@ import { apikey } from '../../../../../keys';
 })
 export class MapBoxComponent implements OnInit {
 
+  @Input() coords: any;
   /// default settings
   map: mapboxgl.Map;
   style = 'mapbox://styles/mapbox/outdoors-v9';
@@ -28,6 +29,8 @@ export class MapBoxComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.lat = this.coords.lat;
+    this.lng = this.coords.lng;
     //this.markers = this.mapService.getMarkers()
     this.initializeMap()
   }

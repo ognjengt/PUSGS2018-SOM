@@ -55,7 +55,7 @@ export class AdminServiceService {
   }
 
   promoteUser(promotedUser: PromoteData): Observable<any> {
-    return this.httpClient.post("http://localhost:51680/api/AdditionalUserOps/PromoteUser",promotedUser);
+    return this.httpClient.post("http://localhost:51680/api/Account/PromoteUser",promotedUser);
   }
 
 }
