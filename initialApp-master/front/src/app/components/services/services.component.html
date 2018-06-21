@@ -1,6 +1,6 @@
 <div class="container">
     <h2>Services</h2>
-        <div>
+        <div *ngIf="loggedIn()">
             <button type="button" class="btn btn-primary"  [routerLink]="['/addService']">Add Service</button>    
         </div>
 
@@ -13,8 +13,8 @@
                   <h5 class="card-title">{{service.Name}}</h5>
                   <p class="card-text">{{service.Description}}</p>
                   <button type="button" [routerLink]="['/services', service.Id]" class="btn btn-primary">View Service</button>
-                  <button type="button" class="btn btn-danger" (click)="deleteService(service.Id, i)">Delete Service</button>
-                  <button type="button" class="btn btn-warning" [routerLink]="['/editService', service.Id]">Edit Service</button>
+                  <button type="button" class="btn btn-danger" (click)="deleteService(service.Id, i)" *ngIf="loggedIn()">Delete Service</button>
+                  <button type="button" class="btn btn-warning" [routerLink]="['/editService', service.Id]" *ngIf="loggedIn()">Edit Service</button>
                 </div>
             </div>
         </div>

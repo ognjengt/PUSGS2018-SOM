@@ -30,6 +30,10 @@ export class RentsComponent implements OnInit {
 
   ngOnInit() {
   }
+  
+  loggedIn(): string {
+    return localStorage.jwt;
+  }
 
   deleteVehicle(id, i) {
     this.rentService.deleteVehicle(id).

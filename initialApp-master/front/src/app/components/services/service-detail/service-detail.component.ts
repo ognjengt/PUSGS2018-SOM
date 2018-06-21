@@ -29,7 +29,6 @@ export class ServiceDetailComponent implements OnInit {
     subscribe(data => {
       this.service = data;
       this.reviews = this.service.Reviews;
-      console.log(this.service)
     })
   }
 
@@ -39,10 +38,13 @@ export class ServiceDetailComponent implements OnInit {
 
     review.ServiceId = parseInt(this.id);
     this.servService.postReview(review).subscribe(resp => {
-      this.servService.getService(this.id).
-      subscribe(data => {
-          this.reviews = data['Reviews'];
+      this.servService.getService(this.id)
+      .subscribe( data => {
+        this.reviews = data['Reviews'];
       })
+    },
+    error => {
+      alert("Please log in to post a review.")
     })
   }
 

@@ -29,6 +29,10 @@ export class ServicesComponent implements OnInit {
 
   ngOnInit() {
   }
+  
+  loggedIn(): string {
+    return localStorage.jwt;
+  }
 
   // Todo pogledati ko moze da dodaje servise
 }

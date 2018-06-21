@@ -1,6 +1,6 @@
 <div class="container">
   <h2>Vehicles</h2>
-      <div>
+      <div *ngIf="loggedIn()">
           <button type="button" class="btn btn-primary"  [routerLink]="['/addVehicle']">Add Vehicle</button>    
       </div>
 
@@ -17,8 +17,8 @@
                 <p class="card-text">{{vehicle.PricePerHour}}</p>
                 <p class="card-text">{{vehicle.Type.Name}}</p>
                 <button type="button" [routerLink]="['/vehicleDetails', vehicle.Id]" class="btn btn-primary">View Vehicle</button>
-                <button type="button" class="btn btn-danger" (click)="deleteVehicle(vehicle.Id, i)">Delete Vehicle</button>
-                <button type="button" class="btn btn-warning" [routerLink]="['/editVehicle', vehicle.Id]">Edit Vehicle</button>
+                <button type="button" class="btn btn-danger" (click)="deleteVehicle(vehicle.Id, i)" *ngIf="loggedIn()">Delete Vehicle</button>
+                <button type="button" class="btn btn-warning" [routerLink]="['/editVehicle', vehicle.Id]" *ngIf="loggedIn()">Edit Vehicle</button>
               </div>
           </div>
       </div>

@@ -20,7 +20,7 @@ export class BranchOfficeDetailComponent implements OnInit {
 
   constructor(private branchOfficeService: BranchofficeService, private route: ActivatedRoute, private router: Router) {
   }
-
+  
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.id = params['Id'];

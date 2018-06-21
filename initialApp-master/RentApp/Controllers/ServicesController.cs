@@ -156,7 +156,8 @@ namespace RentApp.Controllers
 
             return "Ok";
         }
-        
+
+        [Authorize]
         [Route("PostReview")]
         public IHttpActionResult PostReview([FromBody]ReviewRequestModel reviewRequest)
         {

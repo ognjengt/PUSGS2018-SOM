@@ -36,6 +36,10 @@ export class BranchOfficesComponent implements OnInit {
   ngOnInit() {
   }
 
+  loggedIn(): string {
+    return localStorage.jwt;
+  }
+
   deletebranchOffice(id, i) {
     this.branchOfficeService.deleteBranchOffice(id).
     subscribe(data => {      
