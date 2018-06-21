@@ -3,13 +3,13 @@ import { CanActivate, Router } from '@angular/router';
 import decode from 'jwt-decode';
 
 @Injectable()
-export class CanActivateViaAuthGuard implements CanActivate {
+export class ManagerGuard implements CanActivate {
 
   constructor(private router: Router) {}
 
   canActivate() {
     const tokenPayload = decode(localStorage.getItem('jwt'));
-    if(tokenPayload.role == 'Admin') {
+    if(tokenPayload.role == 'Manager' || tokenPayload.role == 'Admin') {
       return true;
     }
     else {

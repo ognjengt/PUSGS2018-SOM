@@ -46,9 +46,9 @@ export class RentACarComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.id = params['Id'];
     });
-    this.vehicle = this.rentService.getVehicle(this.id).
+    this.rentService.getVehicle(this.id).
     subscribe(data => {
-      this.vehicle = data; 
+      this.vehicle = data;
     })
   }
 

@@ -20,7 +20,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/interceptor';
 
 // Guard
-import {CanActivateViaAuthGuard} from './guard/auth.guard';
+import {CanActivateViaAuthGuard} from './guard/auth.guard'; // Admin guard
+import { UserSignedInGuard } from './guard/userSignedIn.guard'; // Signed in guard
 
 // Our Components
 import { AppComponent } from './app.component';
@@ -53,6 +54,7 @@ import {
   ToastNoAnimation,
   ToastNoAnimationModule,
 } from 'ngx-toastr';
+import { ManagerGuard } from './guard/manager.guard';
 
 const Routes = [
   {
@@ -93,31 +95,38 @@ const Routes = [
   },
   {
     path: "profile",
-    component: ProfileComponent
+    component: ProfileComponent,
+    canActivate: [UserSignedInGuard]
   },
   {
     path: "adminpanel",
-    component: AdminpanelComponent
+    component: AdminpanelComponent,
+    canActivate: [CanActivateViaAuthGuard]
   },
   {
     path: "addService",
-    component: AddServiceComponent
+    component: AddServiceComponent,
+    canActivate: [ManagerGuard]
   },
   {
     path: "editService/:Id",
-    component: EditServiceComponent
+    component: EditServiceComponent,
+    canActivate: [ManagerGuard]
   },
   {
     path: "editBranchOffice/:Id",
-    component: EditBranchComponent
+    component: EditBranchComponent,
+    canActivate: [ManagerGuard]
   },
   {
     path: "addVehicle",
-    component: AddRentComponent
+    component: AddRentComponent,
+    canActivate: [ManagerGuard]
   },
   {
     path: "editVehicle/:Id",
-    component: EditRentComponent
+    component: EditRentComponent,
+    canActivate: [ManagerGuard]
   },
   {
     path: "vehicleDetails/:Id",
@@ -125,7 +134,8 @@ const Routes = [
   },
   {
     path: "rentACar/:Id",
-    component: RentACarComponent
+    component: RentACarComponent,
+    canActivate: [UserSignedInGuard]
   },
   {
     path: "search",
@@ -180,6 +190,8 @@ const Routes = [
   ],  
   providers: [
     CanActivateViaAuthGuard,
+    UserSignedInGuard,
+    ManagerGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
