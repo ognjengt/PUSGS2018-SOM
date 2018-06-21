@@ -14,6 +14,7 @@ export class SearchComponent implements OnInit {
 
   types: TypeModule[] = [];
   vehicles: VehicleModule[] = [];
+  images: any = {}
 
   constructor(private serachService: SearchService) { 
     serachService.getVehicleTypes().subscribe(types => {
@@ -27,6 +28,13 @@ export class SearchComponent implements OnInit {
   onSubmit(searchData: SearchModel, form: NgForm) {
     this.serachService.search(searchData).subscribe(data => {
       this.vehicles = data;
+
+      for(let vehicle of this.vehicles){
+        if(vehicle['Images'] != null && vehicle['Images'] != undefined){
+          var imgsSplit = vehicle['Images'].split(';')
+          this.images[vehicle.Id] = imgsSplit
+        }        
+      }
       console.log(this.vehicles);
     })
   }
