@@ -183,6 +183,12 @@ namespace RentApp.Controllers
             return Ok(vehicle);
         }
 
+        [Route("SearchVehicles")]
+        public IEnumerable<Vehicle> SearchVehicles([FromBody]SearchVehicleRequestModel searchVehicleRequest)
+        {
+            return unitOfWork.Vehicles.SearchVehicles(searchVehicleRequest);
+        }
+
         private bool VehicleExists(int id)
         {
             return unitOfWork.Vehicles.Get(id) != null;

@@ -75,6 +75,7 @@ namespace RentApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        [Route("PostVehicleType")]
         [ResponseType(typeof(VehicleType))]
         public IHttpActionResult PostVehicleType(VehicleType vehicleType)
         {

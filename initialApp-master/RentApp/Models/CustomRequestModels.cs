@@ -46,4 +46,13 @@ namespace RentApp.Models
         public int UserId { get; set; }
         public string NewRole { get; set; }
     }
+
+    public class SearchVehicleRequestModel
+    {
+        public string Model { get; set; }
+        public string Manufactor { get; set; }
+        public int Year { get; set; }
+        public string Type { get; set; }
+        public int PricePerHour { get; set; }
+    }
 }
