@@ -6,7 +6,7 @@
 
   <div class="row card-group">
       <div class="col-4"  *ngFor="let vehicle of vehicles; let i = index">
-          <div class="card">
+          <div class="card" *ngIf="!vehicle.Unavailable">
               <img src="http:\\localhost:51680\{{images[vehicle.Id][0]}}" height="150" width="300" *ngIf="vehicle.Images">
               <img src="https://www.b92.net/news/pics/2018/02/02/9267640395a741825a80ed062741542_orig.jpg" height="150" width="300" *ngIf="!vehicle.Images">
               <div class="card-body">

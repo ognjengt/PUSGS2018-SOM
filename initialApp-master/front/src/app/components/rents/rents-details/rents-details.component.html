@@ -3,7 +3,9 @@
     <p>{{vehicle.Year}}</p>
     <div *ngFor="let img of images">
         <img src="http:\\localhost:51680\{{img}}" height="150" width="300" *ngIf="vehicle.Images && img!=''">
+        <br/>
     </div>
+    <br/>
     <img src="https://www.b92.net/news/pics/2018/02/02/9267640395a741825a80ed062741542_orig.jpg" height="150" width="300" *ngIf="!vehicle.Images">       
-    <button type="button" class="btn btn-primary" (click)="onReserveVehicle()">Primary</button>   
+    <button type="button" class="btn btn-primary" [routerLink]="['/rentACar',vehicle.Id]">Rent this Vehicle</button>   
   </div>

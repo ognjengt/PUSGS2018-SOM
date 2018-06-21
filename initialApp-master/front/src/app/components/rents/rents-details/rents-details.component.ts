@@ -32,11 +32,11 @@ export class RentsDetailsComponent implements OnInit {
     })
   }
 
-  onReserveVehicle(){
-    this.vehicle.Unavailable = true
-    this.rentService.setVehicleAvailability(this.id, this.vehicle).
-    subscribe(data => {
-      console.log(data)
-    })
-  }
+  // onReserveVehicle(){
+  //   this.vehicle.Unavailable = true
+  //   this.rentService.setVehicleAvailability(this.id, this.vehicle).
+  //   subscribe(data => {
+  //     console.log(data)
+  //   })
+  // }
 }
