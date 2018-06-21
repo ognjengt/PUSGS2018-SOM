@@ -21,7 +21,7 @@ export class AppComponent {
     this.canSendMessage = _signalRService.connectionExists;
     setInterval(() => {  
       this._signalRService.sendNotification();  
-    }, 1000); 
+    }, 20000); 
   }
 
   public loggedIn(): string {

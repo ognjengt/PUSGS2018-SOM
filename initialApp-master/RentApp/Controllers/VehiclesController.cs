@@ -176,6 +176,18 @@ namespace RentApp.Controllers
                 return NotFound();
             }
 
+            var rents = unitOfWork.Rents.GetAll();
+            var rentsToDelete = new List<Rent>();
+            foreach (var rent in rents)
+            {
+                if (rent.Vehicle.Id == id)
+                    rentsToDelete.Add(rent);
+            }
+            
+
+            unitOfWork.Rents.RemoveRange(rentsToDelete);
+            unitOfWork.Complete();
+
             unitOfWork.Vehicles.Remove(vehicle);
             unitOfWork.Complete();
 

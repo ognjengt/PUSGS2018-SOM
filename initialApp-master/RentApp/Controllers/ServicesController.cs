@@ -110,6 +110,22 @@ namespace RentApp.Controllers
             service.Reviews.Clear();
             unitOfWork.BranchOffices.RemoveRange(service.BranchOffices);
             service.BranchOffices.Clear();
+
+            var rents = unitOfWork.Rents.GetAll();
+            var vehicles = service.Vehicles;
+            var rentsToDelete = new List<Rent>();
+            foreach(var vehicle in vehicles)
+            {
+                foreach (var rent in rents)
+                {
+                    if (rent.Vehicle.Id == vehicle.Id)
+                        rentsToDelete.Add(rent);
+                }
+            }
+
+            unitOfWork.Rents.RemoveRange(rentsToDelete);
+            unitOfWork.Complete();
+
             unitOfWork.Vehicles.RemoveRange(service.Vehicles);
             service.Vehicles.Clear();
             unitOfWork.Complete();
