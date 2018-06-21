@@ -12,11 +12,23 @@ export class BranchOfficesComponent implements OnInit {
 
   branchOffices: BranchOfficeModel[] = [];
   branchOfficeLoaded: boolean;
+
+  lat: number = 45.0079;
+  lng: number = 19.8226;
+  markers: any = [];
   
   constructor(private branchOfficeService: BranchofficeService) { 
     this.branchOfficeService.getAllBranchOffices().subscribe(data => {
       this.branchOfficeLoaded = true
       this.branchOffices = data;
+      this.branchOffices.forEach(branchoffice => {
+        let coords = {
+          id: branchoffice.Id,
+          lat: branchoffice.Latitude,
+          lng: branchoffice.Longitude
+        }
+        this.markers.push(coords);
+      })
     })
   }
 
@@ -29,5 +41,9 @@ export class BranchOfficesComponent implements OnInit {
       alert("Delete successful!");
       this.branchOffices.splice(i, 1);
     })
+  }
+
+  MarkerClickEvent(marker) {
+    window.location.href = "/branchOffice/"+marker.id;
   }
 }

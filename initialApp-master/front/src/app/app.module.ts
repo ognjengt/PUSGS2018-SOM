@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { AgmCoreModule } from '@agm/core';
 
 // Bootstrap Modules
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -44,6 +45,7 @@ import { MapBoxComponent } from './components/map/map-box/map-box.component';
 import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
 import { RentsDetailsComponent } from './components/rents/rents-details/rents-details.component';
 import { RentACarComponent } from './components/rentACar/rent-a-car/rent-a-car.component';
+import { GOOGLE_API_KEY } from 'keys';
 
 const Routes = [
   {
@@ -156,7 +158,10 @@ const Routes = [
     RouterModule.forRoot(Routes),
     HttpModule,
     HttpClientModule,
-    HttpClientXsrfModule
+    HttpClientXsrfModule,
+    AgmCoreModule.forRoot({
+      apiKey: GOOGLE_API_KEY
+    })
   ],
   providers: [
     CanActivateViaAuthGuard,
