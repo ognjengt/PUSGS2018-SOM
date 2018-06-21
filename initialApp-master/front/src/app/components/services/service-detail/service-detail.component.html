@@ -24,11 +24,17 @@
               <label for="Stars">Your grade</label>
               <input type="number" min="1" max="5" class="form-control" name="Stars" placeholder="From 1-5" ngModel>
             </div>
+
+            <div *ngIf="!validations.starsEmpty" style="color:red">This field can't be empty.</div>
+
+            <div *ngIf="!validations.starsInRange" style="color:red">Grade must be between 1 and 5</div>
     
             <div class="form-group">
               <label for="Comment">Comment</label>
               <textarea type="text" class="form-control" name="Comment" placeholder="Post your comment here..." ngModel></textarea>
             </div>
+
+            <div *ngIf="!validations.commentOk" style="color:red">This field can't be empty.</div>
     
             <button type="submit" class="btn btn-primary">Submit Review</button>
           </form>

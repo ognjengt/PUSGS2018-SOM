@@ -229,3 +229,36 @@ export class VehicleValidations{
     return wrong;
   }
 }
+
+export class ReviewValidations{
+  starsEmpty: boolean = true;
+  starsInRange: boolean = true;
+  commentOk: boolean = true;
+
+  validate(reviewData) {
+    let wrong = false;
+    if (reviewData.Stars == null || reviewData.Stars == "") {
+      this.starsEmpty = false;
+      wrong = true;
+    }
+    else this.starsEmpty = true;
+
+    if (reviewData.Comment == null || reviewData.Comment == "") {
+      this.commentOk = false;
+      wrong = true;
+    }
+    else this.commentOk = true;
+
+    return wrong;
+  }
+
+  validateStars(stars) {
+    if(stars < 1 || stars > 5) {
+      this.starsInRange = false;
+      return false;
+    } else {
+      this.starsInRange = true;
+      return true;
+    }
+  }
+}

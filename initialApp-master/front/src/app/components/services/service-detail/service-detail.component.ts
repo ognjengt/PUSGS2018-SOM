@@ -4,6 +4,7 @@ import { ServiceModule } from '../../../models/service.model';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ReviewModel } from '../../../models/review.model';
+import { ReviewValidations } from '../../../models/validations/validationModels';
 
 @Component({
   selector: 'app-service-detail',
@@ -15,6 +16,7 @@ export class ServiceDetailComponent implements OnInit {
   service:any
   id:any
   reviews: ReviewModel[] = [];
+  validations: ReviewValidations = new ReviewValidations();
 
   constructor(private servService: ServiceService, private route: ActivatedRoute, private router: Router) {
   }
@@ -32,6 +34,9 @@ export class ServiceDetailComponent implements OnInit {
   }
 
   onSubmitReview(review: ReviewModel, form: NgForm) {
+    if(this.validations.validate(review)) return;
+    if(!this.validations.validateStars(review.Stars)) return;
+
     review.ServiceId = parseInt(this.id);
     this.servService.postReview(review).subscribe(resp => {
       this.servService.getService(this.id).
