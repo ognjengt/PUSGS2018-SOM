@@ -11,9 +11,11 @@ using System.Web.Http.Description;
 using RentApp.Models.Entities;
 using RentApp.Persistance;
 using RentApp.Persistance.UnitOfWork;
+using RentApp.Models;
 
 namespace RentApp.Controllers
 {
+    [RoutePrefix("api/Rents")]
     public class RentsController : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
@@ -72,19 +74,42 @@ namespace RentApp.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
-
-        [ResponseType(typeof(Rent))]
-        public IHttpActionResult PostRent(Rent rent)
+    
+        [Route("PostRent")]
+        public string PostRent(RentRequestModel rentRequest)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest(ModelState).ToString();
             }
 
-            unitOfWork.Rents.Add(rent);
-            unitOfWork.Complete();
+            Rent r = new Rent();
+            r.Start = rentRequest.Start;
+            r.End = rentRequest.End;
+            r.Vehicle = unitOfWork.Vehicles.Get(rentRequest.VehicleId);
+            r.BranchOffice = unitOfWork.BranchOffices.Get(rentRequest.BranchOfficeId);
+            r.Vehicle.Unavailable = true;
+            // Izvuci iz heada jwt i uzmi koji je user
+            string jwt = Request.Headers.Authorization.Parameter.ToString();
+            var decodedToken = unitOfWork.AppUserRepository.DecodeJwt(jwt);
 
-            return CreatedAtRoute("DefaultApi", new { id = rent.Id }, rent);
+            string userEmail = decodedToken.Claims.First(claim => claim.Type == "unique_name").Value;
+            AppUser appUser = unitOfWork.AppUserRepository.GetAll().Where(u => u.Email == userEmail).FirstOrDefault();
+            
+
+            try
+            {
+                unitOfWork.Rents.Add(r);
+                appUser.Rents.Add(r);
+                unitOfWork.Complete();
+            }
+            catch (Exception)
+            {
+                return InternalServerError().ToString();
+            }
+
+
+            return "Ok";
         }
 
         [ResponseType(typeof(Rent))]

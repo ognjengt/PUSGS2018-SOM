@@ -16,7 +16,8 @@
       <div class="card">
           <!-- <img class="card-img-top" src="vehicles.Logo" alt="Card image cap"> -->
           <div class="card-body">
-            {{rent.Vehicle.Model}}
+            <a [routerLink]="['/vehicleDetails', rent.Vehicle.Id]">{{rent.Vehicle.Manufactor}} {{rent.Vehicle.Model}}</a>
+            
           </div>
       </div>
   </div>

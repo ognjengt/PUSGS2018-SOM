@@ -31,6 +31,7 @@ export class ProfileComponent implements OnInit {
       this.usersService.getUserData(claims['Email']).subscribe(data => {
         this.profileLoaded = true
         this.user = data;
+        console.log(this.user);
       })
     })
   }

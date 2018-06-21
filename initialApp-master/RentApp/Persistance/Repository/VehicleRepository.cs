@@ -23,7 +23,7 @@ namespace RentApp.Persistance.Repository
         public VehiclePaginationResponse SearchVehicles(SearchVehicleRequestModel vehicle)
         {
             int pageSize = 10;
-            var queryChain = Context.Vehicles.ToList();
+            var queryChain = Context.Vehicles.Where(v => v.Unavailable == false).ToList();
             if (!String.IsNullOrEmpty(vehicle.Model))
             {
                 queryChain = queryChain.Where(v => v.Model.ToLower().Contains(vehicle.Model.ToLower())).ToList();
