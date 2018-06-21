@@ -28,4 +28,26 @@
           <img src="http://localhost:51680/{{awaitingClient.Image}}" width="200" height="100" alt=""><span class="pull-right" style="float:right"><button class="btn btn-success btn-small" (click)="AuthorizeUser(awaitingClient.Id,i)">Authorize Client</button></span></li>
       </ul>
     </div>
+
+    <div class="col-md-12">
+      <h3>Promote</h3> 
+      <ul class="list-group" *ngFor="let appUser of allAppUsers; let i = index">
+        Full name: {{appUser.FullName}} <br>
+        Email: {{appUser.Email}}
+        <form #promoteForm="ngForm" (ngSubmit)="PromoteUser(promoteForm.value, promoteForm)">
+            <input type="text" hidden [(ngModel)]="appUser.Id" name="UserId" ngModel>
+            <div class="col-md-3">
+                <select ngModel type="text" class="form-control" name="Role" placeholder="Role">
+                    <option value="AppUser">AppUser</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Admin">Admin</option>
+                  </select>
+            </div>
+  
+          <button type="submit" class="btn btn-primary">Promote</button>
+        </form>
+        <hr>
+        <br>
+      </ul>
+    </div>
 </div>

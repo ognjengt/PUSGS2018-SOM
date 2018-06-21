@@ -31,6 +31,12 @@ namespace RentApp.Controllers
             return unitOfWork.AppUserRepository.GetUnbannedManagers();
         }
 
+        [Route("GetAllUsers")]
+        public IEnumerable<AppUser> GetAllUsers()
+        {
+            return unitOfWork.AppUserRepository.GetAll();
+        }
+
         [Route("GetUser")]
         public AppUser GetUser(string email)
         {

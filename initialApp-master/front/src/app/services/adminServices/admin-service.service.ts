@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { Body } from '@angular/http/src/body';
+import PromoteData from '../../models/promoteUser.model';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,14 @@ export class AdminServiceService {
 
   authorizeUser(userId): Observable<any> {
     return this.httpClient.post("http://localhost:51680/api/AdditionalUserOps/AuthorizeUser",userId);
+  }
+
+  getAllUsers(): Observable<any> {
+    return this.httpClient.get("http://localhost:51680/api/AdditionalUserOps/GetAllUsers");
+  }
+
+  promoteUser(promotedUser: PromoteData): Observable<any> {
+    return this.httpClient.post("http://localhost:51680/api/AdditionalUserOps/PromoteUser",promotedUser);
   }
 
 }

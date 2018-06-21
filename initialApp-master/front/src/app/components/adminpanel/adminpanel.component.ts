@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminServiceService } from '../../services/adminServices/admin-service.service';
+import PromoteData from '../../models/promoteUser.model';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-adminpanel',
@@ -14,6 +16,7 @@ export class AdminpanelComponent implements OnInit {
   unbannedManagers:any = [];
   bannedManagers:any = [];
   awaitingClients:any = [];
+  allAppUsers:any = [];
 
   constructor(adminService: AdminServiceService) { 
     this.adminService = adminService;
@@ -32,8 +35,12 @@ export class AdminpanelComponent implements OnInit {
 
     adminService.getAwaitingClients().subscribe(data => {
       this.awaitingClients = data;
-      console.log(this.awaitingClients);
     })
+    
+    adminService.getAllUsers().subscribe(data => {
+      this.allAppUsers = data;
+    })
+    
   }
 
   ngOnInit() {
@@ -53,8 +60,20 @@ export class AdminpanelComponent implements OnInit {
   AuthorizeService(id, i) {
     this.adminService.authorizeService(id).subscribe(resp => {
       if(resp == "Ok")  {
-        alert("Service has been authorized!"); 
+        alert("Service has been authorized!");
         this.awaitingServices.splice(i,1);
+      }
+
+      else alert("Something went wrong");
+    })
+  }
+
+  PromoteUser(promotedUser: PromoteData, form: NgForm) {
+    console.log(promotedUser);
+
+    this.adminService.promoteUser(promotedUser).subscribe(resp => {
+      if(resp == "Ok")  {
+        alert("User has been promoted to: "+ promotedUser.NewRole);
       }
 
       else alert("Something went wrong");
