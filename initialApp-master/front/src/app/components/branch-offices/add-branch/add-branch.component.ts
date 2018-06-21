@@ -39,6 +39,9 @@ export class AddBranchComponent implements OnInit {
         this.fileUploadService.uploadBranchLogo(response, this.selectedImages)
         .subscribe(data => {   
           alert("Add was successful!");   
+        }, 
+        error => {
+          alert("Image not added, too large!");  
         })
       }
       else{        

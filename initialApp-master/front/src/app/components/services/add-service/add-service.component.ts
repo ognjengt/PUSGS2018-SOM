@@ -38,6 +38,9 @@ export class AddServiceComponent implements OnInit {
         this.fileUploadService.uploadServiceLogo(addServiceData.Email, this.logo)
         .subscribe(data => {   
           alert("Add was successful!");   
+        }, 
+        error => {
+          alert("Image not added, too large!");  
         })
       }
       else{        

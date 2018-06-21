@@ -76,6 +76,7 @@ namespace RentApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
     
+        [Authorize]
         [Route("PostRent")]
         public string PostRent(RentRequestModel rentRequest)
         {

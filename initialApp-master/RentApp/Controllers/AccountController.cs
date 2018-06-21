@@ -19,6 +19,8 @@ using RentApp.Providers;
 using RentApp.Results;
 using RentApp.Persistance.UnitOfWork;
 using System.Data.Entity.Infrastructure;
+using RentApp.Hubs;
+using Microsoft.AspNet.SignalR;
 using System.Net;
 
 namespace RentApp.Controllers

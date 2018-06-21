@@ -49,6 +49,10 @@ export class ProfileComponent implements OnInit {
     .subscribe(data => {      
       alert("Image uploaded.");      
       this.requestUserInfo()
+    }, 
+    error => {
+      alert("Image not added, too large!");  
+      this.requestUserInfo()
     })
   }
 }

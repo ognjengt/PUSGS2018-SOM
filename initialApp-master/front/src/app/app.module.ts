@@ -48,6 +48,12 @@ import { RentACarComponent } from './components/rentACar/rent-a-car/rent-a-car.c
 import { GOOGLE_API_KEY } from 'keys';
 import { SearchComponent } from './components/search/search.component';
 
+import {
+  ToastrModule,
+  ToastNoAnimation,
+  ToastNoAnimationModule,
+} from 'ngx-toastr';
+
 const Routes = [
   {
     path: "",
@@ -127,7 +133,6 @@ const Routes = [
   }
 ]
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -152,7 +157,7 @@ const Routes = [
     FileUploaderComponent,
     RentsDetailsComponent,
     RentACarComponent,
-    SearchComponent
+    SearchComponent    
   ],
   imports: [
     BrowserModule,
@@ -167,8 +172,12 @@ const Routes = [
     HttpClientXsrfModule,
     AgmCoreModule.forRoot({
       apiKey: GOOGLE_API_KEY
-    })
-  ],
+    }),
+    ToastNoAnimationModule,
+    ToastrModule.forRoot({
+      toastComponent: ToastNoAnimation,
+    }),
+  ],  
   providers: [
     CanActivateViaAuthGuard,
     {

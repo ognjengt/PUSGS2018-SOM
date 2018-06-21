@@ -62,6 +62,9 @@ export class RentACarComponent implements OnInit {
     console.log(rentData);
     this.rentService.postNewRent(rentData).subscribe(resp => {
       if(resp == "Ok") alert("Successfully reserved!");
+    },
+    error => {
+      alert("You are not logged in!");
     })
   }
 
