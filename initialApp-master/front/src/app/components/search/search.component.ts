@@ -15,6 +15,9 @@ export class SearchComponent implements OnInit {
   types: TypeModule[] = [];
   vehicles: VehicleModule[] = [];
   images: any = {}
+  pages: number;
+  pagesArr: number[] = [];
+  pagedRequest: SearchModel;
 
   constructor(private serachService: SearchService) { 
     serachService.getVehicleTypes().subscribe(types => {
@@ -26,8 +29,17 @@ export class SearchComponent implements OnInit {
   }
 
   onSubmit(searchData: SearchModel, form: NgForm) {
+    searchData.Page = 1;
+    this.pagedRequest = searchData;
+    console.log(searchData);
     this.serachService.search(searchData).subscribe(data => {
-      this.vehicles = data;
+      this.vehicles = data['Vehicles'];
+      this.pages = data['Pages'];
+      this.pagesArr = [];
+
+      for (let index = 1; index <= this.pages; index++) {
+        this.pagesArr.push(index);
+      }
 
       for(let vehicle of this.vehicles){
         if(vehicle['Images'] != null && vehicle['Images'] != undefined){
@@ -35,7 +47,28 @@ export class SearchComponent implements OnInit {
           this.images[vehicle.Id] = imgsSplit
         }        
       }
-      console.log(this.vehicles);
+    })
+  }
+
+  Paginate(page) {
+    this.pagedRequest.Page = page;
+
+    this.serachService.search(this.pagedRequest).subscribe(data => {
+      this.vehicles = data['Vehicles'];
+      this.pages = data['Pages'];
+      this.pagesArr = [];
+
+      for (let index = 1; index <= this.pages; index++) {
+        
+        this.pagesArr.push(index);
+      }
+
+      for(let vehicle of this.vehicles){
+        if(vehicle['Images'] != null && vehicle['Images'] != undefined){
+          var imgsSplit = vehicle['Images'].split(';')
+          this.images[vehicle.Id] = imgsSplit
+        }        
+      }
     })
   }
 

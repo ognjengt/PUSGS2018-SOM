@@ -54,5 +54,6 @@ namespace RentApp.Models
         public int Year { get; set; }
         public string Type { get; set; }
         public int PricePerHour { get; set; }
+        public int Page { get; set; }
     }
 }

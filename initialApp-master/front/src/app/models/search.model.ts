@@ -6,4 +6,5 @@ export default class SearchModel {
   Year: string;
   Type: TypeModule;
   PricePerHour: number;
+  Page: number;
 }

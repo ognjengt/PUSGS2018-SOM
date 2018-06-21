@@ -20,8 +20,9 @@ namespace RentApp.Persistance.Repository
             return Context.Vehicles.Skip((pageIndex - 1) * pageSize).Take(pageSize);
         }
 
-        public IEnumerable<Vehicle> SearchVehicles(SearchVehicleRequestModel vehicle)
+        public VehiclePaginationResponse SearchVehicles(SearchVehicleRequestModel vehicle)
         {
+            int pageSize = 10;
             var queryChain = Context.Vehicles.ToList();
             if (!String.IsNullOrEmpty(vehicle.Model))
             {
@@ -43,7 +44,22 @@ namespace RentApp.Persistance.Repository
             {
                 queryChain = queryChain.Where(v => v.PricePerHour == vehicle.PricePerHour).ToList();
             }
-            return queryChain;
+            VehiclePaginationResponse vpr = new VehiclePaginationResponse();
+            vpr.Vehicles = queryChain.Skip((vehicle.Page - 1) * pageSize).Take(pageSize).ToList();
+
+            int pages;
+
+            if (queryChain.ToList().Count % 10 == 0)
+            {
+                pages = queryChain.ToList().Count / 10;
+            }
+            else
+            {
+                pages = (queryChain.ToList().Count / 10) + 1;
+            }
+
+            vpr.Pages = pages;
+            return vpr;
         }
 
         protected RADBContext Context { get { return RADBContext.Create(); } }

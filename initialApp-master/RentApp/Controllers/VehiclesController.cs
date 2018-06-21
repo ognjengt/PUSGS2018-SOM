@@ -184,7 +184,7 @@ namespace RentApp.Controllers
         }
 
         [Route("SearchVehicles")]
-        public IEnumerable<Vehicle> SearchVehicles([FromBody]SearchVehicleRequestModel searchVehicleRequest)
+        public VehiclePaginationResponse SearchVehicles([FromBody]SearchVehicleRequestModel searchVehicleRequest)
         {
             return unitOfWork.Vehicles.SearchVehicles(searchVehicleRequest);
         }
