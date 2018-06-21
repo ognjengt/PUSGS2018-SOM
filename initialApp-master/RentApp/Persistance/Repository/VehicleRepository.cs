@@ -22,7 +22,6 @@ namespace RentApp.Persistance.Repository
 
         public IEnumerable<Vehicle> SearchVehicles(SearchVehicleRequestModel vehicle)
         {
-            
             var queryChain = Context.Vehicles.ToList();
             if (!String.IsNullOrEmpty(vehicle.Model))
             {
