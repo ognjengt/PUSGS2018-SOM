@@ -2,6 +2,9 @@
   <h1>{{service.Name}}</h1>
   <p>{{service.Description}}</p>
 
+  <img class="card-img-top" src="http:\\localhost:51680\{{service.Logo}}" height="500" width="300" *ngIf="service.Logo">
+  <img class="card-img-top" src="https://putovanjaisitonija.files.wordpress.com/2017/05/rent-a-car-sitonija1.png?w=593&h=261&crop=1" height="500" width="300" *ngIf="!service.Logo"> 
+
   <h4>Reviews</h4>
   <div class="list-group" *ngFor="let review of reviews">
       <a class="list-group-item list-group-item-action flex-column align-items-start">

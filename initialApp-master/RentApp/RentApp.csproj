@@ -290,6 +290,10 @@
     <Compile Include="Migrations\201806191743275_Reviews.Designer.cs">
       <DependentUpon>201806191743275_Reviews.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806202329512_Vehicle images.cs" />
+    <Compile Include="Migrations\201806202329512_Vehicle images.Designer.cs">
+      <DependentUpon>201806202329512_Vehicle images.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -417,6 +421,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806191743275_Reviews.resx">
       <DependentUpon>201806191743275_Reviews.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806202329512_Vehicle images.resx">
+      <DependentUpon>201806202329512_Vehicle images.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

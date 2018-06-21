@@ -3,7 +3,8 @@
   <div class="row card-group">
       <div class="col-4"  *ngFor="let branchOffice of branchOffices; let i = index">
           <div class="card">
-              <img class="card-img-top" src="branchOffice.Logo" alt="Card image cap">
+              <img class="card-img-top" src="http:\\localhost:51680\{{branchOffice.Logo}}" *ngIf="branchOffice.Logo">
+              <img class="card-img-top" src="https://www.ncp-e.com/fileadmin/_processed_/0/d/filialvernetzung_d62f619600.png" *ngIf="!branchOffice.Logo">
               <div class="card-body">
                 <h5 class="card-title">{{branchOffice.Name}}</h5>
                 <p class="card-text">{{branchOffice.Address}}</p>

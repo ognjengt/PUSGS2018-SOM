@@ -39,7 +39,11 @@
 
           <div *ngIf="!validations.addressOk" style="color:red">This field can't be empty.</div>
 
-          // Jos logo ovde
+          <div class="container">
+              <input type="file" (change)="onFileSelected($event)">  
+          </div>
+          <br/>
+          <br/>
 
         <button type="submit" class="btn btn-primary">Add</button>
       </form>

@@ -108,7 +108,7 @@ namespace RentApp.Controllers
                 service.BranchOffices.Add(branchOffice);
                 unitOfWork.Complete();
 
-                return Ok();
+                return Ok(branchOffice.Id);
             }
             catch (Exception ex)
             {
