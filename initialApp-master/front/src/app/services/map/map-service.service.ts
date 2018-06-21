@@ -10,7 +10,7 @@ import { apikey } from '../../../../keys';
 export class MapServiceService {
 
   constructor() {
-    mapboxgl.accessToken = apikey;
+    Object.getOwnPropertyDescriptor(mapboxgl, "accessToken").set(apikey);
   }
 
 

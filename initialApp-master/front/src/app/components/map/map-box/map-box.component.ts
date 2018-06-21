@@ -25,7 +25,7 @@ export class MapBoxComponent implements OnInit {
   markers: any;
 
   constructor(private mapService: MapServiceService) {
-    mapboxgl.accessToken = apikey;
+    Object.getOwnPropertyDescriptor(mapboxgl, "accessToken").set(apikey);
   }
 
   ngOnInit() {
