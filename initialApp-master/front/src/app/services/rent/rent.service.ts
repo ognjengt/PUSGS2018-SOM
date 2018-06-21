@@ -47,4 +47,8 @@ export class RentService {
   postNewRent(newRent) {
     return this.httpClient.post("http://localhost:51680/api/Rents/PostRent", newRent)
   }
+
+  getRentedVehicles() {
+    return this.httpClient.get("http://localhost:51680/api/Rents/GetRents")
+  }
 }

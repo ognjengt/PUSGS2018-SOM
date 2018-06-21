@@ -25,6 +25,7 @@ namespace RentApp.Controllers
             this.unitOfWork = unitOfWork;
         }
 
+        [Route("GetRents")]
         public IEnumerable<Rent> GetRents()
         {
             return unitOfWork.Rents.GetAll();

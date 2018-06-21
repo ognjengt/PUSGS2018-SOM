@@ -71,6 +71,14 @@ namespace RentApp.Migrations
 
             context.AppUsers.AddOrUpdate(
 
+                  u => u.FullName,
+
+                  new AppUser() { FullName = "Menadzer Menadzerovic", Email="menadzer@menadzerovic.com", Birthday = DateTime.Now, Activated = true }
+
+            );
+
+            context.AppUsers.AddOrUpdate(
+
                 p => p.FullName,
 
                 new AppUser() { FullName = "AppUser AppUserovic" , Email= "sofija@gmail.com", Id=12345 }
@@ -183,6 +191,15 @@ namespace RentApp.Migrations
                 userManager.Create(user);
                 userManager.AddToRole(user.Id, "Admin");
             }
+
+            if (!context.Users.Any(u => u.UserName == "menadzerko"))
+            {
+                var _appUser = context.AppUsers.FirstOrDefault(a => a.FullName == "Menadzer Menadzerovic");
+                var user = new RAIdentityUser() { Id = "menadzer@menadzerovic.com", UserName = "menadzer@menadzerovic.com", Email = "menadzer@menadzerovic.com", PasswordHash = RAIdentityUser.HashPassword("menadzer"), AppUserId = _appUser.Id };
+                userManager.Create(user);
+                userManager.AddToRole(user.Id, "Manager");
+            }
+
 
             if (!context.Users.Any(u => u.UserName == "appu"))
 

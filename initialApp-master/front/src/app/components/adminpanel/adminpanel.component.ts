@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdminServiceService } from '../../services/adminServices/admin-service.service';
 import PromoteData from '../../models/promoteUser.model';
 import { NgForm } from '@angular/forms';
+import { RentService } from '../../services/rent/rent.service';
 
 @Component({
   selector: 'app-adminpanel',
@@ -16,9 +17,9 @@ export class AdminpanelComponent implements OnInit {
   unbannedManagers:any = [];
   bannedManagers:any = [];
   awaitingClients:any = [];
-  allAppUsers:any = [];
+  rentedVehicles:any = [];
 
-  constructor(adminService: AdminServiceService) { 
+  constructor(adminService: AdminServiceService, rentService: RentService) { 
     this.adminService = adminService;
 
     adminService.getAwaitingServices().subscribe(data => {
@@ -36,9 +37,9 @@ export class AdminpanelComponent implements OnInit {
     adminService.getAwaitingClients().subscribe(data => {
       this.awaitingClients = data;
     })
-    
-    adminService.getAllUsers().subscribe(data => {
-      this.allAppUsers = data;
+
+    rentService.getRentedVehicles().subscribe(data => {
+      this.rentedVehicles = data;
     })
     
   }
