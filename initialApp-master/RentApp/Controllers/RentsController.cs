@@ -19,6 +19,7 @@ namespace RentApp.Controllers
     public class RentsController : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
+        private object locker = new object();
 
         public RentsController(IUnitOfWork unitOfWork)
         {
@@ -80,55 +81,63 @@ namespace RentApp.Controllers
         [Route("PostRent")]
         public string PostRent(RentRequestModel rentRequest)
         {
-            if (!ModelState.IsValid)
+            lock (locker)
             {
-                return BadRequest(ModelState).ToString();
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState).ToString();
+                }
+
+                Rent r = new Rent();
+                r.Start = rentRequest.Start;
+                r.End = rentRequest.End;
+                r.Vehicle = unitOfWork.Vehicles.Get(rentRequest.VehicleId);
+                r.BranchOffice = unitOfWork.BranchOffices.Get(rentRequest.BranchOfficeId);
+                r.Vehicle.Unavailable = true;
+                // Izvuci iz heada jwt i uzmi koji je user
+                string jwt = Request.Headers.Authorization.Parameter.ToString();
+                var decodedToken = unitOfWork.AppUserRepository.DecodeJwt(jwt);
+
+                string userEmail = decodedToken.Claims.First(claim => claim.Type == "unique_name").Value;
+                AppUser appUser = unitOfWork.AppUserRepository.GetAll().Where(u => u.Email == userEmail).FirstOrDefault();
+
+
+                try
+                {
+                    unitOfWork.Rents.Add(r);
+                    appUser.Rents.Add(r);
+                    unitOfWork.Complete();
+                }
+                catch (Exception)
+                {
+                    return InternalServerError().ToString();
+                }
+
+
+                return "Ok";
+
             }
-
-            Rent r = new Rent();
-            r.Start = rentRequest.Start;
-            r.End = rentRequest.End;
-            r.Vehicle = unitOfWork.Vehicles.Get(rentRequest.VehicleId);
-            r.BranchOffice = unitOfWork.BranchOffices.Get(rentRequest.BranchOfficeId);
-            r.Vehicle.Unavailable = true;
-            // Izvuci iz heada jwt i uzmi koji je user
-            string jwt = Request.Headers.Authorization.Parameter.ToString();
-            var decodedToken = unitOfWork.AppUserRepository.DecodeJwt(jwt);
-
-            string userEmail = decodedToken.Claims.First(claim => claim.Type == "unique_name").Value;
-            AppUser appUser = unitOfWork.AppUserRepository.GetAll().Where(u => u.Email == userEmail).FirstOrDefault();
-            
-
-            try
-            {
-                unitOfWork.Rents.Add(r);
-                appUser.Rents.Add(r);
-                unitOfWork.Complete();
-            }
-            catch (Exception)
-            {
-                return InternalServerError().ToString();
-            }
-
-
-            return "Ok";
         }
 
+        [Authorize]
         [Route("DeleteRent")]
         [ResponseType(typeof(Rent))]
         public string DeleteRent(int id)
         {
-            Rent rent = unitOfWork.Rents.Get(id);
-            if (rent == null)
+            lock (locker)
             {
-                return NotFound().ToString();
+                Rent rent = unitOfWork.Rents.Get(id);
+                if (rent == null)
+                {
+                    return NotFound().ToString();
+                }
+
+                rent.Vehicle.Unavailable = false;
+                unitOfWork.Rents.Remove(rent);
+                unitOfWork.Complete();
+
+                return "Ok";
             }
-
-            rent.Vehicle.Unavailable = false;
-            unitOfWork.Rents.Remove(rent);
-            unitOfWork.Complete();
-
-            return "Ok";
         }
 
         private bool RentExists(int id)

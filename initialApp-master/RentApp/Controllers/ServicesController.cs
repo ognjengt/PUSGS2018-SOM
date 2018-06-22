@@ -21,6 +21,7 @@ namespace RentApp.Controllers
     public class ServicesController : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
+        private object locker = new object();
 
         public ServicesController(IUnitOfWork unitOfWork)
         {
@@ -46,110 +47,129 @@ namespace RentApp.Controllers
             return Ok(service);
         }
 
+        [Authorize(Roles = "Manager, Admin")]
         [Route("AddServices")]
         public IHttpActionResult AddService(Service service)
         {
-            this.unitOfWork.Services.Add(service);
-            return Ok();
+            lock (locker)
+            {
+                this.unitOfWork.Services.Add(service);
+                return Ok();
+            }
         }
 
+        [Authorize(Roles = "Manager, Admin")]
         [ResponseType(typeof(void))]
         [Route("PutService")]        
         public IHttpActionResult PutService(int id, Service service)
         {
-            if (!ModelState.IsValid)
+            lock (locker)
             {
-                return BadRequest(ModelState);
-            }
-
-            if (id != service.Id)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                unitOfWork.Services.Update(service);
-                unitOfWork.Complete();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ServiceExists(id))
+                
+                if (!ModelState.IsValid)
                 {
-                    return NotFound();
+                    return BadRequest(ModelState);
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return StatusCode(HttpStatusCode.NoContent);
+                if (id != service.Id)
+                {
+                    return BadRequest();
+                }
+
+                try
+                {
+                    unitOfWork.Services.Update(service);
+                    unitOfWork.Complete();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ServiceExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
         }
 
         [Authorize(Roles = "Manager, Admin")]
         [ResponseType(typeof(Service))]
         public IHttpActionResult PostService(Service service)
         {
-            if (!ModelState.IsValid)
+            lock(locker)
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                // Izvuci iz heada jwt i uzmi koji je user
+                string jwt = Request.Headers.Authorization.Parameter.ToString();
+                var decodedToken = unitOfWork.AppUserRepository.DecodeJwt(jwt);
+
+                string userEmail = decodedToken.Claims.First(claim => claim.Type == "unique_name").Value;
+
+                AppUser current = unitOfWork.AppUserRepository.GetAll().Where(u => u.Email == userEmail).FirstOrDefault();
+                service.ManagerId = current.Id;
+
+                unitOfWork.Services.Add(service);
+                unitOfWork.Complete();
+
+                return CreatedAtRoute("DefaultApi", new { id = service.Id }, service);
             }
-            // Izvuci iz heada jwt i uzmi koji je user
-            string jwt = Request.Headers.Authorization.Parameter.ToString();
-            var decodedToken = unitOfWork.AppUserRepository.DecodeJwt(jwt);
-
-            string userEmail = decodedToken.Claims.First(claim => claim.Type == "unique_name").Value;
-
-            AppUser current = unitOfWork.AppUserRepository.GetAll().Where(u => u.Email == userEmail).FirstOrDefault();
-            service.ManagerId = current.Id;
-
-            unitOfWork.Services.Add(service);
-            unitOfWork.Complete();
-
-            return CreatedAtRoute("DefaultApi", new { id = service.Id }, service);
+            
         }
 
+        [Authorize(Roles = "Manager, Admin")]
         [Route("DeleteService")]
         public IHttpActionResult DeleteService(string id)
         {
-            Service service = unitOfWork.Services.Get(Int32.Parse(id));                   
-            unitOfWork.Reviews.RemoveRange(service.Reviews);
-            service.Reviews.Clear();
-            unitOfWork.BranchOffices.RemoveRange(service.BranchOffices);
-            service.BranchOffices.Clear();
-
-            var rents = unitOfWork.Rents.GetAll();
-            var vehicles = service.Vehicles;
-            var rentsToDelete = new List<Rent>();
-            foreach(var vehicle in vehicles)
+            lock (locker)
             {
-                foreach (var rent in rents)
+                Service service = unitOfWork.Services.Get(Int32.Parse(id));
+                unitOfWork.Reviews.RemoveRange(service.Reviews);
+                service.Reviews.Clear();
+                unitOfWork.BranchOffices.RemoveRange(service.BranchOffices);
+                service.BranchOffices.Clear();
+
+                var rents = unitOfWork.Rents.GetAll();
+                var vehicles = service.Vehicles;
+                var rentsToDelete = new List<Rent>();
+                foreach (var vehicle in vehicles)
                 {
-                    if (rent.Vehicle.Id == vehicle.Id)
-                        rentsToDelete.Add(rent);
+                    foreach (var rent in rents)
+                    {
+                        if (rent.Vehicle.Id == vehicle.Id)
+                            rentsToDelete.Add(rent);
+                    }
                 }
+
+                unitOfWork.Rents.RemoveRange(rentsToDelete);
+                unitOfWork.Complete();
+
+                unitOfWork.Vehicles.RemoveRange(service.Vehicles);
+                service.Vehicles.Clear();
+                unitOfWork.Complete();
+
+                if (service == null)
+                {
+                    return NotFound();
+                }
+
+                unitOfWork.Services.Remove(service);
+                unitOfWork.Complete();
+
+                return Ok(service);
             }
-
-            unitOfWork.Rents.RemoveRange(rentsToDelete);
-            unitOfWork.Complete();
-
-            unitOfWork.Vehicles.RemoveRange(service.Vehicles);
-            service.Vehicles.Clear();
-            unitOfWork.Complete();
-
-            if (service == null)
-            {
-                return NotFound();
-            }
-
-            unitOfWork.Services.Remove(service);
-            unitOfWork.Complete();
-
-            return Ok(service);
+            
         }
 
-        // Autorizuje servis da postane vidljiv
+        // Uzima servise koji cekaju da budu autorizovani
+        [Authorize(Roles = "Admin")]
         [Route("GetAwaitingServices")]
         public IEnumerable<Service> GetAwaitingServices()
         {
@@ -157,72 +177,79 @@ namespace RentApp.Controllers
         }
 
         // Autorizuje servis da postane vidljiv
+        [Authorize(Roles = "Admin")]
         [Route("AuthorizeService")]
         public string AuthorizeService([FromBody]string Id)
         {
-            if (!ModelState.IsValid)
+            lock (locker)
             {
-                return BadRequest(ModelState).ToString();
-            }
-            //Get user data, and update activated to true
-            Service current = unitOfWork.Services.Get(Int32.Parse(Id));
-            current.Authorized = true;
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState).ToString();
+                }
+                //Get user data, and update activated to true
+                Service current = unitOfWork.Services.Get(Int32.Parse(Id));
+                current.Authorized = true;
 
-            try
-            {
-                unitOfWork.Services.Update(current);
-                unitOfWork.Complete();
+                try
+                {
+                    unitOfWork.Services.Update(current);
+                    unitOfWork.Complete();
 
-                string subject = "Service approved";
-                string desc = $"Dear Manager, Your service {current.Name} has been approved. Block 8 team.";
-                var managerEmail = unitOfWork.AppUserRepository.Get(current.ManagerId).Email;
-                unitOfWork.AppUserRepository.NotifyViaEmail(managerEmail, subject, desc);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                return BadRequest().ToString();
-            }
+                    string subject = "Service approved";
+                    string desc = $"Dear Manager, Your service {current.Name} has been approved. Block 8 team.";
+                    var managerEmail = unitOfWork.AppUserRepository.Get(current.ManagerId).Email;
+                    unitOfWork.AppUserRepository.NotifyViaEmail(managerEmail, subject, desc);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    return BadRequest().ToString();
+                }
 
-            return "Ok";
+                return "Ok";
+            }
         }
 
         [Authorize]
         [Route("PostReview")]
         public IHttpActionResult PostReview([FromBody]ReviewRequestModel reviewRequest)
         {
-            if (!ModelState.IsValid)
+            lock (locker)
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                // Izvuci iz heada jwt i uzmi koji je user
+                string jwt = Request.Headers.Authorization.Parameter.ToString();
+                var decodedToken = unitOfWork.AppUserRepository.DecodeJwt(jwt);
+
+                string userEmail = decodedToken.Claims.First(claim => claim.Type == "unique_name").Value;
+
+                Review review = new Review();
+                review.Comment = reviewRequest.Comment;
+                review.DatePosted = DateTime.Now;
+                review.Stars = reviewRequest.Stars;
+                review.User = userEmail;
+
+                Service service = unitOfWork.Services.Get(reviewRequest.ServiceId);
+
+                try
+                {
+                    unitOfWork.Reviews.Add(review);
+                    service.Reviews.Add(review);
+                    unitOfWork.Complete();
+                }
+                catch (Exception)
+                {
+
+                    return NotFound();
+                }
+
+
+                return Ok();
             }
-
-            // Izvuci iz heada jwt i uzmi koji je user
-            string jwt = Request.Headers.Authorization.Parameter.ToString();
-            var decodedToken = unitOfWork.AppUserRepository.DecodeJwt(jwt);
-
-            string userEmail = decodedToken.Claims.First(claim => claim.Type == "unique_name").Value;
-
-            Review review = new Review();
-            review.Comment = reviewRequest.Comment;
-            review.DatePosted = DateTime.Now;
-            review.Stars = reviewRequest.Stars;
-            review.User = userEmail;
-
-            Service service = unitOfWork.Services.Get(reviewRequest.ServiceId);
-
-            try
-            {
-                unitOfWork.Reviews.Add(review);
-                service.Reviews.Add(review);
-                unitOfWork.Complete();
-            }
-            catch (Exception)
-            {
-
-                return NotFound();
-            }
-            
-
-            return Ok();
         }
 
 

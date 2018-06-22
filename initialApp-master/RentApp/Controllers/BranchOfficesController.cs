@@ -19,11 +19,13 @@ namespace RentApp.Controllers
     public class BranchOfficesController : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
+        private object locker = new object();
 
         public BranchOfficesController(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
+
 
         [Route("GetBranchOffices")]
         public IEnumerable<BranchOffice> GetBranchOffices()
@@ -52,94 +54,107 @@ namespace RentApp.Controllers
             return Ok(branchOffice);
         }
 
+        [Authorize(Roles ="Manager, Admin")]
         [Route("PutBranchOffice")]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutBranchOffice(int id, BranchOfficeRequestModel branchOfficeRequest)
         {
-            if (!ModelState.IsValid)
+            lock (locker)
             {
-                return BadRequest(ModelState);
-            }
-
-            if (id != branchOfficeRequest.Id)
-            {
-                return BadRequest();
-            }
-
-            BranchOffice branchOffice = new BranchOffice();
-            branchOffice.Id = branchOfficeRequest.Id;
-            branchOffice.Name = branchOfficeRequest.Name;
-            branchOffice.Latitude = Double.Parse(branchOfficeRequest.Latitude);
-            branchOffice.Longitude = Double.Parse(branchOfficeRequest.Longitude);
-            branchOffice.Address = branchOfficeRequest.Address;
-
-            try
-            {
-                unitOfWork.BranchOffices.Update(branchOffice);
-                unitOfWork.Complete();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BranchOfficeExists(id))
+                if (!ModelState.IsValid)
                 {
-                    return NotFound();
+                    return BadRequest(ModelState);
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return Ok();
+                if (id != branchOfficeRequest.Id)
+                {
+                    return BadRequest();
+                }
+
+                BranchOffice branchOffice = new BranchOffice();
+                branchOffice.Id = branchOfficeRequest.Id;
+                branchOffice.Name = branchOfficeRequest.Name;
+                branchOffice.Latitude = Double.Parse(branchOfficeRequest.Latitude);
+                branchOffice.Longitude = Double.Parse(branchOfficeRequest.Longitude);
+                branchOffice.Address = branchOfficeRequest.Address;
+
+                try
+                {
+                    unitOfWork.BranchOffices.Update(branchOffice);
+                    unitOfWork.Complete();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!BranchOfficeExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return Ok();
+            }
         }
 
+        [Authorize(Roles = "Manager, Admin")]
         [Route("PostBranchOffice")]
         [ResponseType(typeof(BranchOffice))]
         public IHttpActionResult PostBranchOffice([FromBody]BranchOfficeRequestModel branchOfficeRequest)
         {
-            if (!ModelState.IsValid)
+            lock (locker)
             {
-                return BadRequest(ModelState);
-            }
 
-            BranchOffice branchOffice = new BranchOffice();
-            branchOffice.Name = branchOfficeRequest.Name;
-            branchOffice.Latitude = Double.Parse(branchOfficeRequest.Latitude);
-            branchOffice.Longitude = Double.Parse(branchOfficeRequest.Longitude);
-            //branchOffice.Logo = branchOfficeRequest.Logo;
-            branchOffice.Address = branchOfficeRequest.Address;
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
 
-            Service service = unitOfWork.Services.Get(branchOfficeRequest.ServiceId);
+                BranchOffice branchOffice = new BranchOffice();
+                branchOffice.Name = branchOfficeRequest.Name;
+                branchOffice.Latitude = Double.Parse(branchOfficeRequest.Latitude);
+                branchOffice.Longitude = Double.Parse(branchOfficeRequest.Longitude);
+                //branchOffice.Logo = branchOfficeRequest.Logo;
+                branchOffice.Address = branchOfficeRequest.Address;
 
-            try
-            {
-                unitOfWork.BranchOffices.Add(branchOffice);
-                service.BranchOffices.Add(branchOffice);
-                unitOfWork.Complete();
+                Service service = unitOfWork.Services.Get(branchOfficeRequest.ServiceId);
 
-                return Ok(branchOffice.Id);
-            }
-            catch (Exception ex)
-            {
-                return NotFound();
+                try
+                {
+                    unitOfWork.BranchOffices.Add(branchOffice);
+                    service.BranchOffices.Add(branchOffice);
+                    unitOfWork.Complete();
+
+                    return Ok(branchOffice.Id);
+                }
+                catch (Exception ex)
+                {
+                    return NotFound();
+                }
             }
            
         }
 
+        [Authorize(Roles = "Manager, Admin")]
         [Route("DeleteBranchOffice")]
         [ResponseType(typeof(BranchOffice))]
         public IHttpActionResult DeleteBranchOffice(int id)
         {
-            BranchOffice branchOffice = unitOfWork.BranchOffices.Get(id);
-            if (branchOffice == null)
+            lock (locker)
             {
-                return NotFound();
+                BranchOffice branchOffice = unitOfWork.BranchOffices.Get(id);
+                if (branchOffice == null)
+                {
+                    return NotFound();
+                }
+
+                unitOfWork.BranchOffices.Remove(branchOffice);
+                unitOfWork.Complete();
+
+                return Ok(branchOffice);
             }
-
-            unitOfWork.BranchOffices.Remove(branchOffice);
-            unitOfWork.Complete();
-
-            return Ok(branchOffice);
         }
 
         private bool BranchOfficeExists(int id)

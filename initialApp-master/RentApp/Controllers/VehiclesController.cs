@@ -19,6 +19,7 @@ namespace RentApp.Controllers
     public class VehiclesController : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
+        private object locker = new object();
 
         public VehiclesController(IUnitOfWork unitOfWork)
         {
@@ -56,32 +57,120 @@ namespace RentApp.Controllers
             return Ok(vehicle);
         }
 
+        [Authorize(Roles = "Manager, Admin")]
         [Route("AddVehicles")]
         public IHttpActionResult AddVehicle(Vehicle vehicle)
         {
-            this.unitOfWork.Vehicles.Add(vehicle);
-            return Ok();
+            lock (locker)
+            {
+                this.unitOfWork.Vehicles.Add(vehicle);
+                return Ok();
+            }
         }
 
+        [Authorize(Roles = "Manager, Admin")]
         [Route("PutVehicle")]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutVehicle(int id, VehicleRequestModel vehicle)
         {
-            if (!ModelState.IsValid)
+            lock (locker)
             {
-                return BadRequest(ModelState);
-            }
+                
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
 
-            if (id != vehicle.Id)
-            {
-                return BadRequest();
-            }
+                if (id != vehicle.Id)
+                {
+                    return BadRequest();
+                }
 
-            try
+                try
+                {
+                    var vs = unitOfWork.Vehicles.GetAll();
+                    Vehicle v = vs.ToList<Vehicle>().Where(ve => ve.Id == id).ToList().First();
+                    v.Id = id;
+                    v.Model = vehicle.Model;
+                    v.Description = vehicle.Description;
+                    v.Manufactor = vehicle.Manufactor;
+                    v.Year = vehicle.Year;
+                    v.PricePerHour = vehicle.PricePerHour;
+                    var types = unitOfWork.VehicleTypes.GetAll();
+                    v.Type = (VehicleType)types.ToList<VehicleType>().Where(t => t.Name == vehicle.Type).ToList().First();
+                    //v.Images = vehicle.Images;
+
+                    unitOfWork.Vehicles.Update(v);
+                    unitOfWork.Complete();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!VehicleExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+        }
+
+        [Authorize(Roles = "Manager, Admin")]
+        [Route("PutVehicleAvailability")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutVehicleAvailability(int id, Vehicle vehicle)
+        {
+            lock (locker)
             {
-                var vs = unitOfWork.Vehicles.GetAll();
-                Vehicle v = vs.ToList<Vehicle>().Where(ve => ve.Id == id).ToList().First();
-                v.Id = id;
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                if (id != vehicle.Id)
+                {
+                    return BadRequest();
+                }
+
+                try
+                {
+                    unitOfWork.Vehicles.Update(vehicle);
+                    unitOfWork.Complete();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!VehicleExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+        }
+
+        [Authorize(Roles = "Manager, Admin")]
+        [Route("PostVehicle")]
+        [ResponseType(typeof(Vehicle))]
+        public IHttpActionResult PostVehicle(VehicleRequestModel vehicle)
+        {
+            lock (locker)
+            {
+                
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                Vehicle v = new Vehicle();
                 v.Model = vehicle.Model;
                 v.Description = vehicle.Description;
                 v.Manufactor = vehicle.Manufactor;
@@ -91,119 +180,53 @@ namespace RentApp.Controllers
                 v.Type = (VehicleType)types.ToList<VehicleType>().Where(t => t.Name == vehicle.Type).ToList().First();
                 //v.Images = vehicle.Images;
 
-                unitOfWork.Vehicles.Update(v);
-                unitOfWork.Complete();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!VehicleExists(id))
+                Service service = unitOfWork.Services.Get(vehicle.ServiceId);
+
+                try
+                {
+                    unitOfWork.Vehicles.Add(v);
+                    service.Vehicles.Add(v);
+                    unitOfWork.Complete();
+
+                    return Ok(v.Id);
+                }
+                catch (Exception ex)
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        [Route("PutVehicleAvailability")]
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutVehicleAvailability(int id, Vehicle vehicle)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != vehicle.Id)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                unitOfWork.Vehicles.Update(vehicle);
-                unitOfWork.Complete();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!VehicleExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        [Route("PostVehicle")]
-        [ResponseType(typeof(Vehicle))]
-        public IHttpActionResult PostVehicle(VehicleRequestModel vehicle)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            Vehicle v = new Vehicle();
-            v.Model = vehicle.Model;
-            v.Description = vehicle.Description;
-            v.Manufactor = vehicle.Manufactor;
-            v.Year = vehicle.Year;
-            v.PricePerHour = vehicle.PricePerHour;
-            var types = unitOfWork.VehicleTypes.GetAll();
-            v.Type = (VehicleType)types.ToList<VehicleType>().Where(t => t.Name == vehicle.Type).ToList().First();
-            //v.Images = vehicle.Images;
-
-            Service service = unitOfWork.Services.Get(vehicle.ServiceId);
-
-            try
-            {
-                unitOfWork.Vehicles.Add(v);
-                service.Vehicles.Add(v);
-                unitOfWork.Complete();
-
-                return Ok(v.Id);
-            }
-            catch (Exception ex)
-            {
-                return NotFound();
             }
         }
 
+        [Authorize(Roles = "Manager, Admin")]
         [Route("DeleteVehicle")]
         [ResponseType(typeof(Vehicle))]
         public IHttpActionResult DeleteVehicle(int id)
         {
-            Vehicle vehicle = unitOfWork.Vehicles.Get(id);
-            if (vehicle == null)
+            lock (locker)
             {
-                return NotFound();
+                Vehicle vehicle = unitOfWork.Vehicles.Get(id);
+                if (vehicle == null)
+                {
+                    return NotFound();
+                }
+
+                var rents = unitOfWork.Rents.GetAll();
+                var rentsToDelete = new List<Rent>();
+                foreach (var rent in rents)
+                {
+                    if (rent.Vehicle.Id == id)
+                        rentsToDelete.Add(rent);
+                }
+
+
+                unitOfWork.Rents.RemoveRange(rentsToDelete);
+                unitOfWork.Complete();
+
+                unitOfWork.Vehicles.Remove(vehicle);
+                unitOfWork.Complete();
+
+                return Ok(vehicle);
             }
-
-            var rents = unitOfWork.Rents.GetAll();
-            var rentsToDelete = new List<Rent>();
-            foreach (var rent in rents)
-            {
-                if (rent.Vehicle.Id == id)
-                    rentsToDelete.Add(rent);
-            }
-            
-
-            unitOfWork.Rents.RemoveRange(rentsToDelete);
-            unitOfWork.Complete();
-
-            unitOfWork.Vehicles.Remove(vehicle);
-            unitOfWork.Complete();
-
-            return Ok(vehicle);
         }
 
         [Route("SearchVehicles")]

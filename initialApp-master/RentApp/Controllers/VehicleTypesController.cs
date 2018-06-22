@@ -18,6 +18,7 @@ namespace RentApp.Controllers
     public class VehicleTypesController : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
+        private object locker = new object();
 
         public VehicleTypesController(IUnitOfWork unitOfWork)
         {
@@ -45,64 +46,77 @@ namespace RentApp.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutVehicleType(int id, VehicleType vehicleType)
         {
-            if (!ModelState.IsValid)
+            lock (locker)
             {
-                return BadRequest(ModelState);
-            }
-
-            if (id != vehicleType.Id)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                unitOfWork.VehicleTypes.Update(vehicleType);
-                unitOfWork.Complete();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!VehicleTypeExists(id))
+                if (!ModelState.IsValid)
                 {
-                    return NotFound();
+                    return BadRequest(ModelState);
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return StatusCode(HttpStatusCode.NoContent);
+                if (id != vehicleType.Id)
+                {
+                    return BadRequest();
+                }
+
+                try
+                {
+                    unitOfWork.VehicleTypes.Update(vehicleType);
+                    unitOfWork.Complete();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!VehicleTypeExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            
         }
 
+        [Authorize(Roles = "Admin")]
         [Route("PostVehicleType")]
         [ResponseType(typeof(VehicleType))]
         public IHttpActionResult PostVehicleType(VehicleType vehicleType)
         {
-            if (!ModelState.IsValid)
+            lock (locker)
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                unitOfWork.VehicleTypes.Add(vehicleType);
+                unitOfWork.Complete();
+
+                return CreatedAtRoute("DefaultApi", new { id = vehicleType.Id }, vehicleType);
             }
-
-            unitOfWork.VehicleTypes.Add(vehicleType);
-            unitOfWork.Complete();
-
-            return CreatedAtRoute("DefaultApi", new { id = vehicleType.Id }, vehicleType);
+            
         }
 
         [ResponseType(typeof(VehicleType))]
         public IHttpActionResult DeleteVehicleType(int id)
         {
-            VehicleType vehicleType = unitOfWork.VehicleTypes.Get(id);
-            if (vehicleType == null)
+            lock (locker)
             {
-                return NotFound();
+                VehicleType vehicleType = unitOfWork.VehicleTypes.Get(id);
+                if (vehicleType == null)
+                {
+                    return NotFound();
+                }
+
+                unitOfWork.VehicleTypes.Remove(vehicleType);
+                unitOfWork.Complete();
+
+                return Ok(vehicleType);
             }
-
-            unitOfWork.VehicleTypes.Remove(vehicleType);
-            unitOfWork.Complete();
-
-            return Ok(vehicleType);
+            
         }
 
         private bool VehicleTypeExists(int id)
