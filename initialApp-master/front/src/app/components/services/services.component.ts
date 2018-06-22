@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceService } from '../../services/serv/service.service';
+import decode from 'jwt-decode';
 
 
 @Component({
@@ -32,6 +33,17 @@ export class ServicesComponent implements OnInit {
   
   loggedIn(): string {
     return localStorage.jwt;
+  }
+
+  isAuthorized() {
+    const tokenPayload = decode(localStorage.getItem('jwt'));
+    if(tokenPayload.role != 'Admin') {
+      if(tokenPayload.role != 'Manager') {
+        return false;
+      }
+      else return true;
+    }
+    else return true;
   }
 
   // Todo pogledati ko moze da dodaje servise
