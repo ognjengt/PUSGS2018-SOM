@@ -38,4 +38,8 @@ export class ServiceService {
   postReview(review) {
     return this.httpClient.post("https://localhost:44347/api/Services/PostReview", review)
   }
+
+  getCanPostReview(){
+    return this.httpClient.get("https://localhost:44347/api/Services/GetCanPostReview")
+  }
 }

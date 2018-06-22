@@ -18,6 +18,7 @@ export class ServiceDetailComponent implements OnInit {
   id:any
   reviews: ReviewModel[] = [];
   validations: ReviewValidations = new ReviewValidations();
+  auth: any;
 
   constructor(private servService: ServiceService, private route: ActivatedRoute, private router: Router) {
   }
@@ -31,6 +32,7 @@ export class ServiceDetailComponent implements OnInit {
       this.service = data;
       this.reviews = this.service.Reviews;
     })
+    this.isAuthorized()
   }
 
   onSubmitReview(review: ReviewModel, form: NgForm) {
@@ -50,8 +52,12 @@ export class ServiceDetailComponent implements OnInit {
   }
 
   isAuthorized() {
-    if(localStorage.jwt) return true;
-    else return false;
+    this.servService.getCanPostReview().subscribe(resp => {
+      this.auth = resp
+    })
+    // if(localStorage.jwt) return true;
+    // else return false;
   }
+
 
 }

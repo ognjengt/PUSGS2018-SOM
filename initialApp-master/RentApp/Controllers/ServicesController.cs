@@ -47,6 +47,24 @@ namespace RentApp.Controllers
             return Ok(service);
         }
 
+        [Authorize]
+        [Route("GetCanPostReview")]        
+        public bool GetCanPostReview()
+        {
+            string jwt = Request.Headers.Authorization.Parameter.ToString();
+            var decodedToken = unitOfWork.AppUserRepository.DecodeJwt(jwt);
+            string userEmail = decodedToken.Claims.First(claim => claim.Type == "unique_name").Value;
+            AppUser current = unitOfWork.AppUserRepository.GetAll().Where(u => u.Email == userEmail).FirstOrDefault();
+            
+            foreach(var rent in current.Rents)
+            {
+                if (rent.Deleted)
+                    return true;
+            }       
+
+            return false;
+        }
+
         [Authorize(Roles = "Manager, Admin")]
         [Route("AddServices")]
         public IHttpActionResult AddService(Service service)

@@ -29,7 +29,7 @@ namespace RentApp.Controllers
         [Route("GetRents")]
         public IEnumerable<Rent> GetRents()
         {
-            return unitOfWork.Rents.GetAll();
+            return unitOfWork.Rents.GetAll().Where(r=>!r.Deleted);
         }
 
         [ResponseType(typeof(Rent))]
@@ -120,7 +120,7 @@ namespace RentApp.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("DeleteRent")]
         [ResponseType(typeof(Rent))]
         public string DeleteRent(int id)
@@ -136,7 +136,7 @@ namespace RentApp.Controllers
                 rent.Vehicle.Unavailable = false;
                 rent.Deleted = true;
                 //unitOfWork.Rents.Remove(rent);
-                //unitOfWork.Complete();
+                unitOfWork.Complete();
 
                 return "Ok";
             }
