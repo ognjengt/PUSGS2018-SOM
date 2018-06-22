@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import decode from 'jwt-decode';
 
 @Component({
   selector: 'app-menu-bar',
@@ -22,6 +23,12 @@ export class MenuBarComponent implements OnInit {
 
   getRole(): string {
     return localStorage.role;
+  }
+
+  getRoleByDecode(): string {
+    if(!localStorage.jwt) return "Unauthorized";
+    var decoded = decode(localStorage.getItem('jwt'));
+    return decoded.role;
   }
 
   logout() {
