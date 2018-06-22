@@ -133,8 +133,9 @@ namespace RentApp.Controllers
                 }
 
                 rent.Vehicle.Unavailable = false;
-                unitOfWork.Rents.Remove(rent);
-                unitOfWork.Complete();
+                rent.Deleted = true;
+                //unitOfWork.Rents.Remove(rent);
+                //unitOfWork.Complete();
 
                 return "Ok";
             }

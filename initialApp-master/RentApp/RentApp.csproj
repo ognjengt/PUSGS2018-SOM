@@ -312,6 +312,10 @@
     <Compile Include="Migrations\201806211948252_Added ManagerId.Designer.cs">
       <DependentUpon>201806211948252_Added ManagerId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806220309010_Delete polje u Rent.cs" />
+    <Compile Include="Migrations\201806220309010_Delete polje u Rent.Designer.cs">
+      <DependentUpon>201806220309010_Delete polje u Rent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -448,6 +452,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806211948252_Added ManagerId.resx">
       <DependentUpon>201806211948252_Added ManagerId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806220309010_Delete polje u Rent.resx">
+      <DependentUpon>201806220309010_Delete polje u Rent.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
