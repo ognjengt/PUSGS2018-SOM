@@ -56,6 +56,7 @@ export class RentsDetailsComponent implements OnInit {
   }
 
   isAuthorized() {
+    if(!localStorage.jwt) return false;
     const tokenPayload = decode(localStorage.getItem('jwt'));
     if(tokenPayload.role != 'Admin') {
       if(tokenPayload.role != 'Manager') {
@@ -64,6 +65,11 @@ export class RentsDetailsComponent implements OnInit {
       else return true;
     }
     else return true;
+  }
+
+  isLoggedIn() {
+    if(localStorage.jwt) return true;
+    else return false;
   }
 
   // onReserveVehicle(){

@@ -19,7 +19,7 @@
 
     <div>
         <h5>Add review</h5>
-        <form #addReviewForm="ngForm" (ngSubmit)="onSubmitReview(addReviewForm.value, addReviewForm)">
+        <form *ngIf="isAuthorized()" #addReviewForm="ngForm" (ngSubmit)="onSubmitReview(addReviewForm.value, addReviewForm)">
             <div class="form-group">
               <label for="Stars">Your grade</label>
               <input type="number" min="1" max="5" class="form-control" name="Stars" placeholder="From 1-5" ngModel>
