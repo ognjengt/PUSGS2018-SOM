@@ -4,6 +4,8 @@ import { AuthenticationModule } from '../../../models/registration.model';
 import { NgForm } from '@angular/forms';
 import { HttpHeaders } from '@angular/common/http';
 import { RegistrationValidations } from '../../../models/validations/validationModels';
+import { SignalRServiceService } from '../../../services/signal-r-service/signal-r-service.service';
+
 
 @Component({
   selector: 'app-register',
@@ -15,7 +17,7 @@ export class RegisterComponent implements OnInit {
 
   validations: RegistrationValidations = new RegistrationValidations();
 
-  constructor(private authService: AuthenticationService) { 
+  constructor(private authService: AuthenticationService, private _signalRService: SignalRServiceService) { 
   }
 
   ngOnInit() {
@@ -35,6 +37,7 @@ export class RegisterComponent implements OnInit {
     this.authService.register(registrationData)
     .subscribe( data => {
       alert("Register successful!");
+      this._signalRService.sendNotification();
     },
     error => {
       alert("Error!");
