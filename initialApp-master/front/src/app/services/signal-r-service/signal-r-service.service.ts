@@ -23,14 +23,19 @@ export class SignalRServiceService {
       this.connectionExists = false;
 
       this.connection = $.hubConnection('https://localhost:44347/');
-      this.proxy = this.connection.createHubProxy(this.proxyName);
+      this.proxy = this.connection.createHubProxy(this.proxyName);      
       this.registerOnServerEvents();  
-      this.startConnection(); 
+      this.startConnection();       
   }
 
   public sendNotification() {  
     // server side hub method using proxy.invoke with method name pass as param  
     this.proxy.invoke('NotifyAdmin');  
+  }    
+  
+  public sendServiceNotification() {  
+    // server side hub method using proxy.invoke with method name pass as param  
+    this.proxy.invoke('NotifyAdminService');  
   }  
 
   private startConnection(): void {  
