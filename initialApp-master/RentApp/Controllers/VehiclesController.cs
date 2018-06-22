@@ -28,7 +28,19 @@ namespace RentApp.Controllers
         [Route("GetVehicles")]
         public IEnumerable<Vehicle> GetVehicles()
         {
-            return unitOfWork.Vehicles.GetAll().Where(v => v.Unavailable == false);
+            List<Service> AuthorizedServices = unitOfWork.Services.GetAll().Where(s => s.Authorized == true).ToList();
+            List<Vehicle> enabledVehicles = new List<Vehicle>();
+            foreach (var service in AuthorizedServices)
+            {
+                foreach (var vehicle in service.Vehicles)
+                {
+                    if (!vehicle.Unavailable)
+                    {
+                        enabledVehicles.Add(vehicle);
+                    }
+                }
+            }
+            return enabledVehicles;
         }
 
         [Route("GetVehicle")]

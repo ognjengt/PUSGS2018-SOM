@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ReviewModel } from '../../../models/review.model';
 import { ReviewValidations } from '../../../models/validations/validationModels';
+import decode from 'jwt-decode';
 
 @Component({
   selector: 'app-service-detail',
@@ -46,6 +47,11 @@ export class ServiceDetailComponent implements OnInit {
     error => {
       alert("Please log in to post a review.")
     })
+  }
+
+  isAuthorized() {
+    if(localStorage.jwt) return true;
+    else return false;
   }
 
 }

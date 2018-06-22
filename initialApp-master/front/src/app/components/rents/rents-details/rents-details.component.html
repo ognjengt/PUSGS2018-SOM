@@ -7,5 +7,5 @@
     </div>
     <br/>
     <img src="https://www.b92.net/news/pics/2018/02/02/9267640395a741825a80ed062741542_orig.jpg" height="150" width="300" *ngIf="!vehicle.Images">       
-    <button type="button" class="btn btn-primary" [routerLink]="['/rentACar',vehicle.Id]">Rent this Vehicle</button>   
+    <button type="button" *ngIf="isLoggedIn()" class="btn btn-primary" [routerLink]="['/rentACar',vehicle.Id]">Rent this Vehicle</button>   
   </div>

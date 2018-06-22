@@ -9,7 +9,7 @@ import RentModel from '../../../models/rent.model';
 import { BranchofficeService } from '../../../services/branchoffices/branchoffice.service';
 import { BranchOfficeModel } from '../../../models/branchoffice.model';
 import { PayPalConfig, PayPalEnvironment, PayPalIntegrationType } from 'ngx-paypal';
-import {PayPalKey} from '../../../../../keys'
+import {PayPalKey} from '../../../../../keys';
 
 @Component({
   selector: 'app-rent-a-car',
@@ -77,6 +77,8 @@ export class RentACarComponent implements OnInit {
       alert("You are not logged in!");
     })
   }
+
+
 
   SelectBranchOffice(marker) {
     this.selectedBranchOffice = {

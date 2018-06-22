@@ -5,6 +5,8 @@ import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ReviewModel } from '../../../models/review.model';
 import { RentService } from '../../../services/rent/rent.service';
+import { UsersService } from '../../../services/users/users.service';
+import decode from 'jwt-decode';
 
 @Component({
   selector: 'app-rents-details',
@@ -17,7 +19,24 @@ export class RentsDetailsComponent implements OnInit {
   id:any
   images: any = []
 
-  constructor(private rentService: RentService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private rentService: RentService, private route: ActivatedRoute, private router: Router, private userService: UsersService) { 
+
+    if(!this.isAuthorized()) {
+      this.userService.getUserClaims().subscribe(claims => {
+        this.userService.getUserData(claims['Email']).subscribe(user => {
+          if(user['Activated'] == false) {
+            this.router.navigateByUrl('/profile');
+          }
+          else {
+            if(user['Image'] == "" || user['Image'] == null) {
+              this.router.navigateByUrl('/profile');
+            }
+          }
+        })
+      })
+    }
+    
+  }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
@@ -29,10 +48,28 @@ export class RentsDetailsComponent implements OnInit {
       if(this.vehicle['Unavailable']) {
         this.router.navigateByUrl('/home');
       }
+
       if(this.vehicle.Images != null && this.vehicle.Images != undefined){       
         this.images = this.vehicle.Images.split(';')
       }   
     })
+  }
+
+  isAuthorized() {
+    if(!localStorage.jwt) return false;
+    const tokenPayload = decode(localStorage.getItem('jwt'));
+    if(tokenPayload.role != 'Admin') {
+      if(tokenPayload.role != 'Manager') {
+        return false;
+      }
+      else return true;
+    }
+    else return true;
+  }
+
+  isLoggedIn() {
+    if(localStorage.jwt) return true;
+    else return false;
   }
 
   // onReserveVehicle(){
