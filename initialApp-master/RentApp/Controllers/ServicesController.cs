@@ -214,10 +214,14 @@ namespace RentApp.Controllers
                     unitOfWork.Services.Update(current);
                     unitOfWork.Complete();
 
-                    string subject = "Service approved";
-                    string desc = $"Dear Manager, Your service {current.Name} has been approved. Block 8 team.";
-                    var managerEmail = unitOfWork.AppUserRepository.Get(current.ManagerId).Email;
-                    unitOfWork.AppUserRepository.NotifyViaEmail(managerEmail, subject, desc);
+                    try
+                    {
+                        string subject = "Service approved";
+                        string desc = $"Dear Manager, Your service {current.Name} has been approved. Block 8 team.";
+                        var managerEmail = unitOfWork.AppUserRepository.Get(current.ManagerId).Email;
+                        unitOfWork.AppUserRepository.NotifyViaEmail(managerEmail, subject, desc);
+                    }
+                    catch { }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
