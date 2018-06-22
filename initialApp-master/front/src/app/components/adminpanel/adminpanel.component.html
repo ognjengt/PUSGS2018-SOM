@@ -30,22 +30,25 @@
     </div>
 
     <div class="col-md-12">
-      <h3>Promote</h3> 
-      <ul class="list-group" *ngFor="let appUser of allAppUsers; let i = index">
-        Full name: {{appUser.FullName}} <br>
-        Email: {{appUser.Email}}
-        <form #promoteForm="ngForm" (ngSubmit)="PromoteUser(promoteForm.value, promoteForm)">
-            <input type="text" hidden [(ngModel)]="appUser.Id" name="UserId" ngModel>
-            <div class="col-md-3">
-                <select ngModel type="text" class="form-control" name="Role" placeholder="Role">
-                    <option value="AppUser">AppUser</option>
-                    <option value="Manager">Manager</option>
-                    <option value="Admin">Admin</option>
-                  </select>
-            </div>
-  
-          <button type="submit" class="btn btn-primary">Promote</button>
-        </form>
+      <h3>Rented vehicles</h3> 
+      <ul class="list-group" *ngFor="let rent of rentedVehicles; let i = index">
+        <div class="card">
+            <h5>Rent details</h5>
+            Rent Id: {{rent.Id}} <br>
+            Start date: {{rent.Start | date}} <br>
+            End date: {{rent.End | date}}
+            <br>
+            <h5>Rent details</h5>
+            Picked up in: {{rent.BranchOffice.Name}} <br>
+            Vehicle: {{rent.Vehicle.Manufactor}} {{rent.Vehicle.Model}}
+
+            <div *ngIf="rentDue(rent)" style="color:red">This rent is due! Please close it ASAP</div>
+            
+            <br>
+
+            <span class="pull-right" style="float:right"><button class="btn btn-danger btn-small" (click)="CloseRent(rent.Id,i)">Close rent</button></span>
+        </div>
+
         <hr>
         <br>
       </ul>

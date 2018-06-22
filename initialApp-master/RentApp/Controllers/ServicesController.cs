@@ -87,7 +87,7 @@ namespace RentApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-
+        [Authorize(Roles = "Manager")]
         [ResponseType(typeof(Service))]
         public IHttpActionResult PostService(Service service)
         {
@@ -95,6 +95,14 @@ namespace RentApp.Controllers
             {
                 return BadRequest(ModelState);
             }
+            // Izvuci iz heada jwt i uzmi koji je user
+            string jwt = Request.Headers.Authorization.Parameter.ToString();
+            var decodedToken = unitOfWork.AppUserRepository.DecodeJwt(jwt);
+
+            string userEmail = decodedToken.Claims.First(claim => claim.Type == "unique_name").Value;
+
+            AppUser current = unitOfWork.AppUserRepository.GetAll().Where(u => u.Email == userEmail).FirstOrDefault();
+            service.ManagerId = current.Id;
 
             unitOfWork.Services.Add(service);
             unitOfWork.Complete();
@@ -164,6 +172,11 @@ namespace RentApp.Controllers
             {
                 unitOfWork.Services.Update(current);
                 unitOfWork.Complete();
+
+                string subject = "Service approved";
+                string desc = $"Dear Manager, Your service {current.Name} has been approved. Block 8 team.";
+                var managerEmail = unitOfWork.AppUserRepository.Get(current.Id).Email;
+                unitOfWork.AppUserRepository.NotifyViaEmail(managerEmail, subject, desc);
             }
             catch (DbUpdateConcurrencyException)
             {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdminServiceService } from '../../services/adminServices/admin-service.service';
 import PromoteData from '../../models/promoteUser.model';
 import { NgForm } from '@angular/forms';
+import { RentService } from '../../services/rent/rent.service';
 
 @Component({
   selector: 'app-adminpanel',
@@ -12,14 +13,16 @@ import { NgForm } from '@angular/forms';
 export class AdminpanelComponent implements OnInit {
 
   adminService: AdminServiceService;
+  rentService: RentService;
   awaitingServices:any = [];
   unbannedManagers:any = [];
   bannedManagers:any = [];
   awaitingClients:any = [];
-  allAppUsers:any = [];
+  rentedVehicles:any = [];
 
-  constructor(adminService: AdminServiceService) { 
+  constructor(adminService: AdminServiceService, rentService: RentService) { 
     this.adminService = adminService;
+    this.rentService = rentService;
 
     adminService.getAwaitingServices().subscribe(data => {
       this.awaitingServices = data;
@@ -36,14 +39,23 @@ export class AdminpanelComponent implements OnInit {
     adminService.getAwaitingClients().subscribe(data => {
       this.awaitingClients = data;
     })
-    
-    adminService.getAllUsers().subscribe(data => {
-      this.allAppUsers = data;
+
+    rentService.getRentedVehicles().subscribe(data => {
+      this.rentedVehicles = data;
     })
     
   }
 
   ngOnInit() {
+  }
+
+  rentDue(rent) {
+    let today = new Date();
+    let endDate = new Date(rent.End);
+    if(today >= endDate) {
+      return true;
+    }
+    else return false;
   }
 
   AuthorizeUser(id, i) {
@@ -74,6 +86,17 @@ export class AdminpanelComponent implements OnInit {
     this.adminService.promoteUser(promotedUser).subscribe(resp => {
       if(resp == "Ok")  {
         alert("User has been promoted to: "+ promotedUser.NewRole);
+      }
+
+      else alert("Something went wrong");
+    })
+  }
+
+  CloseRent(rentId, i) {
+    this.rentService.closeRent(rentId).subscribe(resp => {
+      if(resp == "Ok") {
+        alert("Rent deleted.");
+        this.rentedVehicles.splice(i,1);
       }
 
       else alert("Something went wrong");

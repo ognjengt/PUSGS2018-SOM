@@ -63,7 +63,7 @@ namespace RentApp.Persistance.Repository
         {
             string mailTo = targetEmail;
             string mailFrom = "capsulelink@gmail.com";
-            string pass = "AosOqPB3h74y"; //AosOqPB3h74y
+            string pass = "AosOqPB3h74y";
 
             try
             {

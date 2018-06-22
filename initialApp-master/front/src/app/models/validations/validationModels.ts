@@ -159,6 +159,8 @@ export class VehicleValidations{
   manufactorOk: boolean = true;
   pricePerHourOk: boolean = true;
   typeSelected: boolean = true;
+  yearOk: boolean = true;
+  descriptionOk: boolean = true;
 
   validate(vehicleData) {
     let wrong = false;
@@ -179,6 +181,18 @@ export class VehicleValidations{
       wrong = true;
     }
     else this.manufactorOk = true;
+
+    if (vehicleData.Year == null || vehicleData.Year == "") {
+      this.yearOk = false;
+      wrong = true;
+    }
+    else this.yearOk = true;
+
+    if (vehicleData.Description == null || vehicleData.Description == "") {
+      this.descriptionOk = false;
+      wrong = true;
+    }
+    else this.descriptionOk = true;
 
     if (vehicleData.PricePerHour == null) {
       this.pricePerHourOk = false;
@@ -211,6 +225,18 @@ export class VehicleValidations{
       wrong = true;
     }
     else this.manufactorOk = true;
+
+    if (vehicleData.Year == null || vehicleData.Year == "") {
+      this.yearOk = false;
+      wrong = true;
+    }
+    else this.yearOk = true;
+
+    if (vehicleData.Description == null || vehicleData.Description == "") {
+      this.descriptionOk = false;
+      wrong = true;
+    }
+    else this.descriptionOk = true;
 
     if (vehicleData.PricePerHour == null) {
       this.pricePerHourOk = false;

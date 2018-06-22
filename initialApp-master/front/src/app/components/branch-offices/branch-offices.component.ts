@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BranchofficeService } from '../../services/branchoffices/branchoffice.service';
 import { BranchOfficeModel } from '../../models/branchoffice.model';
 import { Router } from '@angular/router';
+import decode from 'jwt-decode';
 
 @Component({
   selector: 'app-branch-offices',
@@ -50,5 +51,16 @@ export class BranchOfficesComponent implements OnInit {
 
   MarkerClickEvent(marker) {
     this.router.navigateByUrl('/branchOffice/'+marker.id);
+  }
+
+  isAuthorized() {
+    const tokenPayload = decode(localStorage.getItem('jwt'));
+    if(tokenPayload.role != 'Admin') {
+      if(tokenPayload.role != 'Manager') {
+        return false;
+      }
+      else return true;
+    }
+    else return true;
   }
 }

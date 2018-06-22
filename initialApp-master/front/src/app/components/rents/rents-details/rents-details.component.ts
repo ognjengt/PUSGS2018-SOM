@@ -26,6 +26,9 @@ export class RentsDetailsComponent implements OnInit {
     this.vehicle = this.rentService.getVehicle(this.id).
     subscribe(data => {
       this.vehicle = data;
+      if(this.vehicle['Unavailable']) {
+        this.router.navigateByUrl('/home');
+      }
       if(this.vehicle.Images != null && this.vehicle.Images != undefined){       
         this.images = this.vehicle.Images.split(';')
       }   

@@ -9,15 +9,15 @@
                 <h5 class="card-title">{{branchOffice.Name}}</h5>
                 <p class="card-text">{{branchOffice.Address}}</p>
                 <button type="button" [routerLink]="['/branchOffice', branchOffice.Id]" class="btn btn-primary">View Details</button>
-                <button type="button" class="btn btn-danger" (click)="deletebranchOffice(branchOffice.Id, i)" *ngIf="loggedIn()">Delete</button>
-                <button type="button" class="btn btn-warning" [routerLink]="['/editBranchOffice', branchOffice.Id]" *ngIf="loggedIn()">Edit</button>
+                <button type="button" class="btn btn-danger" (click)="deletebranchOffice(branchOffice.Id, i)" *ngIf="loggedIn() && isAuthorized()">Delete</button>
+                <button type="button" class="btn btn-warning" [routerLink]="['/editBranchOffice', branchOffice.Id]" *ngIf="loggedIn() && isAuthorized()">Edit</button>
               </div>
           </div>
       </div>
   </div>
 </div>
 
-<app-add-branch *ngIf="loggedIn()"></app-add-branch>
+<app-add-branch *ngIf="loggedIn() && isAuthorized()"></app-add-branch>
 
 <div class="container">
     <h3>Branch offices world map</h3>

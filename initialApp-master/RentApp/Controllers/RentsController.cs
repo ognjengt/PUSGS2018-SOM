@@ -25,6 +25,7 @@ namespace RentApp.Controllers
             this.unitOfWork = unitOfWork;
         }
 
+        [Route("GetRents")]
         public IEnumerable<Rent> GetRents()
         {
             return unitOfWork.Rents.GetAll();
@@ -113,19 +114,21 @@ namespace RentApp.Controllers
             return "Ok";
         }
 
+        [Route("DeleteRent")]
         [ResponseType(typeof(Rent))]
-        public IHttpActionResult DeleteRent(int id)
+        public string DeleteRent(int id)
         {
             Rent rent = unitOfWork.Rents.Get(id);
             if (rent == null)
             {
-                return NotFound();
+                return NotFound().ToString();
             }
 
+            rent.Vehicle.Unavailable = false;
             unitOfWork.Rents.Remove(rent);
             unitOfWork.Complete();
 
-            return Ok(rent);
+            return "Ok";
         }
 
         private bool RentExists(int id)

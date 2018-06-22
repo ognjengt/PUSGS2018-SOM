@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RentService } from '../../services/rent/rent.service';
 import { VehicleModule } from '../../models/vehicle.model';
+import decode from 'jwt-decode';
 
 
 @Component({
@@ -41,5 +42,16 @@ export class RentsComponent implements OnInit {
       alert("Delete successful!");
       this.vehicles.splice(i, 1);
     })
+  }
+
+  isAuthorized() {
+    const tokenPayload = decode(localStorage.getItem('jwt'));
+    if(tokenPayload.role != 'Admin') {
+      if(tokenPayload.role != 'Manager') {
+        return false;
+      }
+      else return true;
+    }
+    else return true;
   }
 }
