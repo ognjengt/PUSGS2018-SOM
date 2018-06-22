@@ -37,7 +37,7 @@ export class EditRentComponent implements OnInit {
   }
 
   onSubmit(editVehicleData: VehicleModule, form: NgForm) {
-    if(this.validations.validate(editVehicleData)) return;
+    if(this.validations.validateEdit(editVehicleData)) return;
     editVehicleData.Id = this.id  
     this.rentService.editVehicle(this.id, editVehicleData)
     .subscribe( data => {

@@ -28,7 +28,16 @@ namespace RentApp.Controllers
         [Route("GetBranchOffices")]
         public IEnumerable<BranchOffice> GetBranchOffices()
         {
-            return unitOfWork.BranchOffices.GetAll();
+            List<Service> AuthorizedServices = unitOfWork.Services.GetAll().Where(s => s.Authorized == true).ToList();
+            List<BranchOffice> enabledBranches = new List<BranchOffice>();
+            foreach (var service in AuthorizedServices)
+            {
+                foreach (var branchOffice in service.BranchOffices)
+                {
+                    enabledBranches.Add(branchOffice);
+                }
+            }
+            return enabledBranches;
         }
 
         [ResponseType(typeof(BranchOffice))]

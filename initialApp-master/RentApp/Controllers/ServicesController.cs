@@ -30,7 +30,7 @@ namespace RentApp.Controllers
         [Route("GetServices")]
         public IEnumerable<Service> GetServices()
         {
-            return unitOfWork.Services.GetAll();
+            return unitOfWork.Services.GetAll().Where(s => s.Authorized == true);
         }
 
         [Route("GetService")]
@@ -175,7 +175,7 @@ namespace RentApp.Controllers
 
                 string subject = "Service approved";
                 string desc = $"Dear Manager, Your service {current.Name} has been approved. Block 8 team.";
-                var managerEmail = unitOfWork.AppUserRepository.Get(current.Id).Email;
+                var managerEmail = unitOfWork.AppUserRepository.Get(current.ManagerId).Email;
                 unitOfWork.AppUserRepository.NotifyViaEmail(managerEmail, subject, desc);
             }
             catch (DbUpdateConcurrencyException)
