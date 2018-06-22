@@ -87,7 +87,7 @@ namespace RentApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Manager, Admin")]
         [ResponseType(typeof(Service))]
         public IHttpActionResult PostService(Service service)
         {
