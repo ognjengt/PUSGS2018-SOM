@@ -31,6 +31,7 @@ export class RentACarComponent implements OnInit {
   }
   date1: any;
   date2: any;
+  dataLoaded: boolean;
 
   constructor(private rentService: RentService, private route: ActivatedRoute, private router: Router, private branchOfficeService: BranchofficeService) {
     this.branchOfficeService.getAllBranchOffices().subscribe(data => {
@@ -53,9 +54,10 @@ export class RentACarComponent implements OnInit {
     });
     this.rentService.getVehicle(this.id).
     subscribe(data => {
+      this.dataLoaded = true
       this.vehicle = data;
+      this.initConfig()
     })
-    this.initConfig()
   }
 
   onSubmit(rentData: RentModel, form: NgForm) {
