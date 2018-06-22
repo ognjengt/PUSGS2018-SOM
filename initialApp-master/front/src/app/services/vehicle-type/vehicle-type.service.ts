@@ -16,6 +16,6 @@ export class VehicleTypeService {
   constructor(private http: Http, private httpClient: HttpClient) { }
 
   getTypes(){
-    return this.httpClient.get('http://localhost:51680/api/Types/GetTypes')   
+    return this.httpClient.get('https://localhost:44347/api/Types/GetTypes')   
   }
 }

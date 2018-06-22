@@ -22,7 +22,7 @@ export class SignalRServiceService {
       this.messageReceived = new EventEmitter <GetNotification> ();  
       this.connectionExists = false;
 
-      this.connection = $.hubConnection('http://localhost:51680/');
+      this.connection = $.hubConnection('https://localhost:44347/');
       this.proxy = this.connection.createHubProxy(this.proxyName);
       this.registerOnServerEvents();  
       this.startConnection(); 

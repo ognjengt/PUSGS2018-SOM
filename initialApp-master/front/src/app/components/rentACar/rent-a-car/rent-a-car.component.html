@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container">    
     <h2>Rent {{vehicle.Manufactor}} {{vehicle.Model}}</h2>
     <p>Description: {{vehicle.Description}}</p>
     <p>Year: {{vehicle.Year}}</p>
@@ -26,5 +26,9 @@
         <!-- <div *ngIf="!validations.emailOk" style="color:red">Email can't be empty.</div> -->
 
         <button type="submit" class="btn btn-primary">Reserve</button>
+        <br/>
+        <br/>
+        <br/>
+        <ngx-paypal [config]="payPalConfig"></ngx-paypal>
       </form>
 </div>

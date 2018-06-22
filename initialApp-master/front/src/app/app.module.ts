@@ -47,6 +47,7 @@ import { RentsDetailsComponent } from './components/rents/rents-details/rents-de
 import { RentACarComponent } from './components/rentACar/rent-a-car/rent-a-car.component';
 import { GOOGLE_API_KEY } from 'keys';
 import { SearchComponent } from './components/search/search.component';
+import { NgxPayPalModule } from 'ngx-paypal';
 
 import {
   ToastrModule,
@@ -177,6 +178,7 @@ const Routes = [
     ToastrModule.forRoot({
       toastComponent: ToastNoAnimation,
     }),
+    NgxPayPalModule,
   ],  
   providers: [
     CanActivateViaAuthGuard,

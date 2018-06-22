@@ -27,35 +27,35 @@ export class AdminServiceService {
 
 
   getAwaitingServices(): Observable<any> {
-    return this.httpClient.get("http://localhost:51680/api/Services/GetAwaitingServices");
+    return this.httpClient.get("https://localhost:44347/api/Services/GetAwaitingServices");
   }
 
   authorizeService(serviceId): Observable<any> {
-    return this.httpClient.post("http://localhost:51680/api/Services/AuthorizeService", serviceId);
+    return this.httpClient.post("https://localhost:44347/api/Services/AuthorizeService", serviceId);
   }
 
   getUnbannedManagers(): Observable<any> {
-    return this.httpClient.get("http://localhost:51680/api/AdditionalUserOps/GetUnbannedManagers");
+    return this.httpClient.get("https://localhost:44347/api/AdditionalUserOps/GetUnbannedManagers");
   }
 
   getBannedManagers(): Observable<any> {
-    return this.httpClient.get("http://localhost:51680/api/AdditionalUserOps/GetBannedManagers");
+    return this.httpClient.get("https://localhost:44347/api/AdditionalUserOps/GetBannedManagers");
   }
 
   getAwaitingClients(): Observable<any> {
-    return this.httpClient.get("http://localhost:51680/api/AdditionalUserOps/GetAwaitingClients");
+    return this.httpClient.get("https://localhost:44347/api/AdditionalUserOps/GetAwaitingClients");
   }
 
   authorizeUser(userId): Observable<any> {
-    return this.httpClient.post("http://localhost:51680/api/AdditionalUserOps/AuthorizeUser",userId);
+    return this.httpClient.post("https://localhost:44347/api/AdditionalUserOps/AuthorizeUser",userId);
   }
 
   getAllUsers(): Observable<any> {
-    return this.httpClient.get("http://localhost:51680/api/AdditionalUserOps/GetAllUsers");
+    return this.httpClient.get("https://localhost:44347/api/AdditionalUserOps/GetAllUsers");
   }
 
   promoteUser(promotedUser: PromoteData): Observable<any> {
-    return this.httpClient.post("http://localhost:51680/api/Account/PromoteUser",promotedUser);
+    return this.httpClient.post("https://localhost:44347/api/Account/PromoteUser",promotedUser);
   }
 
 }

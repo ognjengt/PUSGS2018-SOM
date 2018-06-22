@@ -27,27 +27,27 @@ export class BranchofficeService {
 
 
   getAllServices(): Observable<any> {
-    return this.httpClient.get("http://localhost:51680/api/Services/GetServices");
+    return this.httpClient.get("https://localhost:44347/api/Services/GetServices");
   }
 
   postBranchOffice(branchOffice): Observable<any> {
-    return this.httpClient.post("http://localhost:51680/api/BranchOffices/PostBranchOffice", branchOffice);
+    return this.httpClient.post("https://localhost:44347/api/BranchOffices/PostBranchOffice", branchOffice);
   }
 
   getAllBranchOffices(): Observable<any> {
-    return this.httpClient.get("http://localhost:51680/api/BranchOffices/GetBranchOffices");
+    return this.httpClient.get("https://localhost:44347/api/BranchOffices/GetBranchOffices");
   }
 
   deleteBranchOffice(id): Observable<any> {
-    return this.httpClient.delete("http://localhost:51680/api/BranchOffices/DeleteBranchOffice?id="+id);
+    return this.httpClient.delete("https://localhost:44347/api/BranchOffices/DeleteBranchOffice?id="+id);
   }
 
   getBranchOffice(id): Observable<any> {
-    return this.httpClient.get("http://localhost:51680/api/BranchOffices/GetBranchOffice?id="+id);
+    return this.httpClient.get("https://localhost:44347/api/BranchOffices/GetBranchOffice?id="+id);
   }
 
   editService(id, branchOfficeModel){
-    return this.httpClient.put("http://localhost:51680/api/BranchOffices/PutBranchOffice?id=" + id, branchOfficeModel)
+    return this.httpClient.put("https://localhost:44347/api/BranchOffices/PutBranchOffice?id=" + id, branchOfficeModel)
   }
 
 }

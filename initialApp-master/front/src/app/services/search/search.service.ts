@@ -21,6 +21,6 @@ export class SearchService {
   }
 
   search(params): Observable<any> {
-    return this.httpClient.post('http://localhost:51680/api/Vehicles/SearchVehicles', params) 
+    return this.httpClient.post('https://localhost:44347/api/Vehicles/SearchVehicles', params) 
   }
 }

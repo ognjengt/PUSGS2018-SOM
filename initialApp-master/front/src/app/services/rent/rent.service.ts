@@ -17,34 +17,34 @@ export class RentService {
   constructor(private http: Http, private httpClient: HttpClient) { }
 
   getVehicles(){
-    return this.httpClient.get('http://localhost:51680/api/Vehicles/GetVehicles')   
+    return this.httpClient.get('https://localhost:44347/api/Vehicles/GetVehicles')   
   }
 
   getVehicle(id){
-    return this.httpClient.get('http://localhost:51680/api/Vehicles/GetVehicle?id=' + id)
+    return this.httpClient.get('https://localhost:44347/api/Vehicles/GetVehicle?id=' + id)
   }
 
   addVehicle(addVehicleData: VehicleModule){
-    return this.httpClient.post("http://localhost:51680/api/Vehicles/PostVehicle", addVehicleData)
+    return this.httpClient.post("https://localhost:44347/api/Vehicles/PostVehicle", addVehicleData)
   }
 
   deleteVehicle(id){
-    return this.httpClient.delete("http://localhost:51680/api/Vehicles/DeleteVehicle?id=" + id)
+    return this.httpClient.delete("https://localhost:44347/api/Vehicles/DeleteVehicle?id=" + id)
   }
 
   editVehicle(id, vehicleModule: VehicleModule){
-    return this.httpClient.put("http://localhost:51680/api/Vehicles/PutVehicle?id=" + id, vehicleModule)
+    return this.httpClient.put("https://localhost:44347/api/Vehicles/PutVehicle?id=" + id, vehicleModule)
   }
 
   setVehicleAvailability(id, vehicleModule: VehicleModule){
-    return this.httpClient.put("http://localhost:51680/api/Vehicles/PutVehicleAvailability?id=" + id, vehicleModule)
+    return this.httpClient.put("https://localhost:44347/api/Vehicles/PutVehicleAvailability?id=" + id, vehicleModule)
   }
 
   getVehicleTypes() {
-    return this.httpClient.get("http://localhost:51680/api/Types/GetTypes");
+    return this.httpClient.get("https://localhost:44347/api/Types/GetTypes");
   }
 
   postNewRent(newRent) {
-    return this.httpClient.post("http://localhost:51680/api/Rents/PostRent", newRent)
+    return this.httpClient.post("https://localhost:44347/api/Rents/PostRent", newRent)
   }
 }

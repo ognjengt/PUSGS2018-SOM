@@ -27,7 +27,7 @@ export class AuthenticationService {
 
   register(user): Observable<any> {
     console.log(user);
-    return this.httpClient.post("http://localhost:51680/api/Account/Register", user);
+    return this.httpClient.post("https://localhost:44347/api/Account/Register", user);
   }
 
 
@@ -41,7 +41,7 @@ export class AuthenticationService {
 
       if(!localStorage.jwt)
       {
-         return this.httpClient.post('http://localhost:51680/oauth/token',`username=${loginData.Email}&password=${loginData.Password}&grant_type=password`, {"headers": headers}) as Observable<any>
+         return this.httpClient.post('https://localhost:44347/oauth/token',`username=${loginData.Email}&password=${loginData.Password}&grant_type=password`, {"headers": headers}) as Observable<any>
       }
       else
       {

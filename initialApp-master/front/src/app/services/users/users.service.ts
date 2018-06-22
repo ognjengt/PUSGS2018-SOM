@@ -16,10 +16,10 @@ export class UsersService {
   constructor(private http: Http, private httpClient: HttpClient) { }
 
   getUserClaims() {
-    return this.httpClient.get('http://localhost:51680/api/Account/UserInfo')
+    return this.httpClient.get('https://localhost:44347/api/Account/UserInfo')
   }
 
   getUserData(email:string) {
-    return this.httpClient.get('http://localhost:51680/api/AdditionalUserOps/GetUser?email='+email)
+    return this.httpClient.get('https://localhost:44347/api/AdditionalUserOps/GetUser?email='+email)
   }
 }

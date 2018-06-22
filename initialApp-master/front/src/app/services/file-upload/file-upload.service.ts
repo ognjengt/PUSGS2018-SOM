@@ -21,7 +21,7 @@ export class FileUploadService {
     for (let selectedFile of selectedFiles){
       fd.append(selectedFile.name, selectedFile)
     }    
-    return this.httpClient.post("http://localhost:51680/api/File/PostImage", fd);
+    return this.httpClient.post("https://localhost:44347/api/File/PostImage", fd);
   }  
   
   uploadServiceLogo(serviceEmail: string, selectedFiles: File[]){
@@ -29,7 +29,7 @@ export class FileUploadService {
     for (let selectedFile of selectedFiles){
       fd.append(selectedFile.name, selectedFile)
     }    
-    return this.httpClient.post("http://localhost:51680/api/File/PostServiceImage?serviceEmail=" + serviceEmail, fd);
+    return this.httpClient.post("https://localhost:44347/api/File/PostServiceImage?serviceEmail=" + serviceEmail, fd);
   }  
   
   uploadVehicleImages(vehicleId: string, selectedFiles: File[]){
@@ -37,7 +37,7 @@ export class FileUploadService {
     for (let selectedFile of selectedFiles){
       fd.append(selectedFile.name, selectedFile)
     }    
-    return this.httpClient.post("http://localhost:51680/api/File/PostVehicleImages?vehicleId=" + vehicleId, fd);
+    return this.httpClient.post("https://localhost:44347/api/File/PostVehicleImages?vehicleId=" + vehicleId, fd);
   }  
 
   uploadBranchLogo(branchId: string, selectedFiles: File[]){
@@ -45,6 +45,6 @@ export class FileUploadService {
     for (let selectedFile of selectedFiles){
       fd.append(selectedFile.name, selectedFile)
     }    
-    return this.httpClient.post("http://localhost:51680/api/File/PostBranchImage?bId=" + branchId, fd);
+    return this.httpClient.post("https://localhost:44347/api/File/PostBranchImage?bId=" + branchId, fd);
   }
 }

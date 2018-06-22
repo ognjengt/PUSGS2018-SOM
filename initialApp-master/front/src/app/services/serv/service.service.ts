@@ -16,26 +16,26 @@ export class ServiceService {
   constructor(private http: Http, private httpClient: HttpClient) { }
 
   getServices(){
-    return this.httpClient.get('http://localhost:51680/api/Services/GetServices')   
+    return this.httpClient.get('https://localhost:44347/api/Services/GetServices')   
   }
 
   getService(id){
-    return this.httpClient.get('http://localhost:51680/api/Services/GetService?id=' + id)
+    return this.httpClient.get('https://localhost:44347/api/Services/GetService?id=' + id)
   }
 
   addService(addServiceData: ServiceModule){
-    return this.httpClient.post("http://localhost:51680/api/Services/AddService", addServiceData)
+    return this.httpClient.post("https://localhost:44347/api/Services/AddService", addServiceData)
   }
 
   deleteService(id){
-    return this.httpClient.delete("http://localhost:51680/api/Services/DeleteService?id=" + id)
+    return this.httpClient.delete("https://localhost:44347/api/Services/DeleteService?id=" + id)
   }
 
   editService(id, serviceModule: ServiceModule){
-    return this.httpClient.put("http://localhost:51680/api/Services/PutService?id=" + id, serviceModule)
+    return this.httpClient.put("https://localhost:44347/api/Services/PutService?id=" + id, serviceModule)
   }
 
   postReview(review) {
-    return this.httpClient.post("http://localhost:51680/api/Services/PostReview", review)
+    return this.httpClient.post("https://localhost:44347/api/Services/PostReview", review)
   }
 }

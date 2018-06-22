@@ -18,7 +18,7 @@ namespace RentApp
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
-           // var cors = new EnableCorsAttribute("*", "*", "*"); //Ovo na kraju treba zabraniti. Trenutno je ovako kako bi se dozvolilo angular aplikaciji.
+            //var cors = new EnableCorsAttribute("*", "*", "*"); //Ovo na kraju treba zabraniti. Trenutno je ovako kako bi se dozvolilo angular aplikaciji.
             //config.EnableCors(cors);
             //config.EnableCors(new EnableCorsAttribute(Properties.Settings.Default.Cors, "", ""));
 
