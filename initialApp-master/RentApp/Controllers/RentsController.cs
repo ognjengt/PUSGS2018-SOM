@@ -94,6 +94,7 @@ namespace RentApp.Controllers
                 r.Vehicle = unitOfWork.Vehicles.Get(rentRequest.VehicleId);
                 r.BranchOffice = unitOfWork.BranchOffices.Get(rentRequest.BranchOfficeId);
                 r.Vehicle.Unavailable = true;
+                r.Deleted = false;
                 // Izvuci iz heada jwt i uzmi koji je user
                 string jwt = Request.Headers.Authorization.Parameter.ToString();
                 var decodedToken = unitOfWork.AppUserRepository.DecodeJwt(jwt);
