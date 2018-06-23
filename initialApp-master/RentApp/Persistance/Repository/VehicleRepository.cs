@@ -22,7 +22,7 @@ namespace RentApp.Persistance.Repository
 
         public VehiclePaginationResponse SearchVehicles(SearchVehicleRequestModel vehicle)
         {
-            int pageSize = 10;
+            int pageSize = 3;
             var queryChain = Context.Vehicles.Where(v => v.Unavailable == false).ToList();
             if (!String.IsNullOrEmpty(vehicle.Model))
             {
@@ -49,13 +49,13 @@ namespace RentApp.Persistance.Repository
 
             int pages;
 
-            if (queryChain.ToList().Count % 10 == 0)
+            if (queryChain.ToList().Count % pageSize == 0)
             {
-                pages = queryChain.ToList().Count / 10;
+                pages = queryChain.ToList().Count / pageSize;
             }
             else
             {
-                pages = (queryChain.ToList().Count / 10) + 1;
+                pages = (queryChain.ToList().Count / pageSize) + 1;
             }
 
             vpr.Pages = pages;
