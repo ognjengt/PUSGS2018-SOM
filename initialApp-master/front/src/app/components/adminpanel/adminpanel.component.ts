@@ -3,6 +3,8 @@ import { AdminServiceService } from '../../services/adminServices/admin-service.
 import PromoteData from '../../models/promoteUser.model';
 import { NgForm } from '@angular/forms';
 import { RentService } from '../../services/rent/rent.service';
+import { UsersService } from '../../services/users/users.service';
+import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
 
 @Component({
   selector: 'app-adminpanel',
@@ -19,8 +21,11 @@ export class AdminpanelComponent implements OnInit {
   bannedManagers:any = [];
   awaitingClients:any = [];
   rentedVehicles:any = [];
+  userBytesImages:any = [];
+  imagesLoaded:boolean = false
+  wtfList:any = []
 
-  constructor(adminService: AdminServiceService, rentService: RentService) { 
+  constructor(adminService: AdminServiceService, rentService: RentService, usersService: UsersService) { 
     this.adminService = adminService;
     this.rentService = rentService;
 
@@ -38,6 +43,15 @@ export class AdminpanelComponent implements OnInit {
 
     adminService.getAwaitingClients().subscribe(data => {
       this.awaitingClients = data;
+      usersService.getUserImages(this.awaitingClients).subscribe(imageBytes => {
+        this.userBytesImages = imageBytes
+        this.userBytesImages.forEach(element => {
+          element = "data:image/png;base64," + element
+          this.wtfList.push(element)
+        });
+        this.imagesLoaded = true
+        console.log(this.userBytesImages)
+      })
     })
 
     rentService.getRentedVehicles().subscribe(data => {

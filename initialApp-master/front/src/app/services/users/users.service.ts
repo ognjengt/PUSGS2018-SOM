@@ -22,4 +22,12 @@ export class UsersService {
   getUserData(email:string) {
     return this.httpClient.get('https://localhost:44347/api/AdditionalUserOps/GetUser?email='+email)
   }
+
+  getUserImage(email:string) {
+    return this.httpClient.get('https://localhost:44347/api/File/GetUserImage?email='+email)
+  }
+
+  getUserImages(emails:any) {
+    return this.httpClient.post('https://localhost:44347/api/File/PostUserImages',emails)
+  }
 }

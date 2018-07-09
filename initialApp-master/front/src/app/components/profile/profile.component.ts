@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { UsersService } from '../../services/users/users.service';
 import { FileUploadService } from '../../services/file-upload/file-upload.service';
 
@@ -14,6 +14,8 @@ export class ProfileComponent implements OnInit {
   profileLoaded: boolean;
   user: any;
   selectedImage: any;
+  userBytesImage: any;
+  //@ViewChild('uim') uim: ElementRef;
 
   constructor(private usersService: UsersService, private fileUploadService: FileUploadService) {
     this.requestUserInfo()
@@ -29,9 +31,14 @@ export class ProfileComponent implements OnInit {
   requestUserInfo(){
     this.usersService.getUserClaims().subscribe(claims => {
       this.usersService.getUserData(claims['Email']).subscribe(data => {
-        this.profileLoaded = true
-        this.user = data;
-        console.log(this.user);
+        this.usersService.getUserImage(claims['Email']).subscribe(imageBytes => {
+          //this.uim.nativeElement.src = "data:image/jpg;base64," + imageBytes;
+          this.userBytesImage = "data:image/png;base64," + imageBytes;
+          console.log(this.userBytesImage)
+          this.profileLoaded = true
+          this.user = data;
+          console.log(this.user);          
+        })
       })
     })
   }
