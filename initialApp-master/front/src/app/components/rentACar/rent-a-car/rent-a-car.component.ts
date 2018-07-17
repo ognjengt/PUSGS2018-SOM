@@ -96,7 +96,7 @@ export class RentACarComponent implements OnInit {
     this.payPalConfig = new PayPalConfig(PayPalIntegrationType.ClientSideREST, PayPalEnvironment.Sandbox, {
       commit: true,
       client: {
-        sandbox: PayPalKey
+        sandbox: PayPalKey,
       },
       button: {
         label: 'paypal',
@@ -113,7 +113,7 @@ export class RentACarComponent implements OnInit {
       transactions: [{
         amount: {
           currency: 'USD',
-          total: this.vehicle.pricePerHour * diffDays * 24
+          total: 1 // this.vehicle.pricePerHour * diffDays * 24
         }
       }]
     });
